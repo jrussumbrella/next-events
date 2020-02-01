@@ -1,5 +1,12 @@
 const express = require("express");
 const eventRoute = require("./routes/eventRoute");
+const connectDb = require("./utils/connectDb");
+const dotenv = require("dotenv");
+
+// env vars
+dotenv.config({ path: "./config/config.env" });
+
+connectDb();
 
 const app = express();
 
