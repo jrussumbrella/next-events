@@ -1,3 +1,5 @@
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
 const Event = require("../models/Event");
 
 exports.getEvents = async (req, res) => {
@@ -5,21 +7,11 @@ exports.getEvents = async (req, res) => {
   res.status(200).json({ success: true, data: events, count: events.length });
 };
 
-exports.getEvent = async (req, res) => {
-  try {
-    const event = await Event.findById(req.params.id);
-    if (!event)
-      return res
-        .status(400)
-        .json({ success: false, message: "Cannot find this event" });
-    res.status(200).json({ success: true, data: event });
-  } catch (error) {
-    console.log(error);
-    res
-      .status(500)
-      .json({ success: false, message: "Cannot fetch this event" });
-  }
-};
+exports.getEvent = asyncHandler(async (req, res, next) => {
+  const event = await Event.findById(req.params.id);
+  if (!event) return next(new ErrorResponse(`Event not found`, 404));
+  res.status(200).json({ success: true, data: event });
+});
 
 exports.createEvent = async (req, res) => {
   try {
