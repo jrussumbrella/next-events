@@ -1,7 +1,7 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const eventRoute = require("./routes/eventRoute");
 const connectDb = require("./utils/connectDb");
-const dotenv = require("dotenv");
 const errorHandler = require("./middleware/error");
 
 // env vars
@@ -11,12 +11,13 @@ connectDb();
 
 const app = express();
 
-//middlewares
+//body parser middleware
 app.use(express.json());
 
 //routes
 app.use("/api/v1/events", eventRoute);
 
+//error middleware
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;

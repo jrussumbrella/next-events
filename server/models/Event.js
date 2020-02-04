@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const slugify = require("slugify");
+const geoCoder = require("../utils/geoCoder");
 
 const EventSchema = mongoose.Schema(
   {
@@ -69,5 +71,28 @@ const EventSchema = mongoose.Schema(
     timestamps: true
   }
 );
+
+// add slug for event's name
+EventSchema.pre("save", function(next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+// add geocode for location
+EventSchema.pre("save", async function(next) {
+  const location = await geoCoder.geocode(this.address);
+  this.location = {
+    type: "Point",
+    coordinates: [location[0].longitude, location[0].latitude],
+    formattedAddress: location[0].formattedAddress,
+    street: location[0].streetName,
+    city: location[0].city,
+    state: location[0].stateCode,
+    zipcode: location[0].zipcode,
+    country: location[0].countryCode
+  };
+  this.address = undefined;
+  next();
+});
 
 module.exports = mongoose.model("Event", EventSchema);
