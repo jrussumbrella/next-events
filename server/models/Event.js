@@ -95,4 +95,6 @@ EventSchema.pre("save", async function(next) {
   next();
 });
 
+EventSchema.index({ location: "2dsphere" });
+
 module.exports = mongoose.model("Event", EventSchema);

@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   getEvents,
+  getNearbyEvents,
   createEvent,
   getEvent,
   deleteEVent,
@@ -8,6 +9,8 @@ const {
 } = require("../controllers/eventController");
 
 const router = express.Router();
+
+router.route("/nearby/:zipcode/:distance").get(getNearbyEvents);
 
 router
   .route("/")
