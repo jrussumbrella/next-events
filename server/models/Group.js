@@ -2,18 +2,17 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 const geoCoder = require("../utils/geoCoder");
 
-const EventSchema = mongoose.Schema(
+const GroupSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      require: [true, "Name is required"],
       unique: true,
       trim: true
     },
-    slug: String,
     description: {
       type: String,
-      required: [true, "Description is required"],
+      require: [true, "Description is required"],
       maxlength: [500, "Description can not be more than 500 characters"]
     },
     address: {
@@ -36,42 +35,53 @@ const EventSchema = mongoose.Schema(
       zipcode: String,
       country: String
     },
-    imageURL: {
+    website: {
       type: String,
-      default: "no-photo.jpg"
+      match: [
+        /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+        "Please use a valid URL with HTTP or HTTPS"
+      ]
     },
-    attendees: [
-      {
-        attendee: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User"
-        }
-      }
-    ],
-    user: {
+    email: {
+      type: String,
+      match: [
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        "Please add a valid email"
+      ]
+    },
+    owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true
     },
-    group: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Group",
-      required: true
-    }
+    imageURL: {
+      type: String,
+      default: "no-cover.jpg"
+    },
+    members: [
+      {
+        member: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User"
+        }
+      }
+    ]
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 
-// add slug for event's name
-EventSchema.pre("save", function(next) {
+// add slug for group's name
+GroupSchema.pre("save", function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
 // add geocode for location
-EventSchema.pre("save", async function(next) {
+GroupSchema.pre("save", async function(next) {
   const location = await geoCoder.geocode(this.address);
   this.location = {
     type: "Point",
@@ -87,6 +97,18 @@ EventSchema.pre("save", async function(next) {
   next();
 });
 
-EventSchema.index({ location: "2dsphere" });
+// Cascade delete events when group is deleted
+GroupSchema.pre("remove", async function(next) {
+  await this.model("Event").deleteMany({ group: this._id });
+  next();
+});
 
-module.exports = mongoose.model("Event", EventSchema);
+//Reverse populate with virtuals
+GroupSchema.virtual("events", {
+  ref: "Event",
+  localField: "_id",
+  foreignField: "group",
+  justOne: false
+});
+
+module.exports = mongoose.model("Group", GroupSchema);

@@ -1,6 +1,9 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 const eventRoute = require("./routes/eventRoute");
+const authRoute = require("./routes/authRoute");
+const groupRoute = require("./routes/groupRoute");
 const connectDb = require("./utils/connectDb");
 const errorHandler = require("./middleware/error");
 
@@ -11,11 +14,14 @@ connectDb();
 
 const app = express();
 
-//body parser middleware
+// middleware
 app.use(express.json());
+app.use(cookieParser());
 
 //routes
 app.use("/api/v1/events", eventRoute);
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/groups", groupRoute);
 
 //error middleware
 app.use(errorHandler);
