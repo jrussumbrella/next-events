@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
 const eventRoute = require("./routes/eventRoute");
 const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 const groupRoute = require("./routes/groupRoute");
 const connectDb = require("./utils/connectDb");
 const errorHandler = require("./middleware/error");
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/api/v1/events", eventRoute);
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/groups", groupRoute);
+app.use("/api/v1/users", userRoute);
 
 //error middleware
 app.use(errorHandler);

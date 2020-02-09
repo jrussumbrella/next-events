@@ -39,6 +39,39 @@ exports.getLoginUser = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: user });
 });
 
+exports.updateDetails = asyncHandler(async (req, res, next) => {
+  const fields = {
+    name: req.body.name,
+    email: req.body.email
+  };
+  const user = await User.findByIdAndUpdate(req.user.id, fields, {
+    new: true,
+    runValidators: true
+  });
+  res.status(200).json({ success: true, data: user });
+});
+
+exports.changePassword = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  if (!user) return next(new ErrorResponse("User not found"), 404);
+
+  if (!req.body.currentPassword || !req.body.newPassword)
+    return next(
+      new ErrorResponse("Current Password and New Password is required"),
+      400
+    );
+
+  //check current password
+  const isMatchPassword = await user.matchPassword(req.body.currentPassword);
+  if (!isMatchPassword)
+    return next(new ErrorResponse("Password is incorrect"), 401);
+
+  user.password = req.body.newPassword;
+  await user.save();
+  sendTokenResponse(user, 200, res);
+});
+
 exports.forgotPassword = asyncHandler(async (req, res, next) => {
   if (!req.body.email) return next(new ErrorResponse("Email is required"), 400);
   const user = await User.findOne({ email: req.body.email });

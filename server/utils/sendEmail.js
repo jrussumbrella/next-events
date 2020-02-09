@@ -13,12 +13,6 @@ async function sendEmail(options) {
       }
     });
 
-    console.log(
-      process.env.SMTP_HOST,
-      process.env.SMTP_EMAIL,
-      process.env.SMTP_PASSWORD
-    );
-
     // send mail with defined transport object
     let info = await transporter.sendMail({
       from: `${process.env.FROM_NAME} <${process.env.FROM_EMAIL}>`, // sender address
