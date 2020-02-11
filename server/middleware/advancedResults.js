@@ -2,8 +2,8 @@ const advancedRequests = (model, populate) => async (req, res, next) => {
   let query;
   const reqQuery = { ...req.query };
 
-  //fields to exclude
-  const removeFields = ["select", "sort", "limit", "page"];
+  //  fields to exclude
+  const removeFields = ['select', 'sort', 'limit', 'page'];
   removeFields.forEach(param => delete reqQuery[param]);
 
   let queryStr = JSON.stringify(reqQuery);
@@ -12,21 +12,21 @@ const advancedRequests = (model, populate) => async (req, res, next) => {
 
   query = model.find(JSON.parse(queryStr));
 
-  //select
+  //  select
   if (req.query.select) {
-    const fields = req.query.select.split(",").join(" ");
+    const fields = req.query.select.split(',').join(' ');
     query = query.select(fields);
   }
 
-  //sort
+  //  sort
   if (req.query.sort) {
-    const sort = req.query.sort.split(",").join(" ");
+    const sort = req.query.sort.split(',').join(' ');
     query = query.sort(sort);
   } else {
-    query = query.sort({ createdAt: "desc" });
+    query = query.sort({ createdAt: 'desc' });
   }
 
-  //pagination
+  //  pagination
   const page = req.query.page ? parseInt(req.query.page) : 1;
   const limit = req.query.limit ? parseInt(req.query.limit) : 20;
   const start = (page - 1) * limit;
@@ -41,7 +41,7 @@ const advancedRequests = (model, populate) => async (req, res, next) => {
 
   const results = await query;
 
-  //pagination result
+  //  pagination result
   const pagination = {};
   if (end < total) {
     pagination.next = {
