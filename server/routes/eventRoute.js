@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require('express');
 const {
   getEvents,
   getNearbyEvents,
@@ -6,29 +6,29 @@ const {
   getEvent,
   deleteEVent,
   updateEvent
-} = require("../controllers/eventController");
-const Event = require("../models/Event");
-const advancedResults = require("../middleware/advancedResults");
+} = require('../controllers/eventController');
+const Event = require('../models/Event');
+const advancedResults = require('../middleware/advancedResults');
 
 const router = express.Router({ mergeParams: true });
 
-const { protect } = require("../middleware/auth");
+const { protect } = require('../middleware/auth');
 
-router.route("/nearby/:zipcode/:distance").get(getNearbyEvents);
+router.route('/nearby/:zipcode/:distance').get(getNearbyEvents);
 
 router
-  .route("/")
+  .route('/')
   .get(
     advancedResults(Event, {
-      path: "group",
-      select: "name description"
+      path: 'group',
+      select: 'name description'
     }),
     getEvents
   )
   .post(protect, createEvent);
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(getEvent)
   .delete(protect, deleteEVent)
   .patch(protect, updateEvent);
