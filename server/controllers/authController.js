@@ -142,11 +142,13 @@ const sendTokenResponse = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'production') {
     options.secure = true;
   }
+  let userData = user;
+  userData.password = undefined;
 
   res
     .status(statusCode)
     .cookie('token', token, options)
-    .json({ success: true, token });
+    .json({ success: true, token, data: userData });
 };
 
 exports.logout = asyncHandler(async (req, res, next) => {
@@ -154,6 +156,5 @@ exports.logout = asyncHandler(async (req, res, next) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
-
   res.status(200).json({ success: true, data: {} });
 });
