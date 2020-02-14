@@ -1,28 +1,30 @@
-const express = require("express");
+const express = require('express');
 const {
   createUser,
   getUsers,
   getUser,
   updateUser,
-  deleteUser
-} = require("../controllers/userController");
-const User = require("../models/User");
-const advancedResults = require("../middleware/advancedResults");
+  deleteUser,
+  getCreatedGroups,
+  getJoinedGroups
+} = require('../controllers/userController');
+const User = require('../models/User');
+const advancedResults = require('../middleware/advancedResults');
 const router = express.Router();
-const { protect, authorize } = require("../middleware/auth");
-
-router.use(protect);
-router.use(authorize("admin"));
+const { protect, authorize } = require('../middleware/auth');
 
 router
-  .route("/")
-  .get(advancedResults(User), getUsers)
-  .post(createUser);
+  .route('/')
+  .get(protect, authorize('admin'), advancedResults(User), getUsers)
+  .post(protect, authorize('admin'), createUser);
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(getUser)
-  .put(updateUser)
-  .delete(deleteUser);
+  .put(protect, authorize('admin'), updateUser)
+  .delete(protect, authorize('admin'), deleteUser);
+
+router.route('/:userId/created-groups').get(getCreatedGroups);
+router.route('/:userId/joined-groups').get(getJoinedGroups);
 
 module.exports = router;

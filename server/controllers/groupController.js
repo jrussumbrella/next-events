@@ -1,6 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Group = require('../models/Group');
+const User = require('../models/User');
 const mongoose = require('mongoose');
 
 const { ObjectId } = mongoose.Types;

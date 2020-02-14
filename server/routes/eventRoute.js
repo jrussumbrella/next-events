@@ -9,10 +9,9 @@ const {
 } = require('../controllers/eventController');
 const Event = require('../models/Event');
 const advancedResults = require('../middleware/advancedResults');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router({ mergeParams: true });
-
-const { protect } = require('../middleware/auth');
 
 router.route('/nearby/:zipcode/:distance').get(getNearbyEvents);
 
