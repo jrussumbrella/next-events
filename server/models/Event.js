@@ -1,33 +1,33 @@
-const mongoose = require("mongoose");
-const slugify = require("slugify");
-const geoCoder = require("../utils/geoCoder");
+const mongoose = require('mongoose');
+const slugify = require('slugify');
+const geoCoder = require('../utils/geoCoder');
 
 const EventSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, 'Name is required'],
       unique: true,
       trim: true
     },
     slug: String,
     description: {
       type: String,
-      required: [true, "Description is required"],
-      maxlength: [500, "Description can not be more than 500 characters"]
+      required: [true, 'Description is required'],
+      maxlength: [500, 'Description can not be more than 500 characters']
     },
     address: {
       type: String,
-      required: [true, "Address is required"]
+      required: [true, 'Address is required']
     },
     location: {
       type: {
         type: String,
-        enum: ["Point"]
+        enum: ['Point']
       },
       coordinates: {
         type: [Number],
-        index: "2dsphere"
+        index: '2dsphere'
       },
       formattedAddress: String,
       street: String,
@@ -37,25 +37,31 @@ const EventSchema = mongoose.Schema(
       country: String
     },
     imageURL: {
-      type: String,
-      default: "no-photo.jpg"
+      type: String
+    },
+    isFree: {
+      type: Boolean,
+      default: 'true'
+    },
+    price: {
+      type: Number
     },
     attendees: [
       {
         attendee: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "User"
+          ref: 'User'
         }
       }
     ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true
     },
     group: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Group",
+      ref: 'Group',
       required: true
     }
   },
@@ -65,16 +71,16 @@ const EventSchema = mongoose.Schema(
 );
 
 // add slug for event's name
-EventSchema.pre("save", function(next) {
+EventSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
 // add geocode for location
-EventSchema.pre("save", async function(next) {
+EventSchema.pre('save', async function(next) {
   const location = await geoCoder.geocode(this.address);
   this.location = {
-    type: "Point",
+    type: 'Point',
     coordinates: [location[0].longitude, location[0].latitude],
     formattedAddress: location[0].formattedAddress,
     street: location[0].streetName,
@@ -87,6 +93,6 @@ EventSchema.pre("save", async function(next) {
   next();
 });
 
-EventSchema.index({ location: "2dsphere" });
+EventSchema.index({ location: '2dsphere' });
 
-module.exports = mongoose.model("Event", EventSchema);
+module.exports = mongoose.model('Event', EventSchema);

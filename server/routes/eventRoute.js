@@ -5,7 +5,8 @@ const {
   createEvent,
   getEvent,
   deleteEVent,
-  updateEvent
+  updateEvent,
+  attendEvent
 } = require('../controllers/eventController');
 const Event = require('../models/Event');
 const advancedResults = require('../middleware/advancedResults');
@@ -31,5 +32,7 @@ router
   .get(getEvent)
   .delete(protect, deleteEVent)
   .patch(protect, updateEvent);
+
+router.route('/:eventId/attend').post(protect, attendEvent);
 
 module.exports = router;
