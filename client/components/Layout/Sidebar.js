@@ -41,15 +41,18 @@ const Sidebar = ({ open, handleClick }, ref) => {
 
         .sidebar-list {
           margin-top: 8rem;
+          width: 100%;
         }
 
         .sidebar-list li {
           padding: 1rem 0;
+          text-align: center;
         }
 
         .sidebar-list a {
           color: var(--color-dark);
           font-size: 1.7rem;
+          display: block;
         }
       `}</style>
     </>

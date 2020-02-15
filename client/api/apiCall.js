@@ -2,12 +2,12 @@ import baseURL from '../utils/baseURL';
 import axios from 'axios';
 const API_URL = `${baseURL}/api/v1`;
 
-export const login = user => {
+export const login = async user => {
   try {
-    const { data } = axios.post(`${API_URL}/login`, user);
+    const { data } = await axios.post(`${API_URL}/auth/login`, user);
     return data;
   } catch (error) {
-    console.log(error);
+    throw error.response.data.error;
   }
 };
 
@@ -17,6 +17,6 @@ export const fetchGroups = async () => {
     const { data } = await axios.get(`${API_URL}/groups`, payload);
     return data;
   } catch (error) {
-    return error;
+    throw error.response.data.error;
   }
 };

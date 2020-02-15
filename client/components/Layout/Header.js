@@ -64,6 +64,7 @@ const Header = ({ title }) => {
           left: 0;
           right: 0;
           z-index: 11;
+          border-bottom: 1px solid #d5d5d5;
         }
 
         .page-title {
