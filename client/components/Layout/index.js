@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
       <main className="main">{children}</main>
       <style jsx>{`
         .main {
-          margin-top: 7rem;
+          margin-top: 8rem;
         }
       `}</style>
     </>

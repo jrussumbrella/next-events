@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { forwardRef, memo } from 'react';
+import Link from 'next/link';
 
-const Sidebar = ({ open }) => {
+const Sidebar = ({ open, handleClick }, ref) => {
   return (
     <>
-      <div className={`sidebar ${open ? 'sidebar--open' : ''}`}></div>
+      <div ref={ref} className={`sidebar ${open ? 'sidebar--open' : ''}`}>
+        <ul className="sidebar-list">
+          <li onClick={handleClick}>
+            <Link href="/login">
+              <a> Login </a>
+            </Link>
+          </li>
+          <li onClick={handleClick}>
+            <Link href="/login">
+              <a> Sign Up </a>
+            </Link>
+          </li>
+        </ul>
+      </div>
       <style jsx>{`
         .sidebar {
           position: fixed;
@@ -14,16 +28,34 @@ const Sidebar = ({ open }) => {
           height: 100%;
           bottom: 0;
           background-color: #fff;
-          transform: translateX(100%);
+          transform: translateX(100vw);
           transition: all 0.3s;
+          display: flex;
+          justify-content: center;
+          box-shadow: rgba(2, 12, 27, 0.7) -10px 0px 10px -15px;
         }
 
         .sidebar--open {
           transform: translateX(0);
+        }
+
+        .sidebar-list {
+          margin-top: 8rem;
+        }
+
+        .sidebar-list li {
+          padding: 1rem 0;
+        }
+
+        .sidebar-list a {
+          color: var(--color-dark);
+          font-size: 1.7rem;
         }
       `}</style>
     </>
   );
 };
 
-export default Sidebar;
+const forwardSidebar = forwardRef(Sidebar);
+
+export default memo(forwardSidebar);

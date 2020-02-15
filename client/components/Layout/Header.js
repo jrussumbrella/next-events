@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { HamburgerIcon } from '../Shared/Icons';
@@ -6,6 +6,28 @@ import Sidebar from './Sidebar';
 
 const Header = ({ title }) => {
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const sidebarRef = useRef();
+  const mobileMenuRef = useRef();
+
+  useEffect(() => {
+    window.addEventListener('click', handleClickOutside);
+    return () => window.removeEventListener('click', handleClickOutside);
+  }, []);
+
+  function handleClickOutside(e) {
+    if (
+      sidebarRef.current.contains(e.target) ||
+      mobileMenuRef.current.contains(e.target)
+    ) {
+      return;
+    }
+    setIsOpenDrawer(false);
+  }
+
+  function handleClickSidebar() {
+    setIsOpenDrawer(!isOpenDrawer);
+  }
+
   return (
     <>
       <header className="header">
@@ -15,14 +37,19 @@ const Header = ({ title }) => {
           </Link>
         </div>
         <div className="header-right">
-          <div className="hamburger-menu">
-            <HamburgerIcon
-              active={isOpenDrawer}
-              onClick={() => setIsOpenDrawer(!isOpenDrawer)}
-            />
+          <div
+            className="hamburger-menu"
+            ref={mobileMenuRef}
+            onClick={handleClickSidebar}
+          >
+            <HamburgerIcon active={isOpenDrawer} />
           </div>
         </div>
-        <Sidebar open={isOpenDrawer} />
+        <Sidebar
+          open={isOpenDrawer}
+          ref={sidebarRef}
+          handleClick={handleClickSidebar}
+        />
       </header>
       <style jsx>{`
         .header {
