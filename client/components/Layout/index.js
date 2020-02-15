@@ -7,7 +7,12 @@ const Layout = ({ children }) => {
     <>
       <GlobalStyles />
       <Header title="Next Events" />
-      <main>{children}</main>
+      <main className="main">{children}</main>
+      <style jsx>{`
+        .main {
+          margin-top: 7rem;
+        }
+      `}</style>
     </>
   );
 };

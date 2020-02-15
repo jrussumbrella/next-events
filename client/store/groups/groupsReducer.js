@@ -1,6 +1,7 @@
 import { FETCH_GROUPS_SUCCESS } from './groupsType';
+
 const initState = {
-  groups: null
+  groups: []
 };
 
 export default (state = initState, action) => {

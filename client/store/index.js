@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import auth from './auth/authReducer';
+import groups from './groups/groupsReducer';
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== 'production') {
@@ -10,7 +11,7 @@ const bindMiddleware = middleware => {
   return applyMiddleware(...middleware);
 };
 
-const reducer = combineReducers({ auth });
+const reducer = combineReducers({ auth, groups });
 
 const store = initialState => {
   return createStore(reducer, initialState, bindMiddleware([thunkMiddleware]));

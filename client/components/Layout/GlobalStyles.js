@@ -13,8 +13,8 @@ export default () => {
           html {
             font-size: 62.5%;
             box-sizing: border-box;
-            --color-primary: #f6463d;
-            --color-gray: #f5f5f5;
+            --color-primary: #ee5253;
+            --color-gray: #777777;
             --color-dark: #222;
           }
 

@@ -5,17 +5,18 @@ const API_URL = `${baseURL}/api/v1`;
 export const login = user => {
   try {
     const { data } = axios.post(`${API_URL}/login`, user);
-    console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const fetchGroups = () => {
+export const fetchGroups = async () => {
   try {
-    const { data } = axios.get(`${API_URL}/groups`);
-    console.log(data);
+    const payload = { params: { limit: 10 } };
+    const { data } = await axios.get(`${API_URL}/groups`, payload);
+    return data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
