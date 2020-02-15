@@ -1,21 +1,65 @@
 import React, { forwardRef, memo } from 'react';
 import Link from 'next/link';
+import { useSelector, useDispatch } from 'react-redux';
+import Button from '../Shared/Button';
+import { logout } from '../../store/auth/authAction';
 
 const Sidebar = ({ open, handleClick }, ref) => {
+  const { user } = useSelector(state => state.auth);
+  const dispatch = useDispatch();
+
+  function handleLogout() {
+    dispatch(logout());
+    handleClick();
+  }
+
   return (
     <>
       <div ref={ref} className={`sidebar ${open ? 'sidebar--open' : ''}`}>
         <ul className="sidebar-list">
-          <li onClick={handleClick}>
-            <Link href="/login">
-              <a> Login </a>
-            </Link>
-          </li>
-          <li onClick={handleClick}>
-            <Link href="/login">
-              <a> Sign Up </a>
-            </Link>
-          </li>
+          {!user ? (
+            <>
+              <li onClick={handleClick}>
+                <Link href="/login">
+                  <a> Login </a>
+                </Link>
+              </li>
+              <li onClick={handleClick}>
+                <Link href="/login">
+                  <a> Sign Up </a>
+                </Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <div className="welcome">
+                Hello, <span>{user.name}</span>
+              </div>
+              <li onClick={handleClick}>
+                <Link href="/account">
+                  <a> My Account </a>
+                </Link>
+              </li>
+              <li onClick={handleClick}>
+                <Link href="/groups">
+                  <a> Groups </a>
+                </Link>
+              </li>
+              <li onClick={handleClick}>
+                <Link href="/events">
+                  <a> Events </a>
+                </Link>
+              </li>
+              <li>
+                <Button
+                  type="button"
+                  title="Logout"
+                  onClick={handleLogout}
+                  size={1.8}
+                />
+              </li>
+            </>
+          )}
         </ul>
       </div>
       <style jsx>{`
@@ -45,7 +89,7 @@ const Sidebar = ({ open, handleClick }, ref) => {
         }
 
         .sidebar-list li {
-          padding: 1rem 0;
+          padding: 1rem 2rem;
           text-align: center;
         }
 
@@ -53,6 +97,12 @@ const Sidebar = ({ open, handleClick }, ref) => {
           color: var(--color-dark);
           font-size: 1.7rem;
           display: block;
+        }
+
+        .welcome {
+          text-align: center;
+          padding: 2rem 0;
+          font-size: 1.7rem;
         }
       `}</style>
     </>
