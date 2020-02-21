@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import { HamburgerIcon } from '../Shared/Icons';
 import Sidebar from './Sidebar';
 
+
 const Header = ({ title }) => {
+
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const sidebarRef = useRef();
   const mobileMenuRef = useRef();

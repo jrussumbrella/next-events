@@ -9,7 +9,7 @@ const EventList = ({ events }) => {
       <div className="events">
         <div className="event-list">
           <div className="event-card">
-            <Link href="/">
+            <Link href={`/events/[slug]`} as={`/events/ca-after-party`}>
               <a className="link">
                 <div className="img-wrapper">
                   <img

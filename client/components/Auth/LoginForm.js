@@ -78,11 +78,12 @@ const LoginForm = () => {
         {`
           .form input {
             width: 100%;
-            border: 1px solid var(--color-gray);
+            border: 1px solid var(--color-light-gray);
             height: 6rem;
             border-radius: 6px;
             padding: 0 1.5rem;
             font-size: 1.6rem;
+            background-color: var(--color-light-gray);
           }
 
           .group {

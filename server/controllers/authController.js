@@ -4,6 +4,26 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendEmail');
 
+const sendTokenResponse = (user, statusCode, res) => {
+  const token = user.getSignedJwtToken();
+
+  const options = {
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    httpOnly: false
+  };
+
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true;
+  }
+  const userData = user;
+  userData.password = undefined;
+
+  res
+    .status(statusCode)
+    .cookie('token', token, options)
+    .json({ success: true, token, data: userData });
+};
+
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
   const user = await User.create({ name, email, password, role });
@@ -18,18 +38,18 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   if (!password) {
-    return next(new ErrorResponse('Password is required'), 400);
+    return next(new ErrorResponse('Password is required', 400));
   }
 
-  //check user
+  // check user
   const user = await User.findOne({ email }).select('+password');
   if (!user)
-    return next(new ErrorResponse('Email or password in incorrect'), 401);
+    return next(new ErrorResponse('Email or password in incorrect', 401));
 
   // check if password match
   const isMatchPassword = await user.matchPassword(password);
   if (!isMatchPassword)
-    return next(new ErrorResponse('Email or password in incorrect'), 401);
+    return next(new ErrorResponse('Email or password in incorrect', 401));
 
   sendTokenResponse(user, 200, res);
 });
@@ -54,15 +74,14 @@ exports.updateDetails = asyncHandler(async (req, res, next) => {
 exports.changePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id).select('+password');
 
-  if (!user) return next(new ErrorResponse('User not found'), 404);
+  if (!user) return next(new ErrorResponse('User not found', 404));
 
   if (!req.body.currentPassword || !req.body.newPassword)
     return next(
-      new ErrorResponse('Current Password and New Password is required'),
-      400
+      new ErrorResponse('Current Password and New Password is required', 400)
     );
 
-  //check current password
+  // check current password
   const isMatchPassword = await user.matchPassword(req.body.currentPassword);
   if (!isMatchPassword)
     return next(new ErrorResponse('Password is incorrect'), 401);
@@ -83,7 +102,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const token = await user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
-  //create resetPassword url
+  // create resetPassword url
   const resetURL = `${req.protocol}://${req.get(
     'host'
   )}/api/v1/auth/resetPassword/${token}`;
@@ -103,8 +122,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
     user.resetPasswordExpire = undefined;
     await user.save({ validateBeforeSave: false });
     return next(
-      new ErrorResponse('Error in sending reset password token'),
-      500
+      new ErrorResponse('Error in sending reset password token', 500)
     );
   }
 });
@@ -120,7 +138,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     resetPasswordExpire: { $gt: Date.now() }
   });
 
-  if (!user) return next(new ErrorResponse('Invalid rest password token'), 400);
+  if (!user) return next(new ErrorResponse('Invalid rest password token', 400));
 
   user.password = req.body.password;
   user.resetPasswordToken = undefined;
@@ -130,26 +148,6 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
   sendTokenResponse(user, 200, res);
 });
-
-const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSignedJwtToken();
-
-  const options = {
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-    httpOnly: true
-  };
-
-  if (process.env.NODE_ENV === 'production') {
-    options.secure = true;
-  }
-  let userData = user;
-  userData.password = undefined;
-
-  res
-    .status(statusCode)
-    .cookie('token', token, options)
-    .json({ success: true, token, data: userData });
-};
 
 exports.logout = asyncHandler(async (req, res, next) => {
   res.cookie('token', 'none', {

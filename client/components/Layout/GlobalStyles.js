@@ -16,10 +16,13 @@ export default () => {
             --color-primary: #ee5253;
             --color-gray: #777777;
             --color-dark: #222;
+            --color-light-gray: #efefef;
           }
 
           body {
-            font-family: Poppins, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+              Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+              sans-serif;
             margin: 0;
             padding: 0;
             font-size: 1.5rem;
@@ -36,6 +39,12 @@ export default () => {
 
           a {
             text-decoration: none;
+          }
+
+          button {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+              Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+              sans-serif;
           }
         `}
       </style>

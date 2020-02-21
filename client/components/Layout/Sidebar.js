@@ -89,14 +89,15 @@ const Sidebar = ({ open, handleClick }, ref) => {
         }
 
         .sidebar-list li {
-          padding: 1rem 2rem;
           text-align: center;
+          padding: 0 1.5rem;
         }
 
         .sidebar-list a {
           color: var(--color-dark);
           font-size: 1.7rem;
           display: block;
+          padding: 1rem 2rem;
         }
 
         .welcome {
