@@ -37,6 +37,10 @@ const Button = ({ type, title, size, style, onClick, classType, loading }) => {
           background-color: var(--color-primary);
           color: #fff;
         }
+
+        .btn.link {
+          border: 1px solid transparent;
+        }
       `}</style>
     </>
   );

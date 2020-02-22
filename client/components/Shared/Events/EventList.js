@@ -2,6 +2,7 @@ import React from 'react';
 import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
 import Link from 'next/link';
+import { formatDate, formatTime } from '../../../utils/formatDate';
 
 const EventList = ({ events }) => {
   return (
@@ -23,7 +24,9 @@ const EventList = ({ events }) => {
                     </div>
                     <div className="date">
                       <MdDateRange color={`var(--color-primary)`} size={18} />{' '}
-                      <span className="text">February 14, 2019, 9:00 am</span>
+                      <span className="text">
+                        {formatDate(event.date)} at {formatTime(event.date)}
+                      </span>
                     </div>
                     <div className="bottom">
                       <div className="attende-text">

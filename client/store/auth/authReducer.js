@@ -19,7 +19,7 @@ export default (state = initState, action) => {
         loading: false
       };
     case SET_USER_FAILURE:
-      return { ...state, error: action.payload, loading: false };
+      return { ...state, error: action.payload, loading: false, token: null };
     case CLEAR_ERROR:
       return { ...state, error: null };
     case LOGOUT_USER:

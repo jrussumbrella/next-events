@@ -3,20 +3,37 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../Shared/Button';
 import { logout } from '../../store/auth/authAction';
+import Router from 'next/router';
 
 const Sidebar = ({ open, handleClick }, ref) => {
   const { user } = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
-  function handleLogout() {
+  const handleLogout = () => {
     dispatch(logout());
     handleClick();
-  }
+  };
+
+  const handleCreateEvent = () => {
+    if (user) {
+      Router.push('/create-event');
+    } else {
+      Router.push('/login');
+    }
+  };
 
   return (
     <>
       <div ref={ref} className={`sidebar ${open ? 'sidebar--open' : ''}`}>
         <ul className="sidebar-list">
+          <li>
+            <Button
+              type="button"
+              title="Create an Event"
+              onClick={handleCreateEvent}
+              size={1.8}
+            />
+          </li>
           {!user ? (
             <>
               <li onClick={handleClick}>
@@ -56,6 +73,7 @@ const Sidebar = ({ open, handleClick }, ref) => {
                   title="Logout"
                   onClick={handleLogout}
                   size={1.8}
+                  classType="link"
                 />
               </li>
             </>

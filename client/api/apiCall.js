@@ -59,3 +59,18 @@ export const fetchEvent = async eventId => {
     throw error.response.data.error;
   }
 };
+
+export const toggleAttend = async (eventId, token) => {
+  try {
+    const payload = { headers: { authorization: `Bearer ${token}` } };
+    const { data } = await axios.post(
+      `${API_URL}/events/${eventId}/attend`,
+      {},
+      payload
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error.response.data.error;
+  }
+};
