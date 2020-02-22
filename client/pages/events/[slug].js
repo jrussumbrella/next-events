@@ -1,64 +1,74 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
+import { EventAttendees, EventAction, EventTags } from '../../components/Event';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEvent } from '../../store/events/eventsAction';
 import Layout from '../../components/Layout';
-import EventAttendees from '../../components/Event/EventAttendees';
-import EventAction from '../../components/Event/EventAction';
-import EventTags from '../../components/Event/EventTags';
 
 const Events = () => {
   const router = useRouter();
   const { slug } = router.query;
+  const { selected } = useSelector(state => state.events);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getEvent(slug));
+  }, []);
+
   return (
     <Layout>
       <div>
-        <ul className="breadcrumb">
-          <li>
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">Events</a>
-          </li>
-          <li>
-            <a href="#">CA After Party</a>
-          </li>
-        </ul>
-        <div className="top-bar">
-          <div
-            className="cover-img"
-            style={{
-              backgroundImage: `url(https://demo.gloriathemes.com/eventchamp/demo/wp-content/themes/eventchamp/include/assets/img/breadcrumbs-bg.jpg)`
-            }}
-          ></div>
-        </div>
-        <div className="container">
-          <div className="info">
-            <h1 className="title"> CA After Party </h1>
-            <div className="extra-details">
-              <div className="date">
-                {' '}
-                <MdDateRange color={'var(--color-primary)'} size={20} />{' '}
-                <span>February 22, 2020</span>
-              </div>
-              <div className="place">
-                <FiMapPin color={'var(--color-primary)'} size={20} />
-                <span>119 L.P. Leviste Street</span>{' '}
-              </div>
+        {selected && (
+          <>
+            <ul className="breadcrumb">
+              <li>
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#">Events</a>
+              </li>
+              <li>
+                <a href="#">{selected.name}</a>
+              </li>
+            </ul>
+            <div className="top-bar">
+              <div
+                className="cover-img"
+                style={{
+                  backgroundImage: `url(${selected.imageURL})`
+                }}
+              ></div>
             </div>
-            <div className="desc">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. In
-              perspiciatis omnis libero temporibus expedita minus voluptas!
-              Labore molestiae atque, alias, ut, officiis rerum omnis autem
-              doloremque fuga inventore voluptatem tempore.
+            <div className="container">
+              <div className="info">
+                <h1 className="title"> {selected.name}</h1>
+                <div className="extra-details">
+                  <div className="date">
+                    {' '}
+                    <MdDateRange
+                      color={'var(--color-primary)'}
+                      size={20}
+                    />{' '}
+                    <span>February 22, 2020</span>
+                  </div>
+                  <div className="place">
+                    <FiMapPin color={'var(--color-primary)'} size={20} />
+                    <span>{selected.location.formattedAddress}</span>{' '}
+                  </div>
+                </div>
+                <div className="desc">{selected.description}</div>
+              </div>
+              <EventTags />
+              <EventAction />
             </div>
-          </div>
-
-          <EventTags />
-          <EventAction />
-          <div className="heading">Attendees (8)</div>
-        </div>
-        <EventAttendees />
+            <div className="heading">
+              Attendees ({selected.attendees.length})
+            </div>
+            <EventAttendees attendees={selected.attendees} />
+          </>
+        )}
       </div>
       <style jsx>{`
         .breadcrumb {
@@ -77,7 +87,7 @@ const Events = () => {
         }
 
         .container {
-          padding: 1.5rem;
+          padding: 1.5rem 1.5rem 0 1.5rem;
         }
 
         .info {
@@ -119,6 +129,7 @@ const Events = () => {
 
         .extra-details span {
           padding: 0 0.5rem;
+          flex: 1;
         }
 
         .top-bar {

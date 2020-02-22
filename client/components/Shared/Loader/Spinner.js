@@ -16,10 +16,10 @@ const Spinner = ({ color, size }) => {
           font-size: 10px;
           position: relative;
           text-indent: -9999em;
-          border-top: 0.4em solid rgba(255, 255, 255, 0.5);
-          border-right: 0.4em solid rgba(255, 255, 255, 0.5);
-          border-bottom: 0.4em solid rgba(255, 255, 255, 0.5);
-          border-left: 0.4em solid ${color};
+          border-top: 0.3em solid rgba(255, 255, 255, 0.5);
+          border-right: 0.3em solid rgba(255, 255, 255, 0.5);
+          border-bottom: 0.3em solid rgba(255, 255, 255, 0.5);
+          border-left: 0.3em solid ${color};
           -webkit-transform: translateZ(0);
           -ms-transform: translateZ(0);
           transform: translateZ(0);

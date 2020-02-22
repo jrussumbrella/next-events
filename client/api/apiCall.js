@@ -39,3 +39,23 @@ export const fetchGroups = async () => {
     throw error.response.data.error;
   }
 };
+
+export const fetchEvents = async () => {
+  try {
+    const payload = { params: { limit: 10 } };
+    const { data } = await axios.get(`${API_URL}/events`, payload);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+export const fetchEvent = async eventId => {
+  try {
+    const { data } = await axios.get(`${API_URL}/events/${eventId}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error.response.data.error;
+  }
+};

@@ -7,40 +7,43 @@ const EventList = ({ events }) => {
   return (
     <div>
       <div className="events">
-        <div className="event-list">
-          <div className="event-card">
-            <Link href={`/events/[slug]`} as={`/events/ca-after-party`}>
-              <a className="link">
-                <div className="img-wrapper">
-                  <img
-                    src={`https://demo.gloriathemes.com/eventchamp/demo/wp-content/uploads/2018/11/event-12-952x579.jpg`}
-                    alt=""
-                  />
-                </div>
-                <div className="info">
-                  <div className="name">CA After Party</div>
-                  <div className="location">
-                    <FiMapPin color={`var(--color-primary)`} size={18} />{' '}
-                    <span className="text"> Manila, Ph</span>
+        {events.map(event => (
+          <div className="event-list" key={event._id}>
+            <div className="event-card">
+              <Link href={`/events/[slug]`} as={`/events/${event._id}`}>
+                <a className="link">
+                  <div className="img-wrapper">
+                    <img src={event.imageURL} alt={event.name} />
                   </div>
-                  <div className="date">
-                    <MdDateRange color={`var(--color-primary)`} size={18} />{' '}
-                    <span className="text">February 14, 2019, 9:00 am</span>
+                  <div className="info">
+                    <div className="name">{event.name}</div>
+                    <div className="location">
+                      <FiMapPin color={`var(--color-primary)`} size={18} />{' '}
+                      <span className="text">{event.location.city}</span>
+                    </div>
+                    <div className="date">
+                      <MdDateRange color={`var(--color-primary)`} size={18} />{' '}
+                      <span className="text">February 14, 2019, 9:00 am</span>
+                    </div>
+                    <div className="bottom">
+                      <div className="attende-text">
+                        {' '}
+                        {event.attendees.length} attendees{' '}
+                      </div>
+                    </div>
                   </div>
-                  <div className="bottom">
-                    <div className="attende-text"> 15 attendees </div>
-                  </div>
-                </div>
-              </a>
-            </Link>
+                </a>
+              </Link>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
       <style jsx>
         {`
           .events {
             margin: 2rem 0;
             display: grid;
+            grid-gap: 2rem;
           }
 
           .event-card {
@@ -86,7 +89,8 @@ const EventList = ({ events }) => {
           }
 
           .text {
-            padding-left: 0.5rem;
+            padding-left: 0.6rem;
+            flex: 1;
           }
 
           .bottom {

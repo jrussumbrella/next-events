@@ -1,29 +1,34 @@
 import React from 'react';
 
-const EventAttendees = () => {
+const EventAttendees = ({ attendees }) => {
   return (
     <div>
-      <ul className="attendees">
-        {[...Array(5)].map(arr => (
-          <li className="list" key={arr}>
-            <div className="inner">
-              <a href="#" className="link">
-                <div className="wrapper">
-                  <img
-                    className="avatar"
-                    src="https://secure.meetupstatic.com/photos/member/e/6/c/b/member_243779083.jpeg"
-                    alt=""
-                  />
-                  <div className="info">
-                    <div className="name">Alexander</div>
-                    <div className="label">Member</div>
+      {attendees.length > 0 ? (
+        <ul className="attendees">
+          {attendees.map(attendee => (
+            <li className="list" key={attendee._id}>
+              <div className="inner">
+                <a href="#" className="link">
+                  <div className="wrapper">
+                    <img
+                      className="avatar"
+                      src="https://secure.meetupstatic.com/photos/member/e/6/c/b/member_243779083.jpeg"
+                      alt=""
+                    />
+                    <div className="info">
+                      <div className="name">Alexander</div>
+                      <div className="label">Member</div>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </div>
-          </li>
-        ))}
-      </ul>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="msg"> No atendees yet. </div>
+      )}
+
       <style jsx>{`
         .attendees {
           display: flex;
@@ -75,6 +80,12 @@ const EventAttendees = () => {
 
         .wrapper .label {
           color: var(--color-gray);
+        }
+
+        .msg {
+          text-align: center;
+          font-size: 1.8rem;
+          padding: 1rem 0;
         }
       `}</style>
     </div>
