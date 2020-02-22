@@ -16,7 +16,7 @@ const Sidebar = ({ open, handleClick }, ref) => {
 
   const handleCreateEvent = () => {
     if (user) {
-      Router.push('/create-event');
+      Router.push('/group/create');
     } else {
       Router.push('/login');
     }
@@ -26,14 +26,6 @@ const Sidebar = ({ open, handleClick }, ref) => {
     <>
       <div ref={ref} className={`sidebar ${open ? 'sidebar--open' : ''}`}>
         <ul className="sidebar-list">
-          <li>
-            <Button
-              type="button"
-              title="Create an Event"
-              onClick={handleCreateEvent}
-              size={1.8}
-            />
-          </li>
           {!user ? (
             <>
               <li onClick={handleClick}>
@@ -78,6 +70,14 @@ const Sidebar = ({ open, handleClick }, ref) => {
               </li>
             </>
           )}
+          <li>
+            <Button
+              type="button"
+              title="Create a group"
+              onClick={handleCreateEvent}
+              size={1.8}
+            />
+          </li>
         </ul>
       </div>
       <style jsx>{`

@@ -4,8 +4,10 @@ import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
 import { EventAttendees, EventAction, EventTags } from '../../components/Event';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEvent } from '../../store/events/eventsAction';
+import { getEvent, clearSelectedEvent } from '../../store/events/eventsAction';
 import Layout from '../../components/Layout';
+import EventGroup from '../../components/Event/EventGroup';
+import EventMap from '../../components/Event/EventMap';
 
 const Events = () => {
   const router = useRouter();
@@ -15,6 +17,7 @@ const Events = () => {
 
   useEffect(() => {
     dispatch(getEvent(slug));
+    return () => dispatch(clearSelectedEvent());
   }, []);
 
   return (
@@ -43,7 +46,10 @@ const Events = () => {
             </div>
             <div className="container">
               <div className="info">
-                <h1 className="title"> {selected.name}</h1>
+                <div className="top">
+                  <h1 className="title"> {selected.name}</h1>
+                  {selected.isFree ? <span>FREE</span> : <span>P200</span>}
+                </div>
                 <div className="extra-details">
                   <div className="date">
                     {' '}
@@ -63,6 +69,8 @@ const Events = () => {
               <EventTags />
               <EventAction />
             </div>
+            <EventMap coordinates={selected.location.coordinates} />
+            <EventGroup />
             <div className="heading">
               Attendees ({selected.attendees.length})
             </div>
@@ -101,6 +109,17 @@ const Events = () => {
           padding: 1.5rem 2rem;
         }
 
+        .top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .top span {
+          font-size: 2.5rem;
+          color: var(--color-primary);
+        }
+
         .desc {
           font-size: 1.6rem;
           color: #555555;
@@ -109,7 +128,7 @@ const Events = () => {
 
         .info .title {
           font-size: 2.5rem;
-          margin-bottom: 0;
+          margin: 0;
         }
 
         .extra-details {

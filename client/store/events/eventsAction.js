@@ -1,7 +1,8 @@
 import {
   FETCH_EVENTS_SUCCESS,
   FETCH_SELECTED_EVENT,
-  TOGGLE_JOIN_EVENT
+  TOGGLE_JOIN_EVENT,
+  CLEAR_SELECTED_EVENT
 } from './eventsType';
 import * as apiCall from '../../api/apiCall';
 
@@ -21,6 +22,10 @@ export const getEvent = eventId => async dispatch => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const clearSelectedEvent = () => dispatch => {
+  dispatch({ type: CLEAR_SELECTED_EVENT });
 };
 
 export const toggleAttend = eventId => async (dispatch, getState) => {
