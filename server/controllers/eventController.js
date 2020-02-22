@@ -69,7 +69,7 @@ exports.createEvent = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: event });
 });
 
-exports.deleteEVent = asyncHandler(async (req, res) => {
+exports.deleteEVent = asyncHandler(async (req, res, next) => {
   let event = await Event.findById(req.params.id);
 
   if (!event) return next(new ErrorResponse(`Event not found`, 404));
@@ -88,7 +88,7 @@ exports.deleteEVent = asyncHandler(async (req, res) => {
   res.status(200).json({ success: true, data: {} });
 });
 
-exports.updateEvent = asyncHandler(async (req, res) => {
+exports.updateEvent = asyncHandler(async (req, res, next) => {
   let event = await Event.findById(req.params.id);
 
   if (!event) return next(new ErrorResponse(`Event not found`, 404));

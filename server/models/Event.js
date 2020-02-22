@@ -46,6 +46,10 @@ const EventSchema = mongoose.Schema(
     price: {
       type: Number
     },
+    date: {
+      type: Date,
+      required: [true, 'Date is Required']
+    },
     attendees: [
       {
         attendee: {
