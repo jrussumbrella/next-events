@@ -5,6 +5,7 @@ import store from '../store';
 import { parseCookies, destroyCookie } from 'nookies';
 import { setUser } from '../store/auth/authAction';
 import { redirectUser } from '../utils/auth';
+import '../public/css/normalize.css';
 
 const MyApp = ({ Component, pageProps, store }) => {
   return (
