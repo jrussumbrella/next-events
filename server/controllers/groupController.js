@@ -1,10 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Group = require('../models/Group');
-const User = require('../models/User');
-const mongoose = require('mongoose');
-
-const { ObjectId } = mongoose.Types;
+const GroupMember = require('../models/GroupMember');
 
 exports.getGroups = asyncHandler(async (req, res) => {
   res.status(200).json(res.advancedResults);
@@ -49,31 +46,57 @@ exports.updateGroup = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: group });
 });
 
-exports.join = asyncHandler(async (req, res, next) => {
-  let group = await Group.findById(req.params.id);
-
+exports.getMembers = asyncHandler(async (req, res, next) => {
+  const groupId = req.params.groupId;
+  let group = await Group.findById(req.params.groupId);
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
-  // check is user is already joined the group
-  const isJoined = group.members.some(doc =>
-    ObjectId(req.user.id).equals(doc.member)
-  );
+  let groupMembers = await GroupMember.find({ group: groupId }).populate({
+    path: 'user',
+    select: 'name'
+  });
 
-  if (isJoined) {
-    // remove user to group
-    group = await Group.findOneAndUpdate(
-      { _id: group._id },
-      { $pull: { members: { member: req.user.id } } },
-      { new: true }
-    );
+  res.status(200).json({ success: true, data: groupMembers });
+});
+
+exports.addMember = asyncHandler(async (req, res, next) => {
+  const groupId = req.params.groupId;
+  const userId = req.user.id;
+
+  const group = await Group.findById(groupId);
+  if (!group) return next(new ErrorResponse(`Group is not found`, 404));
+
+  let groupMember = await GroupMember.findOne({ group: groupId, user: userId });
+
+  if (!groupMember) {
+    groupMember = await new GroupMember({
+      user: userId,
+      group: groupId
+    }).save();
   } else {
-    // add user to group
-    group = await Group.findOneAndUpdate(
-      { _id: group._id },
-      { $addToSet: { members: { member: req.user.id } } },
-      { new: true }
-    );
+    return next(new ErrorResponse(`You already member to this group`, 404));
   }
 
-  res.status(200).json({ success: true, data: group });
+  res.status(200).json({ success: true, data: groupMember });
+});
+
+exports.removeMember = asyncHandler(async (req, res, next) => {
+  const groupId = req.params.groupId;
+  const userId = req.user.id;
+
+  const group = await Group.findById(groupId);
+  if (!group) return next(new ErrorResponse(`Group is not found`, 404));
+
+  let groupMember = await GroupMember.findOne({ group: groupId, user: userId });
+
+  if (!groupMember) {
+    return next(
+      new ErrorResponse(`Error in leaving group. Please try again`, 404)
+    );
+  } else {
+    await groupMember.remove();
+    groupMember = {};
+  }
+
+  res.status(200).json({ success: true, data: groupMember });
 });

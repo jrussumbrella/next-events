@@ -5,7 +5,9 @@ const {
   createGroup,
   deleteGroup,
   updateGroup,
-  join
+  getMembers,
+  addMember,
+  removeMember
 } = require('../controllers/groupController');
 const { protect } = require('../middleware/auth');
 const Group = require('../models/Group');
@@ -27,6 +29,10 @@ router
   .delete(protect, deleteGroup)
   .patch(protect, updateGroup);
 
-router.route('/:id/join').post(protect, join);
+router
+  .route('/:groupId/members')
+  .get(getMembers)
+  .post(protect, addMember)
+  .delete(protect, removeMember);
 
 module.exports = router;

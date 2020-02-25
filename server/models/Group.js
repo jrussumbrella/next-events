@@ -48,18 +48,12 @@ const GroupSchema = mongoose.Schema(
       required: true
     },
     imageURL: {
-      type: String,
-      default: 'no-cover.jpg'
+      type: String
     },
-    countMembers: Number,
-    members: [
-      {
-        member: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User'
-        }
-      }
-    ]
+    countMembers: {
+      type: Number,
+      default: 0
+    }
   },
   {
     timestamps: true,
@@ -93,16 +87,16 @@ GroupSchema.pre('save', async function(next) {
 
 // Cascade delete events when group is deleted
 GroupSchema.pre('remove', async function(next) {
-  await this.model('Event').deleteMany({ group: this._id });
+  await this.model('Event').remove();
   next();
 });
 
 //Reverse populate with virtuals
-GroupSchema.virtual('events', {
-  ref: 'Event',
-  localField: '_id',
-  foreignField: 'group',
-  justOne: false
-});
+// GroupSchema.virtual('events', {
+//   ref: 'Event',
+//   localField: '_id',
+//   foreignField: 'group',
+//   justOne: false
+// });
 
 module.exports = mongoose.model('Group', GroupSchema);

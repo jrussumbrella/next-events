@@ -50,14 +50,6 @@ const EventSchema = mongoose.Schema(
       type: Date,
       required: [true, 'Date is Required']
     },
-    attendees: [
-      {
-        attendee: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'User'
-        }
-      }
-    ],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -67,7 +59,8 @@ const EventSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Group',
       required: true
-    }
+    },
+    countAttendees: Number
   },
   {
     timestamps: true
