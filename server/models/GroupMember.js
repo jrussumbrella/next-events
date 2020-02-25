@@ -34,6 +34,14 @@ GroupMemberSchema.statics.countMembers = async function(groupId) {
     await Group.findByIdAndUpdate(groupId, { countMembers: stats[0].count });
 };
 
+GroupMemberSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'user',
+    select: 'name'
+  });
+  next();
+});
+
 GroupMemberSchema.post('save', function() {
   this.constructor.countMembers(this.group);
 });

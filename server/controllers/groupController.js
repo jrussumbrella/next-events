@@ -2,9 +2,20 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Group = require('../models/Group');
 const GroupMember = require('../models/GroupMember');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.getGroups = asyncHandler(async (req, res) => {
-  res.status(200).json(res.advancedResults);
+  const features = new APIFeatures(Group.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const groups = await features.query;
+
+  res
+    .status(200)
+    .json({ success: true, data: { groups }, results: groups.length });
 });
 
 exports.getGroup = asyncHandler(async (req, res, next) => {
@@ -22,7 +33,7 @@ exports.createGroup = asyncHandler(async (req, res) => {
 exports.deleteGroup = asyncHandler(async (req, res) => {
   let group = await Group.findById(req.params.id);
   if (!group) return next(new ErrorResponse(`Event not found`, 404));
-  //Make sure user is group owner
+  //Make sure user is group owner and user is not an admin
   if (group.owner.toString() !== req.user.id && req.user.role !== 'admin')
     return next(
       new ErrorResponse(`You are not allowed to delete this group`, 401)
@@ -34,6 +45,7 @@ exports.deleteGroup = asyncHandler(async (req, res) => {
 exports.updateGroup = asyncHandler(async (req, res, next) => {
   let group = await Group.findById(req.params.id);
   if (!group) return next(new ErrorResponse(`Event not found`, 404));
+
   //Make sure user is group owner
   if (group.owner.toString() !== req.user.id && req.user.role !== 'admin')
     return next(
@@ -48,15 +60,23 @@ exports.updateGroup = asyncHandler(async (req, res, next) => {
 
 exports.getMembers = asyncHandler(async (req, res, next) => {
   const groupId = req.params.groupId;
-  let group = await Group.findById(req.params.groupId);
+  let group = await GroupMember.findOne({ group: groupId });
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
-  let groupMembers = await GroupMember.find({ group: groupId }).populate({
-    path: 'user',
-    select: 'name'
-  });
+  const features = new APIFeatures(
+    GroupMember.find({ group: groupId }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
 
-  res.status(200).json({ success: true, data: groupMembers });
+  const members = await features.query;
+
+  res
+    .status(200)
+    .json({ success: true, data: { members }, results: members.length });
 });
 
 exports.addMember = asyncHandler(async (req, res, next) => {
@@ -66,10 +86,10 @@ exports.addMember = asyncHandler(async (req, res, next) => {
   const group = await Group.findById(groupId);
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
-  let groupMember = await GroupMember.findOne({ group: groupId, user: userId });
+  let member = await GroupMember.findOne({ group: groupId, user: userId });
 
-  if (!groupMember) {
-    groupMember = await new GroupMember({
+  if (!member) {
+    member = await new GroupMember({
       user: userId,
       group: groupId
     }).save();
@@ -77,7 +97,7 @@ exports.addMember = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse(`You already member to this group`, 404));
   }
 
-  res.status(200).json({ success: true, data: groupMember });
+  res.status(200).json({ success: true, data: { member } });
 });
 
 exports.removeMember = asyncHandler(async (req, res, next) => {
@@ -87,16 +107,16 @@ exports.removeMember = asyncHandler(async (req, res, next) => {
   const group = await Group.findById(groupId);
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
-  let groupMember = await GroupMember.findOne({ group: groupId, user: userId });
+  let member = await GroupMember.findOne({ group: groupId, user: userId });
 
-  if (!groupMember) {
+  if (!member) {
     return next(
       new ErrorResponse(`Error in leaving group. Please try again`, 404)
     );
   } else {
-    await groupMember.remove();
-    groupMember = {};
+    await member.remove();
+    member = {};
   }
 
-  res.status(200).json({ success: true, data: groupMember });
+  res.status(200).json({ success: true, data: { member } });
 });

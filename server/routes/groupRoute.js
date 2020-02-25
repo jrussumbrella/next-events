@@ -11,7 +11,6 @@ const {
 } = require('../controllers/groupController');
 const { protect } = require('../middleware/auth');
 const Group = require('../models/Group');
-const advancedResults = require('../middleware/advancedResults');
 const eventRoutes = require('./eventRoute');
 
 const router = express.Router({ mergeParams: true });
@@ -20,7 +19,7 @@ router.use('/:groupId/events', eventRoutes);
 
 router
   .route('/')
-  .get(advancedResults(Group, 'events'), getGroups)
+  .get(getGroups)
   .post(protect, createGroup);
 
 router

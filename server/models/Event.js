@@ -60,7 +60,10 @@ const EventSchema = mongoose.Schema(
       ref: 'Group',
       required: true
     },
-    countAttendees: Number
+    countAttendees: {
+      type: Number,
+      default: 0
+    }
   },
   {
     timestamps: true
