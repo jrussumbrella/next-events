@@ -1,22 +1,27 @@
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Event = require('../models/Event');
+const EventAttendee = require('../models/EventAttendee');
 const Group = require('../models/Group');
+const APIFeatures = require('../utils/apiFeatures');
 const mongoose = require('mongoose');
 
-const { ObjectId } = mongoose.Types;
-
 exports.getEvents = asyncHandler(async (req, res) => {
-  if (req.params.groupId) {
-    const events = await Event.find({ group: req.params.groupId });
-    return res.status(200).json({
-      success: true,
-      count: events.length,
-      data: events
-    });
-  } else {
-    res.status(200).json(res.advancedResults);
-  }
+  let filter = {};
+
+  if (req.params.groupId) filter = { group: req.params.groupId };
+
+  const features = new APIFeatures(Event.find(filter), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const events = await features.query;
+
+  res
+    .status(200)
+    .json({ success: true, data: { events }, results: events.length });
 });
 
 exports.getNearbyEvents = asyncHandler(async (req, res, next) => {
@@ -42,7 +47,13 @@ exports.getNearbyEvents = asyncHandler(async (req, res, next) => {
 });
 
 exports.getEvent = asyncHandler(async (req, res, next) => {
-  const event = await Event.findById(req.params.id).populate({
+  const isObjectId = mongoose.isValidObjectId;
+  let query;
+  query = isObjectId(req.params.id)
+    ? Event.findById(req.params.id)
+    : Event.findOne({ slug: req.params.id });
+
+  const event = await query.populate({
     path: 'group',
     select: 'name description'
   });
@@ -110,32 +121,43 @@ exports.updateEvent = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: event });
 });
 
-exports.attendEvent = asyncHandler(async (req, res) => {
-  const { eventId } = req.params;
-  let event = await Event.findById(eventId);
+exports.addAttendee = asyncHandler(async (req, res, next) => {
+  const userId = req.user.id;
+  const eventId = req.params.eventId;
+
+  const event = await Event.findById(eventId);
   if (!event) return next(new ErrorResponse(`Event is not found`, 404));
 
-  // check if user is already attendees
-  const isAttendee = event.attendees.some(doc =>
-    ObjectId(req.user.id).equals(doc.attendee)
-  );
+  let attendee = await EventAttendee.findOne({ user: userId, event: eventId });
+  if (attendee)
+    return next(new ErrorResponse(`You are already join this event`, 400));
 
-  if (isAttendee) {
-    event = await Event.findOneAndUpdate(
-      {
-        _id: event._id
-      },
-      { $pull: { attendees: { attendee: req.user.id } } },
-      { new: true }
+  attendee = await new EventAttendee({ user: userId, event: event._id }).save();
+
+  res.status(200).json({ success: true, data: { attendee } });
+});
+
+exports.removeAttendee = asyncHandler(async (req, res, next) => {
+  const userId = req.user.id;
+  const eventId = req.params.eventId;
+
+  const event = await Event.findById(eventId);
+  if (!event) return next(new ErrorResponse(`Event is not found`, 404));
+
+  let attendee = await EventAttendee.findOne({
+    user: userId,
+    event: event._id
+  });
+
+  if (!attendee)
+    return next(
+      new ErrorResponse(
+        `Error in cancel joining event. Please try again later.`,
+        400
+      )
     );
-  } else {
-    event = await Event.findOneAndUpdate(
-      {
-        _id: event._id
-      },
-      { $addToSet: { attendees: { attendee: req.user.id } } },
-      { new: true }
-    );
-  }
-  res.status(200).json({ success: true, data: event });
+
+  await attendee.remove();
+
+  res.status(200).json({ success: true, data: {} });
 });

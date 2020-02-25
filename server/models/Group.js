@@ -10,6 +10,7 @@ const GroupSchema = mongoose.Schema(
       unique: true,
       trim: true
     },
+    slug: String,
     description: {
       type: String,
       require: [true, 'Description is required'],

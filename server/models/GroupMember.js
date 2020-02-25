@@ -50,4 +50,6 @@ GroupMemberSchema.post('remove', function() {
   this.constructor.countMembers(this.group);
 });
 
+GroupMemberSchema.index({ user: 1, group: 1 }, { unique: true });
+
 module.exports = mongoose.model('GroupMember', GroupMemberSchema);

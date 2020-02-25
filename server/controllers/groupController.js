@@ -3,6 +3,7 @@ const asyncHandler = require('../middleware/async');
 const Group = require('../models/Group');
 const GroupMember = require('../models/GroupMember');
 const APIFeatures = require('../utils/apiFeatures');
+const mongoose = require('mongoose');
 
 exports.getGroups = asyncHandler(async (req, res) => {
   const features = new APIFeatures(Group.find(), req.query)
@@ -19,7 +20,14 @@ exports.getGroups = asyncHandler(async (req, res) => {
 });
 
 exports.getGroup = asyncHandler(async (req, res, next) => {
-  const group = await Group.findById(req.params.id);
+  const isObjectId = mongoose.isValidObjectId;
+
+  let query;
+  query = isObjectId(req.params.id)
+    ? Group.findById(req.params.id)
+    : Group.findOne({ slug: req.params.id });
+
+  const group = await query;
   if (!group) return next(new ErrorResponse(`Group not found`, 404));
   res.status(200).json({ success: true, data: group });
 });
@@ -44,7 +52,7 @@ exports.deleteGroup = asyncHandler(async (req, res) => {
 
 exports.updateGroup = asyncHandler(async (req, res, next) => {
   let group = await Group.findById(req.params.id);
-  if (!group) return next(new ErrorResponse(`Event not found`, 404));
+  if (!group) return next(new ErrorResponse(`Group not found`, 404));
 
   //Make sure user is group owner
   if (group.owner.toString() !== req.user.id && req.user.role !== 'admin')
@@ -73,7 +81,6 @@ exports.getMembers = asyncHandler(async (req, res, next) => {
     .paginate();
 
   const members = await features.query;
-
   res
     .status(200)
     .json({ success: true, data: { members }, results: members.length });
@@ -86,16 +93,15 @@ exports.addMember = asyncHandler(async (req, res, next) => {
   const group = await Group.findById(groupId);
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
-  let member = await GroupMember.findOne({ group: groupId, user: userId });
+  let member = await GroupMember.findOne({ group: group._id, user: userId });
 
-  if (!member) {
-    member = await new GroupMember({
-      user: userId,
-      group: groupId
-    }).save();
-  } else {
+  if (member)
     return next(new ErrorResponse(`You already member to this group`, 404));
-  }
+
+  member = await new GroupMember({
+    user: userId,
+    group: group._id
+  }).save();
 
   res.status(200).json({ success: true, data: { member } });
 });
@@ -107,16 +113,14 @@ exports.removeMember = asyncHandler(async (req, res, next) => {
   const group = await Group.findById(groupId);
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
-  let member = await GroupMember.findOne({ group: groupId, user: userId });
+  const member = await GroupMember.findOne({ group: group._id, user: userId });
 
-  if (!member) {
+  if (!member)
     return next(
       new ErrorResponse(`Error in leaving group. Please try again`, 404)
     );
-  } else {
-    await member.remove();
-    member = {};
-  }
 
-  res.status(200).json({ success: true, data: { member } });
+  await member.remove();
+
+  res.status(200).json({ success: true, data: {} });
 });
