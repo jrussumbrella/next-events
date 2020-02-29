@@ -2,7 +2,9 @@ import {
   FETCH_GROUPS_SUCCESS,
   FETCH_GROUP_SUCCESS,
   INCREMENT_COUNT_MEMBER,
-  DECREMENT_COUNT_MEMBER
+  DECREMENT_COUNT_MEMBER,
+  FETCH_GROUP_EVENTS_SUCCESS,
+  FETCH_GROUP_MEMBERS_SUCCESS
 } from './groupsType';
 import * as apiCall from '../../api/apiCall';
 
@@ -30,4 +32,22 @@ export const incrementMemberCount = () => dispatch => {
 
 export const decrementMemberCount = () => dispatch => {
   dispatch({ type: DECREMENT_COUNT_MEMBER });
+};
+
+export const getGroupEvents = id => async dispatch => {
+  try {
+    const { data } = await apiCall.fetchGroupEvents(id);
+    dispatch({ type: FETCH_GROUP_EVENTS_SUCCESS, payload: data.events });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getGroupMembers = id => async dispatch => {
+  try {
+    const { data } = await apiCall.fetchGroupMembers(id);
+    dispatch({ type: FETCH_GROUP_MEMBERS_SUCCESS, payload: data.members });
+  } catch (error) {
+    console.log(error);
+  }
 };

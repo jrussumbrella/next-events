@@ -49,6 +49,24 @@ export const fetchGroup = async slug => {
   }
 };
 
+export const fetchGroupEvents = async id => {
+  try {
+    const { data } = await axios.get(`${API_URL}/groups/${id}/events`);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+export const fetchGroupMembers = async id => {
+  try {
+    const { data } = await axios.get(`${API_URL}/groups/${id}/members`);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
 export const joinGroup = async (groupId, token) => {
   try {
     const payload = { headers: { authorization: `Bearer ${token}` } };

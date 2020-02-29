@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, clearError } from '../../store/auth/authAction';
+import { login, clearError } from '../../store/user/userAction';
 import Button from '../Shared/Button';
 import { Alert } from '../Shared/Notif';
 

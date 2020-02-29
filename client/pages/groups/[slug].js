@@ -39,9 +39,16 @@ const Group = () => {
             activeTab={activeTab}
             onTabChange={handleTabChange}
           />
-          {activeTab === 'Events' ? <GroupEvents /> : <GroupMembers />}
+          <div className="container">
+            {activeTab === 'Events' ? <GroupEvents /> : <GroupMembers />}
+          </div>
         </div>
       )}
+      <style jsx>{`
+        .container {
+          padding: 0 2rem;
+        }
+      `}</style>
     </Layout>
   );
 };

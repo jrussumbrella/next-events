@@ -68,7 +68,7 @@ exports.updateGroup = asyncHandler(async (req, res, next) => {
 
 exports.getMembers = asyncHandler(async (req, res, next) => {
   const groupId = req.params.groupId;
-  let group = await GroupMember.findOne({ group: groupId });
+  let group = await Group.findById(groupId);
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
   const features = new APIFeatures(

@@ -8,7 +8,7 @@ const EventList = ({ events }) => {
   return (
     <div>
       {events.length === 0 ? (
-        <div> No Events yet. </div>
+        <div className="msg"> No Events yet. </div>
       ) : (
         <div className="events">
           {events.map(event => (
@@ -23,7 +23,7 @@ const EventList = ({ events }) => {
                       <div className="name">{event.name}</div>
                       <div className="location">
                         <FiMapPin color={`var(--color-primary)`} size={18} />{' '}
-                        <span className="text">{event.location.city}</span>
+                        <span className="text">{event.location?.city}</span>
                       </div>
                       <div className="date">
                         <MdDateRange color={`var(--color-primary)`} size={18} />{' '}
@@ -106,6 +106,12 @@ const EventList = ({ events }) => {
 
           .attende-text {
             color: var(--color-gray);
+          }
+
+          .msg {
+            text-align: center;
+            font-size: 1.8rem;
+            padding: 2rem 0;
           }
         `}
       </style>
