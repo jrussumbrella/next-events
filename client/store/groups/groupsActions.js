@@ -1,4 +1,9 @@
-import { FETCH_GROUPS_SUCCESS, FETCH_GROUP_SUCCESS } from './groupsType';
+import {
+  FETCH_GROUPS_SUCCESS,
+  FETCH_GROUP_SUCCESS,
+  INCREMENT_COUNT_MEMBER,
+  DECREMENT_COUNT_MEMBER
+} from './groupsType';
 import * as apiCall from '../../api/apiCall';
 
 export const getGroups = () => async dispatch => {
@@ -17,4 +22,12 @@ export const getGroup = slug => async dispatch => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const incrementMemberCount = () => dispatch => {
+  dispatch({ type: INCREMENT_COUNT_MEMBER });
+};
+
+export const decrementMemberCount = () => dispatch => {
+  dispatch({ type: DECREMENT_COUNT_MEMBER });
 };

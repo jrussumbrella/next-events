@@ -5,7 +5,7 @@ import {
   LOGOUT_USER,
   LEAVE_GROUP_SUCCESS,
   JOIN_GROUP_SUCCESS
-} from '../auth/authTypes';
+} from './userTypes';
 import * as apiCall from '../../api/apiCall';
 import Router from 'next/router';
 import { setCookie, destroyCookie } from 'nookies';

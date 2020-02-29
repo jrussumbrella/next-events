@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import auth from './auth/authReducer';
+import auth from './user/userReducer';
 import groups from './groups/groupsReducer';
 import events from './events/eventsReducer';
 

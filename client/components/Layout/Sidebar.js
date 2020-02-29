@@ -2,7 +2,7 @@ import React, { forwardRef, memo } from 'react';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../Shared/Button';
-import { logout } from '../../store/auth/authAction';
+import { logout } from '../../store/user/userAction';
 import Router from 'next/router';
 
 const Sidebar = ({ open, handleClick }, ref) => {

@@ -28,7 +28,7 @@ export default () => {
             margin: 0;
             padding: 0;
             font-size: 1.5rem;
-            color: --var(--color-light-dark);
+            color: var(--color-light-dark);
           }
           a {
             text-decoration: none;

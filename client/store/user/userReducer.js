@@ -5,7 +5,7 @@ import {
   LOGOUT_USER,
   JOIN_GROUP_SUCCESS,
   LEAVE_GROUP_SUCCESS
-} from './authTypes';
+} from './userTypes';
 const initState = {
   user: null,
   loading: true,
@@ -13,6 +13,7 @@ const initState = {
   groups: [],
   events: []
 };
+
 export default (state = initState, action) => {
   switch (action.type) {
     case SET_USER_SUCCESS:

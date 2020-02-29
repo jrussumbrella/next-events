@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import store from '../store';
 import { parseCookies, destroyCookie } from 'nookies';
-import { setUser } from '../store/auth/authAction';
+import { setUser } from '../store/user/userAction';
 import { redirectUser } from '../utils/auth';
 import '../public/css/normalize.css';
 
