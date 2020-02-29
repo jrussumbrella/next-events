@@ -34,7 +34,7 @@ const GroupInfo = ({ group }) => {
               <span className="icon">
                 <MdAccountCircle size={25} />
               </span>
-              <p className="text">Organized by John Doe.</p>
+              <p className="text">Organized by {group.owner.name}</p>
             </li>
           </ul>
         </div>

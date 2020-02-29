@@ -2,7 +2,9 @@ import {
   SET_USER_SUCCESS,
   SET_USER_FAILURE,
   CLEAR_ERROR,
-  LOGOUT_USER
+  LOGOUT_USER,
+  LEAVE_GROUP_SUCCESS,
+  JOIN_GROUP_SUCCESS
 } from '../auth/authTypes';
 import * as apiCall from '../../api/apiCall';
 import Router from 'next/router';
@@ -44,4 +46,23 @@ export const logout = () => async dispatch => {
 
 export const clearError = () => dispatch => {
   dispatch({ type: CLEAR_ERROR });
+};
+
+export const joinGroup = (groupId, token) => async dispatch => {
+  try {
+    const { data } = await apiCall.joinGroup(groupId, token);
+    dispatch({ type: JOIN_GROUP_SUCCESS, payload: data.member.group });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const leaveGroup = (groupId, token) => async dispatch => {
+  try {
+    const { data } = await apiCall.leaveGroup(groupId, token);
+    dispatch({ type: LEAVE_GROUP_SUCCESS, payload: groupId });
+    return data.group;
+  } catch (error) {
+    console.log(error);
+  }
 };

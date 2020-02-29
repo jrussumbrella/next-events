@@ -42,7 +42,9 @@ GroupMemberSchema.statics.toggleUserGroup = async function(groupId, userId) {
   const user = await User.findById(userId);
 
   // check whether group is already in users collection
-  const isGroupExist = user.groups.find(group => group === groupId);
+  const isGroupExist = user.groups.find(
+    group => group.toString() === groupId.toString()
+  );
   if (isGroupExist) {
     await User.findOneAndUpdate(
       { _id: userId },

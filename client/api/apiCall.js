@@ -49,6 +49,33 @@ export const fetchGroup = async slug => {
   }
 };
 
+export const joinGroup = async (groupId, token) => {
+  try {
+    const payload = { headers: { authorization: `Bearer ${token}` } };
+    const { data } = await axios.post(
+      `${API_URL}/groups/${groupId}/members`,
+      {},
+      payload
+    );
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+export const leaveGroup = async (groupId, token) => {
+  try {
+    const payload = { headers: { authorization: `Bearer ${token}` } };
+    const { data } = await axios.delete(
+      `${API_URL}/groups/${groupId}/members`,
+      payload
+    );
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
 export const fetchEvents = async () => {
   try {
     const payload = { params: { limit: 10 } };

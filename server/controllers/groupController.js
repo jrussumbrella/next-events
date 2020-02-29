@@ -27,7 +27,7 @@ exports.getGroup = asyncHandler(async (req, res, next) => {
     ? Group.findById(req.params.id)
     : Group.findOne({ slug: req.params.id });
 
-  const group = await query;
+  const group = await query.populate({ path: 'owner', select: 'name' });
   if (!group) return next(new ErrorResponse(`Group not found`, 404));
   res.status(200).json({ success: true, data: group });
 });
