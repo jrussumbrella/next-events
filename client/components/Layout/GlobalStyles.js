@@ -10,12 +10,14 @@ export default () => {
           *::after {
             box-sizing: inherit;
           }
+
           html {
             font-size: 62.5%;
             box-sizing: border-box;
             --color-primary: #ee5253;
             --color-gray: #777777;
             --color-dark: #222;
+            --color-light-dark: #484848;
             --color-light-gray: #efefef;
           }
 
@@ -26,6 +28,7 @@ export default () => {
             margin: 0;
             padding: 0;
             font-size: 1.5rem;
+            color: --var(--color-light-dark);
           }
           a {
             text-decoration: none;

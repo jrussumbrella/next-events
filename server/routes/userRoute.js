@@ -9,13 +9,12 @@ const {
   getJoinedGroups
 } = require('../controllers/userController');
 const User = require('../models/User');
-const advancedResults = require('../middleware/advancedResults');
 const router = express.Router();
 const { protect, authorize } = require('../middleware/auth');
 
 router
   .route('/')
-  .get(protect, authorize('admin'), advancedResults(User), getUsers)
+  .get(protect, authorize('admin'), getUsers)
   .post(protect, authorize('admin'), createUser);
 
 router

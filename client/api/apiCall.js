@@ -40,6 +40,15 @@ export const fetchGroups = async () => {
   }
 };
 
+export const fetchGroup = async slug => {
+  try {
+    const { data } = await axios.get(`${API_URL}/groups/${slug}`);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
 export const fetchEvents = async () => {
   try {
     const payload = { params: { limit: 10 } };

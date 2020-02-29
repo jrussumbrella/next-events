@@ -9,7 +9,7 @@ const {
   addMember,
   removeMember
 } = require('../controllers/groupController');
-const { protect } = require('../middleware/auth');
+const { protect, hasUser } = require('../middleware/auth');
 const Group = require('../models/Group');
 const eventRoutes = require('./eventRoute');
 

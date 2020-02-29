@@ -5,37 +5,49 @@ import Link from 'next/link';
 const GroupList = ({ groups }) => {
   return (
     <div>
-      <div className="events">
-        <div className="event-list">
-          <div className="event-card">
-            <Link href="/">
-              <a className="link">
-                <div className="img-wrapper">
-                  <img
-                    src={`https://secure.meetupstatic.com/photos/event/9/0/e/5/600_454117093.jpeg`}
-                    alt=""
-                  />
-                </div>
-                <div className="info">
-                  <div className="name">CA After Party</div>
-                  <div className="location">
-                    <FiMapPin color={`var(--color-primary)`} size={18} />
-                    <span className="text"> Manila, Ph</span>
-                  </div>
-                  <div className="bottom">
-                    <div className="attende-text"> 15 Members </div>
-                  </div>
-                </div>
-              </a>
-            </Link>
-          </div>
+      {groups.length > 0 ? (
+        <div className="events">
+          {groups.map(group => (
+            <div className="event-list" key={group._id}>
+              <div className="event-card">
+                <Link href={`/groups/[slug]`} as={`/groups/${group.slug}`}>
+                  <a className="link">
+                    <div className="img-wrapper">
+                      <img src={group.imageURL} alt={group.name} />
+                    </div>
+                    <div className="info">
+                      <div className="name">{group.name}</div>
+                      <div className="location">
+                        <FiMapPin color={`var(--color-primary)`} size={18} />
+                        <span className="text">
+                          {group.location.city} {group.location.country}
+                        </span>
+                      </div>
+                      <div className="bottom">
+                        <div className="attende-text">
+                          {' '}
+                          {group.countMembers} Members{' '}
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      ) : (
+        <div> No groups yet.</div>
+      )}
       <style jsx>
         {`
           .events {
             margin: 2rem 0;
             display: grid;
+          }
+
+          .event-list {
+            margin-bottom: 2rem;
           }
 
           .event-card {
@@ -49,6 +61,7 @@ const GroupList = ({ groups }) => {
             padding-bottom: 56.25%;
             width: 100%;
             position: relative;
+            background-color: var(--color-gray);
           }
 
           .link {

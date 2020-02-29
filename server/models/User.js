@@ -38,10 +38,8 @@ const UserSchema = mongoose.Schema(
     resetPasswordExpire: Date,
     groups: [
       {
-        group: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Group'
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
       }
     ]
   },
@@ -71,7 +69,7 @@ UserSchema.methods.matchPassword = async function(passwordInput) {
   return await bcrypt.compare(passwordInput, this.password);
 };
 
-//generate and hash forgot password token
+// generate and hash forgot password token
 UserSchema.methods.getResetPasswordToken = async function() {
   // generate token
   const resetToken = crypto.randomBytes(20).toString('hex');

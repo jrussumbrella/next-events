@@ -10,6 +10,7 @@ import { getEvents } from '../store/events/eventsAction';
 
 const Home = () => {
   const { groups, events } = useSelector(state => state);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const Home = () => {
           <Button type="button" title="View All Events" />
         </div>
         <div className="page-heading">Most Popular Groups</div>
-        <GroupList />
+        <GroupList groups={groups.mostPopular} />
         <div className="view-all-container">
           <Button type="button" title="View All Groups" />
         </div>

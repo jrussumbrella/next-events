@@ -7,40 +7,44 @@ import { formatDate, formatTime } from '../../../utils/formatDate';
 const EventList = ({ events }) => {
   return (
     <div>
-      <div className="events">
-        {events.map(event => (
-          <div className="event-list" key={event._id}>
-            <div className="event-card">
-              <Link href={`/events/[slug]`} as={`/events/${event._id}`}>
-                <a className="link">
-                  <div className="img-wrapper">
-                    <img src={event.imageURL} alt={event.name} />
-                  </div>
-                  <div className="info">
-                    <div className="name">{event.name}</div>
-                    <div className="location">
-                      <FiMapPin color={`var(--color-primary)`} size={18} />{' '}
-                      <span className="text">{event.location.city}</span>
+      {events.length === 0 ? (
+        <div> No Events yet. </div>
+      ) : (
+        <div className="events">
+          {events.map(event => (
+            <div className="event-list" key={event._id}>
+              <div className="event-card">
+                <Link href={`/events/[slug]`} as={`/events/${event._id}`}>
+                  <a className="link">
+                    <div className="img-wrapper">
+                      <img src={event.imageURL} alt={event.name} />
                     </div>
-                    <div className="date">
-                      <MdDateRange color={`var(--color-primary)`} size={18} />{' '}
-                      <span className="text">
-                        {formatDate(event.date)} at {formatTime(event.date)}
-                      </span>
-                    </div>
-                    <div className="bottom">
-                      <div className="attende-text">
-                        {' '}
-                        {event.attendees.length} attendees{' '}
+                    <div className="info">
+                      <div className="name">{event.name}</div>
+                      <div className="location">
+                        <FiMapPin color={`var(--color-primary)`} size={18} />{' '}
+                        <span className="text">{event.location.city}</span>
                       </div>
+                      <div className="date">
+                        <MdDateRange color={`var(--color-primary)`} size={18} />{' '}
+                        <span className="text">
+                          {formatDate(event.date)} at {formatTime(event.date)}
+                        </span>
+                      </div>
+                      {/* <div className="bottom">
+                        <div className="attende-text">
+                          {' '}
+                          {event.attendees.length} attendees{' '}
+                        </div>
+                      </div> */}
                     </div>
-                  </div>
-                </a>
-              </Link>
+                  </a>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
       <style jsx>
         {`
           .events {

@@ -67,14 +67,14 @@ const Events = () => {
                 <div className="desc">{selected.description}</div>
               </div>
               <EventTags />
-              <EventAction />
+              {/* <EventAction /> */}
             </div>
-            <EventMap coordinates={selected.location.coordinates} />
+            {/* <EventMap coordinates={selected.location.coordinates} /> */}
             <EventGroup />
-            <div className="heading">
+            {/* <div className="heading">
               Attendees ({selected.attendees.length})
             </div>
-            <EventAttendees attendees={selected.attendees} />
+            <EventAttendees attendees={selected.attendees} /> */}
           </>
         )}
       </div>

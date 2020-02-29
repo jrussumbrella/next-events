@@ -20,7 +20,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res
     .status(statusCode)
-    .cookie('token', token, options)
+    // .cookie('token', token, options)
     .json({ success: true, token, data: userData });
 };
 
@@ -151,7 +151,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
 
 exports.logout = asyncHandler(async (req, res, next) => {
   res.cookie('token', 'none', {
-    expires: new Date(Date.now() + 10 * 1000),
+    expires: new Date(Date.now() + 1 * 1000),
     httpOnly: true
   });
   res.status(200).json({ success: true, data: {} });

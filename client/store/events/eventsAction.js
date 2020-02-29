@@ -9,7 +9,7 @@ import * as apiCall from '../../api/apiCall';
 export const getEvents = () => async dispatch => {
   try {
     const { data } = await apiCall.fetchEvents();
-    dispatch({ type: FETCH_EVENTS_SUCCESS, payload: data });
+    dispatch({ type: FETCH_EVENTS_SUCCESS, payload: data.events });
   } catch (error) {
     console.log(error);
   }
