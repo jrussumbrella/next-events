@@ -2,10 +2,7 @@ import React from 'react';
 import Button from '../Shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { joinGroup, leaveGroup } from '../../store/user/userAction';
-import {
-  incrementMemberCount,
-  decrementMemberCount
-} from '../../store/groups/groupsActions';
+import { removeMember, addMember } from '../../store/groups/groupsActions';
 
 const GroupAction = () => {
   const { groups, auth } = useSelector(state => state);
@@ -21,10 +18,10 @@ const GroupAction = () => {
 
     if (type === 'join') {
       await dispatch(joinGroup(group._id, token));
-      dispatch(incrementMemberCount());
+      dispatch(addMember());
     } else {
       dispatch(leaveGroup(group._id, token));
-      dispatch(decrementMemberCount());
+      dispatch(removeMember());
     }
   };
 

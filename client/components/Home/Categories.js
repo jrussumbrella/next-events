@@ -34,16 +34,56 @@ const Categories = () => {
             </a>
           </div>
         </li>
+        <li>
+          <div className="inner">
+            <a href="#" className="link">
+              <div>
+                <div
+                  className="cover"
+                  style={{
+                    backgroundImage: `url(https://secure.meetupstatic.com/photos/event/2/e/a/7/600_450131943.jpeg)`
+                  }}
+                ></div>
+                <p className="title"> Tech </p>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div className="inner">
+            <a href="#" className="link">
+              <div>
+                <div
+                  className="cover"
+                  style={{
+                    backgroundImage: `url(https://secure.meetupstatic.com/photos/event/2/e/a/7/600_450131943.jpeg)`
+                  }}
+                ></div>
+                <p className="title"> Tech </p>
+              </div>
+            </a>
+          </div>
+        </li>
       </ul>
       <style jsx>{`
+        ::-webkit-scrollbar {
+          display: none;
+        }
         .categories {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          grid-gap: 2rem;
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
           padding: 1rem 0;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .categories li {
+          width: 15rem;
+          flex: 0 0 auto;
         }
 
         .categories .inner {
+          padding-right: 1.5rem;
         }
 
         .cover {
@@ -61,6 +101,7 @@ const Categories = () => {
           font-size: 1.8rem;
           padding-top: 1rem;
           font-weight: 600;
+          text-align: center;
         }
       `}</style>
     </>

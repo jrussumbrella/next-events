@@ -1,8 +1,8 @@
 import {
   FETCH_GROUPS_SUCCESS,
   FETCH_GROUP_SUCCESS,
-  INCREMENT_COUNT_MEMBER,
-  DECREMENT_COUNT_MEMBER,
+  REMOVE_MEMBER,
+  ADD_MEMBER,
   FETCH_GROUP_EVENTS_SUCCESS,
   FETCH_GROUP_MEMBERS_SUCCESS
 } from './groupsType';
@@ -20,12 +20,13 @@ export default (state = initState, action) => {
       return { ...state, mostPopular: action.payload };
     case FETCH_GROUP_SUCCESS:
       return { ...state, group: action.payload };
-    case INCREMENT_COUNT_MEMBER:
+    case ADD_MEMBER:
       return {
         ...state,
-        group: { ...state.group, countMembers: state.group.countMembers + 1 }
+        group: { ...state.group, countMembers: state.group.countMembers + 1 },
+        groupMembers: [...state.groupMembers]
       };
-    case DECREMENT_COUNT_MEMBER:
+    case REMOVE_MEMBER:
       return {
         ...state,
         group: { ...state.group, countMembers: state.group.countMembers - 1 }

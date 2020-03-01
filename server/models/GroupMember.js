@@ -33,8 +33,11 @@ GroupMemberSchema.statics.countMembers = async function(groupId) {
     }
   ]);
 
-  if (stats.length > 0)
+  if (stats.length > 0) {
     await Group.findByIdAndUpdate(groupId, { countMembers: stats[0].count });
+  } else {
+    await Group.findByIdAndUpdate(groupId, { countMembers: 0 });
+  }
 };
 
 // executes when user add to group

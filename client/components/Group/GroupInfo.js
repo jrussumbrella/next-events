@@ -20,19 +20,19 @@ const GroupInfo = ({ group }) => {
           <ul className="mini-list">
             <li>
               <span className="icon">
-                <MdPlace size={25} />
+                <MdPlace size={22} />
               </span>
               <p className="text">{group.location.formattedAddress}</p>
             </li>
             <li>
               <span className="icon">
-                <MdSupervisorAccount size={25} />
+                <MdSupervisorAccount size={22} />
               </span>
               <p className="text">{group.countMembers} Members</p>
             </li>
             <li>
               <span className="icon">
-                <MdAccountCircle size={25} />
+                <MdAccountCircle size={22} />
               </span>
               <p className="text">Organized by {group.owner.name}</p>
             </li>
@@ -80,6 +80,7 @@ const GroupInfo = ({ group }) => {
         .mini-list li {
           display: flex;
           align-items: center;
+          height: 3rem;
         }
 
         .mini-list li .icon {
@@ -88,6 +89,7 @@ const GroupInfo = ({ group }) => {
 
         .min-list li .text {
           font-size: 1.7rem;
+          margin: 0;
         }
       `}</style>
     </>

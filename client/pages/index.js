@@ -22,6 +22,8 @@ const Home = () => {
     <Layout>
       <Banner />
       <div className="container">
+        <div className="page-heading"> Categories </div>
+        <Categories />
         <div className="page-heading">Upcoming Events</div>
         <EventList events={events.upcoming} />
         <div className="view-all-container">
@@ -32,8 +34,6 @@ const Home = () => {
         <div className="view-all-container">
           <Button type="button" title="View All Groups" />
         </div>
-        <div className="page-heading"> Categories </div>
-        <Categories />
       </div>
       <style jsx>{`
         .container {

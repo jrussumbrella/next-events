@@ -8,8 +8,8 @@ const GroupMembers = () => {
   const { groupMembers, group } = useSelector(state => state.groups);
 
   useEffect(() => {
-    groupMembers.length === 0 && dispatch(getGroupMembers(group.id));
-  }, []);
+    dispatch(getGroupMembers(group.id));
+  }, [group]);
 
   return (
     <>
@@ -59,6 +59,12 @@ const GroupMembers = () => {
         .date {
           color: var(--color-gray);
           padding-top: 0.5rem;
+        }
+
+        .msg {
+          text-align: center;
+          padding: 2rem 0;
+          font-size: 2rem;
         }
       `}</style>
     </>

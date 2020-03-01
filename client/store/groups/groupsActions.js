@@ -1,8 +1,8 @@
 import {
   FETCH_GROUPS_SUCCESS,
   FETCH_GROUP_SUCCESS,
-  INCREMENT_COUNT_MEMBER,
-  DECREMENT_COUNT_MEMBER,
+  REMOVE_MEMBER,
+  ADD_MEMBER,
   FETCH_GROUP_EVENTS_SUCCESS,
   FETCH_GROUP_MEMBERS_SUCCESS
 } from './groupsType';
@@ -26,12 +26,12 @@ export const getGroup = slug => async dispatch => {
   }
 };
 
-export const incrementMemberCount = () => dispatch => {
-  dispatch({ type: INCREMENT_COUNT_MEMBER });
+export const addMember = user => dispatch => {
+  dispatch({ type: ADD_MEMBER, payload: user });
 };
 
-export const decrementMemberCount = () => dispatch => {
-  dispatch({ type: DECREMENT_COUNT_MEMBER });
+export const removeMember = user => dispatch => {
+  dispatch({ type: REMOVE_MEMBER, payload: user });
 };
 
 export const getGroupEvents = id => async dispatch => {
