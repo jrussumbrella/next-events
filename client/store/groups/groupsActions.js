@@ -1,4 +1,5 @@
 import {
+  FETCH_ALL_GROUPS,
   FETCH_GROUPS_SUCCESS,
   FETCH_GROUP_SUCCESS,
   REMOVE_MEMBER,
@@ -7,6 +8,15 @@ import {
   FETCH_GROUP_MEMBERS_SUCCESS
 } from './groupsType';
 import * as apiCall from '../../api/apiCall';
+
+export const getAllGroups = page => async dispatch => {
+  try {
+    const { data } = await apiCall.fetchGroups(page);
+    dispatch({ type: FETCH_ALL_GROUPS, payload: data.groups });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getGroups = () => async dispatch => {
   try {

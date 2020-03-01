@@ -30,6 +30,16 @@ export const logout = async () => {
   }
 };
 
+export const fetchAllGroups = async page => {
+  try {
+    const payload = { params: { limit: 10, page } };
+    const { data } = await axios.get(`${API_URL}/groups`, payload);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
 export const fetchGroups = async () => {
   try {
     const payload = { params: { limit: 10 } };

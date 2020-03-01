@@ -27,12 +27,12 @@ const Home = () => {
         <div className="page-heading">Upcoming Events</div>
         <EventList events={events.upcoming} />
         <div className="view-all-container">
-          <Button type="button" title="View All Events" />
+          <Button type="button" title="View All Events" href="/find/events" />
         </div>
         <div className="page-heading">Most Popular Groups</div>
         <GroupList groups={groups.mostPopular} />
         <div className="view-all-container">
-          <Button type="button" title="View All Groups" />
+          <Button type="button" title="View All Groups" href="/find/groups" />
         </div>
       </div>
       <style jsx>{`

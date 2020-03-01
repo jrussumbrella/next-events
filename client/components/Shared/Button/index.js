@@ -1,18 +1,37 @@
 import React from 'react';
 import { Spinner } from '../Loader';
+import Link from 'next/link';
 
-const Button = ({ type, title, size, style, onClick, classType, loading }) => {
+const Button = ({
+  type,
+  title,
+  size,
+  style,
+  onClick,
+  classType,
+  loading,
+  href
+}) => {
   return (
     <>
-      <button
-        type={type}
-        className={`btn ${classType}`}
-        style={style}
-        onClick={onClick}
-        disabled={loading}
-      >
-        {loading ? <Spinner size={3} color={`#fff`} /> : title}
-      </button>
+      {href ? (
+        <Link href={href}>
+          <a className={`btn ${classType}`} style={style}>
+            {title}
+          </a>
+        </Link>
+      ) : (
+        <button
+          type={type}
+          className={`btn ${classType}`}
+          style={style}
+          onClick={onClick}
+          disabled={loading}
+        >
+          {loading ? <Spinner size={3} color={`#fff`} /> : title}
+        </button>
+      )}
+
       <style jsx>{`
         .btn {
           border: 1px solid var(--color-primary);
