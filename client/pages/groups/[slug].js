@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import { useRouter } from 'next/router';
 import {
   GroupInfo,
   GroupAction,
@@ -11,25 +10,16 @@ import TabList from '../../components/Shared/Tabs/TabList';
 import { useSelector, useDispatch } from 'react-redux';
 import { getGroup } from '../../store/groups/groupsActions';
 
-const Group = () => {
+const Group = ({ group }) => {
   const [activeTab, setActiveTab] = useState('Events');
-  const router = useRouter();
-  const { slug } = router.query;
-  const name = slug.split('-').join(' ');
   const tabs = ['Events', 'Members'];
-  const dispatch = useDispatch();
-  const { group } = useSelector(state => state.groups);
-
-  useEffect(() => {
-    dispatch(getGroup(slug));
-  }, []);
 
   const handleTabChange = value => {
     setActiveTab(value);
   };
 
   return (
-    <Layout title={`Next Events - ${name}`}>
+    <Layout title={`Next Events - ${group.name}`}>
       {group && (
         <div>
           <GroupInfo group={group} />
@@ -51,6 +41,13 @@ const Group = () => {
       `}</style>
     </Layout>
   );
+};
+
+Group.getInitialProps = async ctx => {
+  const { slug } = ctx.query;
+  await ctx.store.dispatch(getGroup(slug));
+  const { group } = ctx.store.getState().groups;
+  return { group };
 };
 
 export default Group;

@@ -7,11 +7,6 @@ import { getAllGroups } from '../../store/groups/groupsActions';
 const Groups = () => {
   const dispatch = useDispatch();
   const { allGroups } = useSelector(state => state.groups);
-  const page = 1;
-
-  useEffect(() => {
-    dispatch(getAllGroups(page));
-  }, []);
 
   return (
     <Layout>
@@ -25,6 +20,13 @@ const Groups = () => {
       `}</style>
     </Layout>
   );
+};
+
+Groups.getInitialProps = async ctx => {
+  const page = 1;
+  ctx.store.dispatch(getAllGroups(page));
+
+  return {};
 };
 
 export default Groups;
