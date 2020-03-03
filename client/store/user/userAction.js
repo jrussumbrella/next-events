@@ -6,13 +6,13 @@ import {
   LEAVE_GROUP_SUCCESS,
   JOIN_GROUP_SUCCESS
 } from './userTypes';
-import * as apiCall from '../../api/apiCall';
+import * as authAPI from '../../api/authAPI';
 import Router from 'next/router';
 import { setCookie, destroyCookie } from 'nookies';
 
 export const setUser = token => async dispatch => {
   try {
-    const { data } = await apiCall.verifyToken(token);
+    const { data } = await authAPI.verifyToken(token);
     dispatch({ type: SET_USER_SUCCESS, payload: { user: data, token } });
   } catch (error) {
     throw error;
@@ -21,7 +21,7 @@ export const setUser = token => async dispatch => {
 
 export const login = user => async dispatch => {
   try {
-    const { data, token } = await apiCall.login(user);
+    const { data, token } = await authAPI.login(user);
     dispatch({
       type: SET_USER_SUCCESS,
       payload: { user: data, token }
@@ -35,7 +35,7 @@ export const login = user => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    await apiCall.logout();
+    await authAPI.logout();
     dispatch({ type: LOGOUT_USER });
     destroyCookie({}, 'token');
     Router.push('/');
