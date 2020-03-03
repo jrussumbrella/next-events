@@ -20,7 +20,7 @@ const GroupAction = () => {
       await dispatch(joinGroup(group._id, token));
       dispatch(addMember());
     } else {
-      dispatch(leaveGroup(group._id, token));
+      await dispatch(leaveGroup(group._id, token));
       dispatch(removeMember());
     }
   };

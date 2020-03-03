@@ -25,7 +25,6 @@ const Groups = () => {
 Groups.getInitialProps = async ctx => {
   const page = 1;
   ctx.store.dispatch(getAllGroups(page));
-
   return {};
 };
 

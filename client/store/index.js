@@ -3,6 +3,7 @@ import thunkMiddleware from 'redux-thunk';
 import auth from './user/userReducer';
 import groups from './groups/groupsReducer';
 import events from './events/eventsReducer';
+import api from './apiState/apiStateReducer';
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== 'production') {
@@ -12,7 +13,7 @@ const bindMiddleware = middleware => {
   return applyMiddleware(...middleware);
 };
 
-const reducer = combineReducers({ auth, groups, events });
+const reducer = combineReducers({ auth, groups, events, api });
 
 const store = initialState => {
   return createStore(reducer, initialState, bindMiddleware([thunkMiddleware]));
