@@ -41,6 +41,12 @@ const UserSchema = mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Group'
       }
+    ],
+    events: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event'
+      }
     ]
   },
   {

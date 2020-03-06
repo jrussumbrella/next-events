@@ -2,9 +2,19 @@ import {
   FETCH_EVENTS_SUCCESS,
   FETCH_SELECTED_EVENT,
   TOGGLE_JOIN_EVENT,
-  CLEAR_SELECTED_EVENT
+  CLEAR_SELECTED_EVENT,
+  FETCH_ALL_EVENTS
 } from './eventsType';
 import * as eventsAPI from '../../api/eventsAPI';
+
+export const getAllEvents = page => async dispatch => {
+  try {
+    const { data } = await eventsAPI.fetchEvents(page);
+    dispatch({ type: FETCH_ALL_EVENTS, payload: data.events });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const getEvents = () => async dispatch => {
   try {

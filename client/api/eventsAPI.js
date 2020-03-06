@@ -2,6 +2,16 @@ import baseURL from '../utils/baseURL';
 import axios from 'axios';
 const API_URL = `${baseURL}/api/v1`;
 
+export const fetchAllEvents = async page => {
+  try {
+    const payload = { params: { limit: 10, page } };
+    const { data } = await axios.get(`${API_URL}/events`, payload);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
 export const fetchEvents = async () => {
   try {
     const payload = { params: { limit: 10 } };

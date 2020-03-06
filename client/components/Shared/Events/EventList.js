@@ -64,6 +64,7 @@ const EventList = ({ events }) => {
             padding-bottom: 56.25%;
             width: 100%;
             position: relative;
+            background-color: var(--color-gray);
           }
 
           .link {

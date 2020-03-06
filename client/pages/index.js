@@ -11,13 +11,6 @@ import { getEvents } from '../store/events/eventsAction';
 const Home = () => {
   const { groups, events } = useSelector(state => state);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getGroups());
-    dispatch(getEvents());
-  }, []);
-
   return (
     <Layout>
       <Banner />
@@ -27,12 +20,12 @@ const Home = () => {
         <div className="page-heading">Upcoming Events</div>
         <EventList events={events.upcoming} />
         <div className="view-all-container">
-          <Button type="button" title="View All Events" href="/find/events" />
+          <Button type="button" title="See All Events" href="/find/events" />
         </div>
         <div className="page-heading">Most Popular Groups</div>
         <GroupList groups={groups.mostPopular} />
         <div className="view-all-container">
-          <Button type="button" title="View All Groups" href="/find/groups" />
+          <Button type="button" title="See All Groups" href="/find/groups" />
         </div>
       </div>
       <style jsx>{`
@@ -50,6 +43,12 @@ const Home = () => {
       `}</style>
     </Layout>
   );
+};
+
+Home.getInitialProps = async ctx => {
+  await ctx.store.dispatch(getGroups());
+  await ctx.store.dispatch(getEvents());
+  return {};
 };
 
 export default Home;

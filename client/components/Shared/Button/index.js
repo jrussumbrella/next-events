@@ -5,7 +5,7 @@ import Link from 'next/link';
 const Button = ({
   type,
   title,
-  size,
+  size = 1.6,
   style,
   onClick,
   classType,
@@ -16,14 +16,14 @@ const Button = ({
     <>
       {href ? (
         <Link href={href}>
-          <a className={`btn ${classType}`} style={style}>
+          <a className={`btn ${classType || ''}`} style={style}>
             {title}
           </a>
         </Link>
       ) : (
         <button
           type={type}
-          className={`btn ${classType}`}
+          className={`btn ${classType || ''}`}
           style={style}
           onClick={onClick}
           disabled={loading}

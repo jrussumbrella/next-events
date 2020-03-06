@@ -21,16 +21,17 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
     : {};
   const isServer = ctx.req;
   if (isServer) {
-    const { token } = parseCookies(ctx);
-    if (token) {
-      try {
+    try {
+      const { token } = parseCookies(ctx);
+      if (token) {
         await ctx.store.dispatch(setUser(token));
-      } catch (error) {
-        console.log(error);
-        destroyCookie('token');
       }
+    } catch (error) {
+      console.log(error);
+      destroyCookie('token');
     }
   }
+
   return { pageProps };
 };
 
