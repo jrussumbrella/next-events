@@ -17,7 +17,7 @@ const EventList = ({ events }) => {
                 <Link href={`/events/[slug]`} as={`/events/${event._id}`}>
                   <a className="link">
                     <div className="img-wrapper">
-                      <img src={event.imageURL} alt={event.name} />
+                      <img src={event.imageCoverURL} alt={event.name} />
                     </div>
                     <div className="info">
                       <div className="name">{event.name}</div>

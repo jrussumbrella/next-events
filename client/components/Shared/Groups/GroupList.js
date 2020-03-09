@@ -13,7 +13,7 @@ const GroupList = ({ groups }) => {
                 <Link href={`/groups/[slug]`} as={`/groups/${group.slug}`}>
                   <a className="link">
                     <div className="img-wrapper">
-                      <img src={group.imageURL} alt={group.name} />
+                      <img src={group.imageCoverURL} alt={group.name} />
                     </div>
                     <div className="info">
                       <div className="name">{group.name}</div>

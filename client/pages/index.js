@@ -9,7 +9,13 @@ import { getGroups } from '../store/groups/groupsActions';
 import { getEvents } from '../store/events/eventsAction';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const { groups, events } = useSelector(state => state);
+
+  useEffect(() => {
+    dispatch(getGroups());
+    dispatch(getEvents());
+  }, []);
 
   return (
     <Layout>
@@ -24,12 +30,22 @@ const Home = () => {
         <div className="page-heading">Upcoming Events</div>
         <EventList events={events.upcoming} />
         <div className="view-all-container">
-          <Button type="button" title="See All Events" href="/find/events" />
+          <Button
+            type="button"
+            title="See All Events"
+            href="/find/events"
+            classType="primary"
+          />
         </div>
         <div className="page-heading">Most Popular Groups</div>
         <GroupList groups={groups.mostPopular} />
         <div className="view-all-container">
-          <Button type="button" title="See All Groups" href="/find/groups" />
+          <Button
+            type="button"
+            title="See All Groups"
+            href="/find/groups"
+            classType="primary"
+          />
         </div>
       </div>
       <style jsx>{`
@@ -50,7 +66,7 @@ const Home = () => {
         }
 
         .category-wrapper {
-          margin: 0 -2rem;
+          margin: 1rem -2rem 2rem -2rem;
           -webkit-overflow-scrolling: touch;
           overflow-x: auto;
         }
@@ -61,12 +77,6 @@ const Home = () => {
       `}</style>
     </Layout>
   );
-};
-
-Home.getInitialProps = async ctx => {
-  await ctx.store.dispatch(getGroups());
-  await ctx.store.dispatch(getEvents());
-  return {};
 };
 
 export default Home;

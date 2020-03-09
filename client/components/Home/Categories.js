@@ -6,62 +6,38 @@ const Categories = () => {
       <ul className="categories">
         <li>
           <div className="inner">
-            <a href="#" className="link">
-              <div>
-                <div
-                  className="cover"
-                  style={{
-                    backgroundImage: `url(https://secure.meetupstatic.com/photos/event/2/e/a/7/600_450131943.jpeg)`
-                  }}
-                ></div>
-                <p className="title"> Tech </p>
-              </div>
-            </a>
+            <div className="item">
+              <a href="#" className="link title">
+                Tech
+              </a>
+            </div>
           </div>
         </li>
         <li>
           <div className="inner">
-            <a href="#" className="link">
-              <div>
-                <div
-                  className="cover"
-                  style={{
-                    backgroundImage: `url(https://secure.meetupstatic.com/photos/event/2/e/a/7/600_450131943.jpeg)`
-                  }}
-                ></div>
-                <p className="title"> Tech </p>
-              </div>
-            </a>
+            <div className="item">
+              <a href="#" className="link title">
+                Tech
+              </a>
+            </div>
           </div>
         </li>
         <li>
           <div className="inner">
-            <a href="#" className="link">
-              <div>
-                <div
-                  className="cover"
-                  style={{
-                    backgroundImage: `url(https://secure.meetupstatic.com/photos/event/2/e/a/7/600_450131943.jpeg)`
-                  }}
-                ></div>
-                <p className="title"> Tech </p>
-              </div>
-            </a>
+            <div className="item">
+              <a href="#" className="link title">
+                Tech
+              </a>
+            </div>
           </div>
         </li>
         <li>
           <div className="inner">
-            <a href="#" className="link">
-              <div>
-                <div
-                  className="cover"
-                  style={{
-                    backgroundImage: `url(https://secure.meetupstatic.com/photos/event/2/e/a/7/600_450131943.jpeg)`
-                  }}
-                ></div>
-                <p className="title"> Tech </p>
-              </div>
-            </a>
+            <div className="item">
+              <a href="#" className="link title">
+                Tech
+              </a>
+            </div>
           </div>
         </li>
       </ul>
@@ -90,13 +66,25 @@ const Categories = () => {
 
         .link {
           color: var(--color-dark);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          width: 100%;
         }
 
         .title {
           font-size: 1.8rem;
-          padding-top: 1rem;
           font-weight: 600;
           text-align: center;
+          color: var(--color-primary);
+        }
+
+        .item {
+          border: 1px solid var(--color-primary);
+          border-radius: 50px;
+          height: 4rem;
         }
       `}</style>
     </>

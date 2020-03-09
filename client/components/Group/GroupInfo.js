@@ -10,7 +10,7 @@ const GroupInfo = ({ group }) => {
         <div
           className="banner-img"
           style={{
-            backgroundImage: `url(${group?.imageURL})`
+            backgroundImage: `url(${group?.imageCoverURL})`
           }}
         ></div>
       </div>

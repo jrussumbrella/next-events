@@ -27,7 +27,7 @@ const GroupAction = () => {
 
   return (
     <div className="container">
-      {user.groups.find(groupId => group._id === groupId) ? (
+      {user && user.groups.find(groupId => group._id === groupId) ? (
         <Button
           type="button"
           classType="primary"

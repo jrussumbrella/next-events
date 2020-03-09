@@ -36,7 +36,7 @@ const EventSchema = mongoose.Schema(
       zipcode: String,
       country: String
     },
-    imageURL: {
+    imageCoverURL: {
       type: String
     },
     isFree: {

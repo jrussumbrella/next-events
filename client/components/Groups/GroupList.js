@@ -13,7 +13,7 @@ const GroupList = ({ groups }) => {
                   <div className="inner">
                     <div
                       className="imgCover"
-                      style={{ backgroundImage: `url(${group.imageURL})` }}
+                      style={{ backgroundImage: `url(${group.imageCoverURL})` }}
                     ></div>
                     <div className="overlay"></div>
                     <div className="info">

@@ -27,7 +27,6 @@ MyApp.getInitialProps = async ({ Component, ctx }) => {
         await ctx.store.dispatch(setUser(token));
       }
     } catch (error) {
-      console.log(error);
       destroyCookie('token');
     }
   }

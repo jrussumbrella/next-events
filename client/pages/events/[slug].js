@@ -40,7 +40,7 @@ const Events = () => {
               <div
                 className="cover-img"
                 style={{
-                  backgroundImage: `url(${selected.imageURL})`
+                  backgroundImage: `url(${selected.imageCoverURL})`
                 }}
               ></div>
             </div>

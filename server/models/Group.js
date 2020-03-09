@@ -41,7 +41,11 @@ const GroupSchema = mongoose.Schema(
       ref: 'User',
       required: true
     },
-    imageURL: {
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category'
+    },
+    imageCoverURL: {
       type: String
     },
     countMembers: {

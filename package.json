@@ -1,0 +1,25 @@
+{
+  "name": "next-events",
+  "version": "1.0.0",
+  "description": "### A full stack application that allow user to create a group and organize an event.",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrussumbrella/next-events.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jrussumbrella/next-events/issues"
+  },
+  "homepage": "https://github.com/jrussumbrella/next-events#readme",
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
