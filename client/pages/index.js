@@ -16,7 +16,11 @@ const Home = () => {
       <Banner />
       <div className="container">
         <div className="page-heading"> Categories </div>
-        <Categories />
+        <div className="category-wrapper">
+          <div className="inner">
+            <Categories />
+          </div>
+        </div>
         <div className="page-heading">Upcoming Events</div>
         <EventList events={events.upcoming} />
         <div className="view-all-container">
@@ -39,6 +43,20 @@ const Home = () => {
 
         .view-all-container {
           margin: 2rem 0;
+        }
+
+        ::-webkit-scrollbar {
+          display: none;
+        }
+
+        .category-wrapper {
+          margin: 0 -2rem;
+          -webkit-overflow-scrolling: touch;
+          overflow-x: auto;
+        }
+
+        .inner {
+          padding-left: 2rem;
         }
       `}</style>
     </Layout>

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const DB =
-  process.env.NODE_ENV !== 'production'
+  process.env.NODE_ENV == 'production'
     ? process.env.MONGO_URI
     : process.env.MONGO_LOCAL;
 

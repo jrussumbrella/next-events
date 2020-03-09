@@ -66,15 +66,10 @@ const Categories = () => {
         </li>
       </ul>
       <style jsx>{`
-        ::-webkit-scrollbar {
-          display: none;
-        }
         .categories {
           display: flex;
           flex-wrap: nowrap;
-          overflow-x: auto;
           padding: 1rem 0;
-          -webkit-overflow-scrolling: touch;
         }
 
         .categories li {
