@@ -12,15 +12,13 @@
 - [x] Create Event
 - [x] View Event's location on google map
 - [x] Join Group
-- [ ] Attend Event
-- [ ] View Event based on Category
 
 ## Installation
 
 ```
 git clone https://github.com/jrussumbrella/next-events.git
 
-cd client
+cd next-events
 
 npm install
 
