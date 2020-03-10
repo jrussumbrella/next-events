@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
 const CategorySchema = mongoose.Schema(
   {
@@ -8,10 +9,7 @@ const CategorySchema = mongoose.Schema(
       unique: true,
       trim: true
     },
-    slug: String,
-    imageCoverURL: {
-      type: String
-    }
+    slug: String
   },
   {
     timestamps: true

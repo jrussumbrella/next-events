@@ -10,6 +10,7 @@ const eventRoute = require('./routes/eventRoute');
 const authRoute = require('./routes/authRoute');
 const userRoute = require('./routes/userRoute');
 const groupRoute = require('./routes/groupRoute');
+const categoryRoutes = require('./routes/categoryRoutes');
 const connectDb = require('./utils/connectDb');
 const errorHandler = require('./middleware/error');
 
@@ -46,6 +47,7 @@ app.use('/api/v1/events', eventRoute);
 app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/groups', groupRoute);
 app.use('/api/v1/users', userRoute);
+app.use('/api/v1/category', categoryRoutes);
 
 //  error middleware
 app.use(errorHandler);

@@ -12,6 +12,7 @@
 - [x] Create Event
 - [x] View Event's location on google map
 - [x] Join Group
+- [ ] Upload group's and event's image cover in AWS S3
 - [ ] Attend Event
 - [ ] View Event based on Category
 
