@@ -6,7 +6,15 @@ const APIFeatures = require('../utils/apiFeatures');
 const mongoose = require('mongoose');
 
 exports.getGroups = asyncHandler(async (req, res) => {
-  const features = new APIFeatures(Group.find(), req.query)
+  let filter = {};
+  let query = Group.find();
+
+  if (req.params.userId) {
+    filter = { user: req.params.userId };
+    query = GroupMember.find(filter).populate({ path: 'group' });
+  }
+
+  const features = new APIFeatures(query, req.query)
     .filter()
     .sort()
     .limitFields()
@@ -72,7 +80,10 @@ exports.getMembers = asyncHandler(async (req, res, next) => {
   if (!group) return next(new ErrorResponse(`Group is not found`, 404));
 
   const features = new APIFeatures(
-    GroupMember.find({ group: groupId }),
+    GroupMember.find({ group: groupId }).populate({
+      path: 'user',
+      select: 'name'
+    }),
     req.query
   )
     .filter()

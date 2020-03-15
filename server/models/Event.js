@@ -63,6 +63,10 @@ const EventSchema = mongoose.Schema(
     countAttendees: {
       type: Number,
       default: 0
+    },
+    slot: {
+      type: Number,
+      required: true
     }
   },
   {

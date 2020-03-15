@@ -8,9 +8,14 @@ const {
   getCreatedGroups,
   getJoinedGroups
 } = require('../controllers/userController');
-const User = require('../models/User');
-const router = express.Router();
 const { protect, authorize } = require('../middleware/auth');
+const eventRoutes = require('./eventRoute');
+const groupRoutes = require('./groupRoute');
+
+const router = express.Router({ mergeParams: true });
+
+router.use('/:userId/events', eventRoutes);
+router.use('/:userId/groups', groupRoutes);
 
 router
   .route('/')

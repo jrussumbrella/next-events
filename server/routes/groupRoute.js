@@ -9,8 +9,7 @@ const {
   addMember,
   removeMember
 } = require('../controllers/groupController');
-const { protect, hasUser } = require('../middleware/auth');
-const Group = require('../models/Group');
+const { protect } = require('../middleware/auth');
 const eventRoutes = require('./eventRoute');
 
 const router = express.Router({ mergeParams: true });

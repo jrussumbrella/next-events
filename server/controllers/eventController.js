@@ -1,17 +1,26 @@
+const mongoose = require('mongoose');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const Event = require('../models/Event');
 const EventAttendee = require('../models/EventAttendee');
 const Group = require('../models/Group');
 const APIFeatures = require('../utils/apiFeatures');
-const mongoose = require('mongoose');
 
 exports.getEvents = asyncHandler(async (req, res) => {
   let filter = {};
+  let query = Event.find();
 
-  if (req.params.groupId) filter = { group: req.params.groupId };
+  if (req.params.groupId) {
+    filter = { group: req.params.groupId };
+    query = Event.find(filter);
+  }
 
-  const features = new APIFeatures(Event.find(filter), req.query)
+  if (req.params.userId) {
+    filter = { user: req.params.userId };
+    query = EventAttendee.find(filter).populate({ path: 'event' });
+  }
+
+  const features = new APIFeatures(query, req.query)
     .filter()
     .sort()
     .limitFields()
@@ -119,6 +128,29 @@ exports.updateEvent = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({ success: true, data: event });
+});
+
+exports.getAttendees = asyncHandler(async (req, res, next) => {
+  const eventId = req.params.eventId;
+  let event = await Event.findById(eventId);
+  if (!event) return next(new ErrorResponse(`Event is not found`, 404));
+
+  const features = new APIFeatures(
+    EventAttendee.find({ event: eventId }).populate({
+      path: 'user',
+      select: 'name'
+    }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const attendees = await features.query;
+  res
+    .status(200)
+    .json({ success: true, data: { attendees }, results: attendees.length });
 });
 
 exports.addAttendee = asyncHandler(async (req, res, next) => {

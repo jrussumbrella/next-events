@@ -7,7 +7,8 @@ const {
   deleteEVent,
   updateEvent,
   addAttendee,
-  removeAttendee
+  removeAttendee,
+  getAttendees
 } = require('../controllers/eventController');
 const { protect } = require('../middleware/auth');
 
@@ -28,6 +29,7 @@ router
 
 router
   .route('/:eventId/attendees')
+  .get(getAttendees)
   .post(protect, addAttendee)
   .delete(protect, removeAttendee);
 

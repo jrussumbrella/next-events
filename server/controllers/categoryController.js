@@ -19,5 +19,19 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
 
   res
     .status(200)
-    .json({ success: false, data: { categories }, results: categories.length });
+    .json({ success: true, data: { categories }, results: categories.length });
+});
+
+exports.getCategories = asyncHandler(async (req, res, next) => {
+  const features = new APIFeatures(Category.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const categories = await features.query;
+
+  res
+    .status(200)
+    .json({ success: true, data: { categories }, results: categories.length });
 });

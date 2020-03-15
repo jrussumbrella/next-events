@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const Group = require('../models/Group');
 const User = require('../models/User');
 
-const { ObjectId } = mongoose.Schema.Types;
-
 const GroupMemberSchema = mongoose.Schema(
   {
     user: {
@@ -60,14 +58,6 @@ GroupMemberSchema.statics.toggleUserGroup = async function(groupId, userId) {
     );
   }
 };
-
-GroupMemberSchema.pre(/^find/, function(next) {
-  this.populate({
-    path: 'user',
-    select: 'name'
-  });
-  next();
-});
 
 GroupMemberSchema.post('save', function() {
   this.constructor.countMembers(this.group);
