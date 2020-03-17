@@ -18,7 +18,7 @@ export default () => {
             --color-gray: #777777;
             --color-dark: #222;
             --color-light-dark: #484848;
-            --color-light-gray: #efefef;
+            --color-light-gray: #dddbdd;
           }
 
           body {

@@ -22,7 +22,7 @@ const CategoryLoader = ({}) => {
         }
 
         .box {
-          background-color: var(--color-gray);
+          background-color: var(--color-light-gray);
           height: 4rem;
           border-radius: 50px;
         }

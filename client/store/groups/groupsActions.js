@@ -14,6 +14,7 @@ export const getAllGroups = page => async dispatch => {
   try {
     const { data } = await groupsAPI.fetchGroups(page);
     dispatch({ type: FETCH_ALL_GROUPS, payload: data.groups });
+    setLoading('upcoming', false);
   } catch (error) {
     console.log(error);
   }
@@ -23,6 +24,7 @@ export const getGroups = () => async dispatch => {
   try {
     const { data } = await groupsAPI.fetchGroups();
     dispatch({ type: FETCH_GROUPS_SUCCESS, payload: data.groups });
+    dispatch(setLoading('mostPopular', false));
   } catch (error) {
     console.log(error);
   }

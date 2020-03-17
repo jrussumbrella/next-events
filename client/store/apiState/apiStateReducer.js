@@ -8,6 +8,13 @@ const initialState = {
   categories: {
     loading: true,
     error: null
+  },
+  upcoming: {
+    loading: true,
+    error: null
+  },
+  mostPopular: {
+    loading: true
   }
 };
 

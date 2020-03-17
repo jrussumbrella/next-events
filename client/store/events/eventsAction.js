@@ -6,6 +6,7 @@ import {
   FETCH_ALL_EVENTS
 } from './eventsType';
 import * as eventsAPI from '../../api/eventsAPI';
+import { setLoading } from '../apiState/apiStateAction';
 
 export const getAllEvents = page => async dispatch => {
   try {
@@ -20,6 +21,7 @@ export const getEvents = () => async dispatch => {
   try {
     const { data } = await eventsAPI.fetchEvents();
     dispatch({ type: FETCH_EVENTS_SUCCESS, payload: data.events });
+    dispatch(setLoading('upcoming', false));
   } catch (error) {
     console.log(error);
   }

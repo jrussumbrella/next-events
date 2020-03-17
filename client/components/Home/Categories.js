@@ -20,7 +20,7 @@ const Categories = () => {
       ) : (
         <ul className="categories">
           {categories.datas.map(category => (
-            <li>
+            <li key={category._id}>
               <div className="inner">
                 <div className="item">
                   <a href="#" className="link title">

@@ -7,10 +7,12 @@ import Button from '../components/Shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { getGroups } from '../store/groups/groupsActions';
 import { getEvents } from '../store/events/eventsAction';
+import GridLoader from '../components/Shared/Loader/GridLoader';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { groups, events } = useSelector(state => state);
+  const { groups, events, api } = useSelector(state => state);
+  const { upcoming, mostPopular } = api;
 
   useEffect(() => {
     dispatch(getGroups());
@@ -28,25 +30,39 @@ const Home = () => {
           </div>
         </div>
         <div className="page-heading">Upcoming Events</div>
-        <EventList events={events.upcoming} />
-        <div className="view-all-container">
-          <Button
-            type="button"
-            title="See All Events"
-            href="/find/events"
-            classType="primary"
-          />
-        </div>
+
+        {upcoming.loading ? (
+          <GridLoader />
+        ) : (
+          <>
+            <EventList events={events.upcoming} />
+            <div className="view-all-container">
+              <Button
+                type="button"
+                title="See All Events"
+                href="/find/events"
+                classType="primary"
+              />
+            </div>
+          </>
+        )}
+
         <div className="page-heading">Most Popular Groups</div>
-        <GroupList groups={groups.mostPopular} />
-        <div className="view-all-container">
-          <Button
-            type="button"
-            title="See All Groups"
-            href="/find/groups"
-            classType="primary"
-          />
-        </div>
+        {mostPopular.loading ? (
+          <GridLoader />
+        ) : (
+          <>
+            <GroupList groups={groups.mostPopular} />
+            <div className="view-all-container">
+              <Button
+                type="button"
+                title="See All Groups"
+                href="/find/groups"
+                classType="primary"
+              />
+            </div>
+          </>
+        )}
       </div>
       <style jsx>{`
         .container {
