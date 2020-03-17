@@ -4,7 +4,9 @@ import {
   CLEAR_ERROR,
   LOGOUT_USER,
   LEAVE_GROUP_SUCCESS,
-  JOIN_GROUP_SUCCESS
+  JOIN_GROUP_SUCCESS,
+  ADD_EVENT,
+  REMOVE_EVENT
 } from './userTypes';
 import * as authAPI from '../../api/authAPI';
 import Router from 'next/router';
@@ -65,4 +67,12 @@ export const leaveGroup = (groupId, token) => async dispatch => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const addEvent = eventId => dispatch => {
+  dispatch({ type: ADD_EVENT, payload: eventId });
+};
+
+export const removeEvent = eventId => dispatch => {
+  dispatch({ type: REMOVE_EVENT, payload: eventId });
 };

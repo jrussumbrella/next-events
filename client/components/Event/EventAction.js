@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import Button from '../Shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleAttend } from '../../store/events/eventsAction';
+import {
+  attendEvent,
+  getEventAttendees
+} from '../../store/events/eventsAction';
+import { leaveEvent } from '../../store/events/eventsAction';
+import { addEvent, removeEvent } from '../../store/user/userAction';
 
 const EventAction = () => {
-  const [attending, setAttending] = useState(false);
   const { auth, events } = useSelector(state => state);
   const { user } = auth;
   const { selected } = events;
   const dispatch = useDispatch();
 
-  const handleJoin = async () => {
+  const handleAttend = async action => {
     if (user) {
-      setAttending(true);
-      await dispatch(toggleAttend(selected._id));
-      setAttending(false);
+      if (action === 'attend') {
+        await dispatch(attendEvent(selected._id));
+        dispatch(addEvent(selected._id));
+      } else {
+        await dispatch(leaveEvent(selected._id));
+        dispatch(removeEvent(selected._id));
+      }
+      dispatch(getEventAttendees(selected._id));
     } else {
       alert('You need to login to join this event');
     }
@@ -23,21 +32,19 @@ const EventAction = () => {
   return (
     <div>
       <div className="container">
-        {user &&
-        selected.attendees.find(attendee => attendee.attendee === user._id) ? (
+        {user && user.events.find(attendee => attendee === selected._id) ? (
           <Button
             title="Cancel Attend"
             size={2}
             classType={'primary'}
-            onClick={handleJoin}
-            loading={attending}
+            onClick={() => handleAttend('cancel')}
           />
         ) : (
           <Button
             title="Attend"
             size={2}
             classType={'primary'}
-            onClick={handleJoin}
+            onClick={() => handleAttend('attend')}
           />
         )}
       </div>

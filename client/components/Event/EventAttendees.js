@@ -16,7 +16,7 @@ const EventAttendees = ({ attendees }) => {
                       alt=""
                     />
                     <div className="info">
-                      <div className="name">Alexander</div>
+                      <div className="name">{attendee.user.name}</div>
                       <div className="label">Member</div>
                     </div>
                   </div>

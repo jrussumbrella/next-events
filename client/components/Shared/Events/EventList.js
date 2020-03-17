@@ -14,7 +14,7 @@ const EventList = ({ events }) => {
           {events.map(event => (
             <div className="event-list" key={event._id}>
               <div className="event-card">
-                <Link href={`/events/[slug]`} as={`/events/${event._id}`}>
+                <Link href={`/events/[slug]`} as={`/events/${event.slug}`}>
                   <a className="link">
                     <div className="img-wrapper">
                       <img src={event.imageCoverURL} alt={event.name} />

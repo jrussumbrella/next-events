@@ -4,14 +4,13 @@ import {
   CLEAR_ERROR,
   LOGOUT_USER,
   JOIN_GROUP_SUCCESS,
-  LEAVE_GROUP_SUCCESS
+  LEAVE_GROUP_SUCCESS,
+  ADD_EVENT,
+  REMOVE_EVENT
 } from './userTypes';
 const initState = {
   user: null,
-  loading: true,
-  error: null,
-  groups: [],
-  events: []
+  error: null
 };
 
 export default (state = initState, action) => {
@@ -39,6 +38,16 @@ export default (state = initState, action) => {
         group => group !== action.payload
       );
       return { ...state, user: { ...state.user, groups: filteredGroups } };
+    case ADD_EVENT:
+      return {
+        ...state,
+        user: { ...state.user, events: [...state.user.events, action.payload] }
+      };
+    case REMOVE_EVENT:
+      const filteredEvents = state.user.events.filter(
+        event => event !== action.payload
+      );
+      return { ...state, user: { ...state.user, events: filteredEvents } };
     default:
       return state;
   }

@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
 import { EventAttendees, EventAction, EventTags } from '../../components/Event';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEvent, clearSelectedEvent } from '../../store/events/eventsAction';
+import {
+  getEvent,
+  clearSelectedEvent,
+  getEventAttendees
+} from '../../store/events/eventsAction';
 import Layout from '../../components/Layout';
 import EventGroup from '../../components/Event/EventGroup';
 import EventMap from '../../components/Event/EventMap';
 
-const Events = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+const Event = () => {
   const { selected } = useSelector(state => state.events);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getEvent(slug));
+    dispatch(getEventAttendees(selected._id));
     return () => dispatch(clearSelectedEvent());
   }, []);
 
@@ -61,20 +62,18 @@ const Events = () => {
                   </div>
                   <div className="place">
                     <FiMapPin color={'var(--color-primary)'} size={20} />
-                    <span>{selected.location.formattedAddress}</span>{' '}
+                    <span>{selected?.location?.formattedAddress}</span>{' '}
                   </div>
                 </div>
                 <div className="desc">{selected.description}</div>
               </div>
               <EventTags />
-              {/* <EventAction /> */}
+              <EventAction />
             </div>
             {/* <EventMap coordinates={selected.location.coordinates} /> */}
             <EventGroup />
-            {/* <div className="heading">
-              Attendees ({selected.attendees.length})
-            </div>
-            <EventAttendees attendees={selected.attendees} /> */}
+            <div className="heading">Attendees ({selected.countAttendees})</div>
+            <EventAttendees attendees={selected.attendees || []} />
           </>
         )}
       </div>
@@ -169,4 +168,10 @@ const Events = () => {
   );
 };
 
-export default Events;
+Event.getInitialProps = async ctx => {
+  const { slug } = ctx.query;
+  await ctx.store.dispatch(getEvent(slug));
+  return {};
+};
+
+export default Event;

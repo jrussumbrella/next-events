@@ -6,3 +6,5 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const LEAVE_GROUP_SUCCESS = 'LEAVE_GROUP_SUCCESS';
 export const JOIN_GROUP_SUCCESS = 'JOIN_GROUP_SUCCESS';
+export const ADD_EVENT = 'ADD_EVENT';
+export const REMOVE_EVENT = 'REMOVE_EVENT';

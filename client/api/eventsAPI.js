@@ -32,13 +32,37 @@ export const fetchEvent = async eventId => {
   }
 };
 
-export const toggleAttend = async (eventId, token) => {
+export const fetchEventAttendees = async eventId => {
   try {
-    const payload = { headers: { authorization: `Bearer ${token}` } };
+    const { data } = await axios.get(`${API_URL}/events/${eventId}/attendees`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error.response.data.error;
+  }
+};
+
+export const attendEvent = async (eventId, token) => {
+  try {
+    const headers = { headers: { authorization: `Bearer ${token}` } };
     const { data } = await axios.post(
-      `${API_URL}/events/${eventId}/attend`,
+      `${API_URL}/events/${eventId}/attendees`,
       {},
-      payload
+      headers
+    );
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error.response.data.error;
+  }
+};
+
+export const leaveEvent = async (eventId, token) => {
+  try {
+    const headers = { headers: { authorization: `Bearer ${token}` } };
+    const { data } = await axios.delete(
+      `${API_URL}/events/${eventId}/attendees`,
+      headers
     );
     return data;
   } catch (error) {
