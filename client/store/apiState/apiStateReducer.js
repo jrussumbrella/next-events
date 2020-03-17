@@ -4,6 +4,10 @@ const initialState = {
   groupMembers: {
     loading: true,
     error: null
+  },
+  categories: {
+    loading: true,
+    error: null
   }
 };
 

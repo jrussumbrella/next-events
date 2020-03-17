@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getGroupMembers } from '../../store/groups/groupsActions';
 import { formatCreatedAt } from '../../utils/formatDate';
 import ListMediaLoader from '../Shared/Loader/ListMediaLoader';
-import { setLoading } from '../../store/apiState/apiStateAction';
 
 const GroupMembers = () => {
   const dispatch = useDispatch();
@@ -12,11 +11,7 @@ const GroupMembers = () => {
   const loading = api.groupMembers.loading;
 
   useEffect(() => {
-    const fetchGroupMembers = async () => {
-      await dispatch(getGroupMembers(group.id));
-      if (loading) dispatch(setLoading('groupMembers', false));
-    };
-    fetchGroupMembers();
+    dispatch(getGroupMembers(group.id));
   }, [group]);
 
   if (loading) return <ListMediaLoader numbers={5} />;

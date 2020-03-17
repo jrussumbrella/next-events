@@ -8,6 +8,7 @@ import {
   FETCH_GROUP_MEMBERS_SUCCESS
 } from './groupsType';
 import * as groupsAPI from '../../api/groupsAPI';
+import { setLoading } from '../apiState/apiStateAction';
 
 export const getAllGroups = page => async dispatch => {
   try {
@@ -57,6 +58,7 @@ export const getGroupMembers = id => async dispatch => {
   try {
     const { data } = await groupsAPI.fetchGroupMembers(id);
     dispatch({ type: FETCH_GROUP_MEMBERS_SUCCESS, payload: data.members });
+    dispatch(setLoading('groupMembers', false));
   } catch (error) {
     console.log(error);
   }

@@ -1,46 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCategories } from '../../store/categories/categoriesAction';
+import CategoryLoader from '../Shared/Loader/CategoryLoader';
 
 const Categories = () => {
+  const dispatch = useDispatch();
+  const { categories, api } = useSelector(state => state);
+
+  const loading = api.categories.loading;
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
   return (
     <>
-      <ul className="categories">
-        <li>
-          <div className="inner">
-            <div className="item">
-              <a href="#" className="link title">
-                Tech
-              </a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div className="inner">
-            <div className="item">
-              <a href="#" className="link title">
-                Tech
-              </a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div className="inner">
-            <div className="item">
-              <a href="#" className="link title">
-                Tech
-              </a>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div className="inner">
-            <div className="item">
-              <a href="#" className="link title">
-                Tech
-              </a>
-            </div>
-          </div>
-        </li>
-      </ul>
+      {loading ? (
+        <CategoryLoader />
+      ) : (
+        <ul className="categories">
+          {categories.datas.map(category => (
+            <li>
+              <div className="inner">
+                <div className="item">
+                  <a href="#" className="link title">
+                    {category.name}
+                  </a>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
       <style jsx>{`
         .categories {
           display: flex;
@@ -49,7 +40,6 @@ const Categories = () => {
         }
 
         .categories li {
-          width: 15rem;
           flex: 0 0 auto;
         }
 
@@ -85,6 +75,7 @@ const Categories = () => {
           border: 1px solid var(--color-primary);
           border-radius: 50px;
           height: 4rem;
+          padding: 0 1rem;
         }
       `}</style>
     </>
