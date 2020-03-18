@@ -7,6 +7,7 @@ import {
 } from '../../store/events/eventsAction';
 import { leaveEvent } from '../../store/events/eventsAction';
 import { addEvent, removeEvent } from '../../store/user/userAction';
+import { setAlert } from '../../store/alert/alertAction';
 
 const EventAction = () => {
   const { auth, events } = useSelector(state => state);
@@ -19,13 +20,15 @@ const EventAction = () => {
       if (action === 'attend') {
         await dispatch(attendEvent(selected._id));
         dispatch(addEvent(selected._id));
+        dispatch(setAlert('success', 'Successfully attended'));
       } else {
         await dispatch(leaveEvent(selected._id));
         dispatch(removeEvent(selected._id));
+        dispatch(setAlert('success', 'Successfully leaved'));
       }
       dispatch(getEventAttendees(selected._id));
     } else {
-      alert('You need to login to join this event');
+      dispatch(setAlert('error', 'Please login before attending this event'));
     }
   };
 

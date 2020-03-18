@@ -5,11 +5,13 @@ import store from '../store';
 import { parseCookies, destroyCookie } from 'nookies';
 import { setUser } from '../store/user/userAction';
 import { redirectUser } from '../utils/auth';
+import Toast from '../components/Shared/Notif/Toast';
 import '../public/css/normalize.css';
 
 const MyApp = ({ Component, pageProps, store }) => {
   return (
     <Provider store={store}>
+      <Toast />
       <Component {...pageProps} />
     </Provider>
   );
