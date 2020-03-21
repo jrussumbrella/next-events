@@ -5,7 +5,7 @@ function formatDate(date) {
 }
 
 function formatCreatedAt(date) {
-  return format(parseISO(date), 'MMMM, d, yyyy');
+  return format(parseISO(date), 'MMMM d, yyyy');
 }
 
 function formatTime(time) {

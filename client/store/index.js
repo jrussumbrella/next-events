@@ -6,6 +6,7 @@ import events from './events/eventsReducer';
 import api from './apiState/apiStateReducer';
 import categories from './categories/categoriesReducer';
 import alert from './alert/alertReducer';
+import modal from './modal/modalReducer';
 
 const bindMiddleware = middleware => {
   if (process.env.NODE_ENV !== 'production') {
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   events,
   api,
   categories,
-  alert
+  alert,
+  modal
 });
 
 const store = initialState => {

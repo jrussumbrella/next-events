@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const EventAttendees = ({ attendees }) => {
   return (
@@ -8,19 +9,27 @@ const EventAttendees = ({ attendees }) => {
           {attendees.map(attendee => (
             <li className="list" key={attendee._id}>
               <div className="inner">
-                <a href="#" className="link">
-                  <div className="wrapper">
-                    <img
-                      className="avatar"
-                      src="https://secure.meetupstatic.com/photos/member/e/6/c/b/member_243779083.jpeg"
-                      alt=""
-                    />
-                    <div className="info">
-                      <div className="name">{attendee.user.name}</div>
-                      <div className="label">Member</div>
+                <Link as={`/user/${attendee.user._id}`} href="/user/[username]">
+                  <a className="link">
+                    <div className="wrapper">
+                      {attendee.user.imageURL ? (
+                        <img
+                          className="avatar"
+                          src="https://secure.meetupstatic.com/photos/member/e/6/c/b/member_243779083.jpeg"
+                          alt=""
+                        />
+                      ) : (
+                        <div className="avatar">
+                          {attendee.user.name.charAt(0)}
+                        </div>
+                      )}
+                      <div className="info">
+                        <div className="name">{attendee.user.name}</div>
+                        <div className="label">Member</div>
+                      </div>
                     </div>
-                  </div>
-                </a>
+                  </a>
+                </Link>
               </div>
             </li>
           ))}
@@ -55,6 +64,12 @@ const EventAttendees = ({ attendees }) => {
           width: 7rem;
           height: 7rem;
           border-radius: 50%;
+          background-color: var(--color-primary);
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.7rem;
         }
 
         .inner {

@@ -46,6 +46,7 @@ const Button = ({
           justify-content: center;
           border-radius: 6px;
           cursor: pointer;
+          padding: 0 1.5rem;
         }
 
         .btn:disabled {

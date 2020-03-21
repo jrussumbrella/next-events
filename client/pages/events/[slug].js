@@ -67,7 +67,6 @@ const Event = () => {
                 </div>
                 <div className="desc">{selected.description}</div>
               </div>
-              <EventTags />
               <EventAction />
             </div>
             {/* <EventMap coordinates={selected.location.coordinates} /> */}

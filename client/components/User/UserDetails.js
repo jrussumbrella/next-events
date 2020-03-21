@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { getUser } from '../../store/user/userAction';
 import { formatCreatedAt } from '../../utils/formatDate';
+import { setModal } from '../../store/modal/modalAction';
 import UserLoader from '../Shared/Loader/UserLoader';
+import Modal from '../Shared/Modal';
+import EditUserDetails from './EditUserDetails';
 
 const UserDetails = () => {
   const dispatch = useDispatch();
@@ -20,6 +23,10 @@ const UserDetails = () => {
     dispatch(getUser(username));
   }, [username]);
 
+  const handleEditProfile = () => {
+    dispatch(setModal(true));
+  };
+
   const handleTabChange = val => {
     console.log(val);
   };
@@ -30,6 +37,9 @@ const UserDetails = () => {
 
   return (
     <div>
+      <Modal title={'Edit Profile'}>
+        <EditUserDetails />
+      </Modal>
       <div className="bg-cover"></div>
       <div className="top">
         <div className="avatar">
@@ -37,9 +47,13 @@ const UserDetails = () => {
             {selectedUser.name.charAt(0).toUpperCase()}
           </div>
         </div>
-        {user._id === username && (
+        {user?._id === username && (
           <div className="top-right">
-            <Button type="button" title="Edit Profile" />
+            <Button
+              type="button"
+              title="Edit Profile"
+              onClick={handleEditProfile}
+            />
           </div>
         )}
       </div>
