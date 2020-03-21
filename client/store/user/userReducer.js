@@ -6,11 +6,13 @@ import {
   JOIN_GROUP_SUCCESS,
   LEAVE_GROUP_SUCCESS,
   ADD_EVENT,
-  REMOVE_EVENT
+  REMOVE_EVENT,
+  SET_USER_PROFILE
 } from './userTypes';
 const initState = {
   user: null,
-  error: null
+  error: null,
+  selectedUser: null
 };
 
 export default (state = initState, action) => {
@@ -28,6 +30,8 @@ export default (state = initState, action) => {
       return { ...state, error: null };
     case LOGOUT_USER:
       return { ...state, user: null, loading: true, error: null };
+    case SET_USER_PROFILE:
+      return { ...state, selectedUser: action.payload };
     case JOIN_GROUP_SUCCESS:
       return {
         ...state,

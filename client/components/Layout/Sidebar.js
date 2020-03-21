@@ -45,7 +45,7 @@ const Sidebar = ({ open, handleClick }, ref) => {
                 Hello, <span>{user.name}</span>
               </div>
               <li onClick={handleClick}>
-                <Link href="/account">
+                <Link href="/user/[username]" as={`/user/${user._id}`}>
                   <a> My Account </a>
                 </Link>
               </li>

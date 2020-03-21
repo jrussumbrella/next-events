@@ -6,9 +6,11 @@ import {
   LEAVE_GROUP_SUCCESS,
   JOIN_GROUP_SUCCESS,
   ADD_EVENT,
-  REMOVE_EVENT
+  REMOVE_EVENT,
+  SET_USER_PROFILE
 } from './userTypes';
 import * as authAPI from '../../api/authAPI';
+import * as userAPI from '../../api/userAPI';
 import Router from 'next/router';
 import { setCookie, destroyCookie } from 'nookies';
 
@@ -18,6 +20,15 @@ export const setUser = token => async dispatch => {
     dispatch({ type: SET_USER_SUCCESS, payload: { user: data, token } });
   } catch (error) {
     throw error;
+  }
+};
+
+export const getUser = userId => async dispatch => {
+  try {
+    const { data } = await userAPI.fetchUser(userId);
+    dispatch({ type: SET_USER_PROFILE, payload: data });
+  } catch (error) {
+    console.log(error);
   }
 };
 
