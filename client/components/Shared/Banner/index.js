@@ -1,10 +1,16 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Banner = () => {
   return (
     <>
       <div className="banner">
-        <div className="title"> Find your next events.</div>
+        <motion.div
+          initial={{ y: -40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+        >
+          <div className="title"> Find your next events.</div>
+        </motion.div>
       </div>
       <style jsx>{`
         .banner {
