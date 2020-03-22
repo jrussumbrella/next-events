@@ -15,7 +15,7 @@ const Toast = () => {
           top: 60px;
           right: 0;
           left: 0;
-          z-index: 999;
+          z-index: 1000;
           width: 100%;
           padding: 1rem;
           visibility: hidden;

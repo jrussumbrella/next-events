@@ -7,12 +7,15 @@ import {
   JOIN_GROUP_SUCCESS,
   ADD_EVENT,
   REMOVE_EVENT,
-  SET_USER_PROFILE
+  SET_USER_PROFILE,
+  UPDATE_USER
 } from './userTypes';
 import * as authAPI from '../../api/authAPI';
 import * as userAPI from '../../api/userAPI';
 import Router from 'next/router';
 import { setCookie, destroyCookie } from 'nookies';
+import { setModal } from '../../store/modal/modalAction';
+import { setAlert } from '../alert/alertAction';
 
 export const setUser = token => async dispatch => {
   try {
@@ -59,6 +62,17 @@ export const logout = () => async dispatch => {
 
 export const clearError = () => dispatch => {
   dispatch({ type: CLEAR_ERROR });
+};
+
+export const updateUserDetails = (token, userData) => async dispatch => {
+  try {
+    const { data } = await authAPI.updateUserDetails(token, userData);
+    dispatch({ type: UPDATE_USER, payload: data });
+    dispatch(setAlert('success', 'Successfully profile updated'));
+    dispatch(setModal(false));
+  } catch (error) {
+    dispatch(setAlert('error', error));
+  }
 };
 
 export const joinGroup = (groupId, token) => async dispatch => {

@@ -29,3 +29,17 @@ export const logout = async () => {
     throw error.response.data.error;
   }
 };
+
+export const updateUserDetails = async (token, userData) => {
+  try {
+    const headers = { headers: { authorization: `Bearer ${token}` } };
+    const { data } = await axios.put(
+      `${API_URL}/auth/updateDetails`,
+      userData,
+      headers
+    );
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};

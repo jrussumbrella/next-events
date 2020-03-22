@@ -21,7 +21,7 @@ const UserDetails = () => {
 
   useEffect(() => {
     dispatch(getUser(username));
-  }, [username]);
+  }, [username, user]);
 
   const handleEditProfile = () => {
     dispatch(setModal(true));

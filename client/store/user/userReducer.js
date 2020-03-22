@@ -7,7 +7,8 @@ import {
   LEAVE_GROUP_SUCCESS,
   ADD_EVENT,
   REMOVE_EVENT,
-  SET_USER_PROFILE
+  SET_USER_PROFILE,
+  UPDATE_USER
 } from './userTypes';
 const initState = {
   user: null,
@@ -24,6 +25,8 @@ export default (state = initState, action) => {
         token: action.payload.token,
         loading: false
       };
+    case UPDATE_USER:
+      return { ...state, user: action.payload };
     case SET_USER_FAILURE:
       return { ...state, error: action.payload, loading: false, token: null };
     case CLEAR_ERROR:

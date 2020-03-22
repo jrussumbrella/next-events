@@ -21,10 +21,10 @@ const LoginForm = () => {
       email: ''
     },
     validationSchema: Yup.object({
-      password: Yup.string().required('Required'),
+      password: Yup.string().required('Password is Required'),
       email: Yup.string()
         .email('Invalid email address')
-        .required('Required')
+        .required('Email is Required')
     }),
     onSubmit: async values => {
       setSubmit(true);
