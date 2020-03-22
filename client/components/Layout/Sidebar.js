@@ -49,14 +49,9 @@ const Sidebar = ({ open, handleClick }, ref) => {
                   <a> My Account </a>
                 </Link>
               </li>
-              <li onClick={handleClick}>
-                <Link href="/groups">
-                  <a> Groups </a>
-                </Link>
-              </li>
-              <li onClick={handleClick}>
-                <Link href="/events">
-                  <a> Events </a>
+              <li>
+                <Link href="/settings">
+                  <a> Settings </a>
                 </Link>
               </li>
               <li>

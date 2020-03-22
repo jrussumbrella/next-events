@@ -3,13 +3,14 @@ import {
   SET_USER_FAILURE,
   CLEAR_ERROR,
   LOGOUT_USER,
-  JOIN_GROUP_SUCCESS,
-  LEAVE_GROUP_SUCCESS,
   ADD_EVENT,
   REMOVE_EVENT,
   SET_USER_PROFILE,
-  UPDATE_USER
+  UPDATE_USER,
+  ADD_GROUP,
+  REMOVE_GROUP
 } from './userTypes';
+import { REMOVE_MEMBER } from '../groups/groupsType';
 const initState = {
   user: null,
   error: null,
@@ -35,12 +36,12 @@ export default (state = initState, action) => {
       return { ...state, user: null, loading: true, error: null };
     case SET_USER_PROFILE:
       return { ...state, selectedUser: action.payload };
-    case JOIN_GROUP_SUCCESS:
+    case ADD_GROUP:
       return {
         ...state,
         user: { ...state.user, groups: [...state.user.groups, action.payload] }
       };
-    case LEAVE_GROUP_SUCCESS:
+    case REMOVE_GROUP:
       const filteredGroups = state.user.groups.filter(
         group => group !== action.payload
       );

@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '../Shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { joinGroup, leaveGroup } from '../../store/user/userAction';
-import { removeMember, addMember } from '../../store/groups/groupsActions';
+import { joinGroup, leaveGroup } from '../../store/groups/groupsActions';
+import { setAlert } from '../../store/alert/alertAction';
 
 const GroupAction = () => {
   const { groups, auth } = useSelector(state => state);
@@ -12,16 +12,14 @@ const GroupAction = () => {
 
   const handleAction = async type => {
     if (!user) {
-      alert('Please login');
+      dispatch(setAlert('error', 'You need to login to join'));
       return;
     }
 
     if (type === 'join') {
       await dispatch(joinGroup(group._id, token));
-      dispatch(addMember());
     } else {
       await dispatch(leaveGroup(group._id, token));
-      dispatch(removeMember());
     }
   };
 

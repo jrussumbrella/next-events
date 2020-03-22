@@ -3,12 +3,12 @@ import {
   SET_USER_FAILURE,
   CLEAR_ERROR,
   LOGOUT_USER,
-  LEAVE_GROUP_SUCCESS,
-  JOIN_GROUP_SUCCESS,
   ADD_EVENT,
   REMOVE_EVENT,
   SET_USER_PROFILE,
-  UPDATE_USER
+  UPDATE_USER,
+  ADD_GROUP,
+  REMOVE_GROUP
 } from './userTypes';
 import * as authAPI from '../../api/authAPI';
 import * as userAPI from '../../api/userAPI';
@@ -75,23 +75,12 @@ export const updateUserDetails = (token, userData) => async dispatch => {
   }
 };
 
-export const joinGroup = (groupId, token) => async dispatch => {
-  try {
-    const { data } = await apiCall.joinGroup(groupId, token);
-    dispatch({ type: JOIN_GROUP_SUCCESS, payload: data.member.group });
-  } catch (error) {
-    console.log(error);
-  }
+export const addGroup = user => dispatch => {
+  dispatch({ type: ADD_GROUP, payload: user });
 };
 
-export const leaveGroup = (groupId, token) => async dispatch => {
-  try {
-    const { data } = await apiCall.leaveGroup(groupId, token);
-    dispatch({ type: LEAVE_GROUP_SUCCESS, payload: groupId });
-    return data.group;
-  } catch (error) {
-    console.log(error);
-  }
+export const removeGroup = user => dispatch => {
+  dispatch({ type: REMOVE_GROUP, payload: user });
 };
 
 export const addEvent = eventId => dispatch => {

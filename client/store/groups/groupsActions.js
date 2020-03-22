@@ -9,6 +9,8 @@ import {
 } from './groupsType';
 import * as groupsAPI from '../../api/groupsAPI';
 import { setLoading } from '../apiState/apiStateAction';
+import { setAlert } from '../alert/alertAction';
+import { addGroup, removeGroup } from '../user/userAction';
 
 export const getAllGroups = page => async dispatch => {
   try {
@@ -39,14 +41,6 @@ export const getGroup = slug => async dispatch => {
   }
 };
 
-export const addMember = user => dispatch => {
-  dispatch({ type: ADD_MEMBER, payload: user });
-};
-
-export const removeMember = user => dispatch => {
-  dispatch({ type: REMOVE_MEMBER, payload: user });
-};
-
 export const getGroupEvents = id => async dispatch => {
   try {
     const { data } = await groupsAPI.fetchGroupEvents(id);
@@ -63,5 +57,28 @@ export const getGroupMembers = id => async dispatch => {
     dispatch(setLoading('groupMembers', false));
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const joinGroup = (groupId, token) => async dispatch => {
+  try {
+    const { data } = await groupsAPI.joinGroup(groupId, token);
+    dispatch({ type: ADD_MEMBER, payload: data.member.group });
+    dispatch(addGroup(groupId));
+    dispatch(setAlert('success', 'Successfully joined group.'));
+  } catch (error) {
+    dispatch(setAlert('error', error));
+  }
+};
+
+export const leaveGroup = (groupId, token) => async dispatch => {
+  try {
+    const { data } = await groupsAPI.leaveGroup(groupId, token);
+    dispatch({ type: REMOVE_MEMBER, payload: groupId });
+    dispatch(removeGroup(groupId));
+    dispatch(setAlert('success', 'Successfully leaved group.'));
+  } catch (error) {
+    console.log(error);
+    dispatch(setAlert('error', error));
   }
 };

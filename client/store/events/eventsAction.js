@@ -9,6 +9,8 @@ import {
 } from './eventsType';
 import * as eventsAPI from '../../api/eventsAPI';
 import { setLoading } from '../apiState/apiStateAction';
+import { addEvent, removeEvent } from '../user/userAction';
+import { setAlert } from '../alert/alertAction';
 
 export const getAllEvents = page => async dispatch => {
   try {
@@ -56,8 +58,10 @@ export const attendEvent = eventId => async (dispatch, getState) => {
     const { token } = getState().auth;
     const { data } = await eventsAPI.attendEvent(eventId, token);
     dispatch({ type: ATTEND_EVENT, payload: data });
+    dispatch(addEvent(eventId));
+    dispatch(setAlert('success', 'Successfully attended'));
   } catch (error) {
-    console.log(error);
+    dispatch(setAlert('error', error));
   }
 };
 
@@ -66,7 +70,9 @@ export const leaveEvent = eventId => async (dispatch, getState) => {
     const { token } = getState().auth;
     const { data } = await eventsAPI.leaveEvent(eventId, token);
     dispatch({ type: LEAVE_EVENT, payload: data });
+    dispatch(removeEvent(eventId));
+    dispatch(setAlert('success', 'Successfully leaved'));
   } catch (error) {
-    console.log(error);
+    dispatch(setAlert('error', 'Successfully leaved'));
   }
 };
