@@ -2,7 +2,7 @@ import { SET_ALERT, REMOVE_ALERT } from './alertTypes';
 
 const initialState = {
   alert: {
-    type: 'success',
+    type: '',
     text: '',
     active: false
   }

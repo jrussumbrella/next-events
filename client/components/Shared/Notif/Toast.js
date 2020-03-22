@@ -1,32 +1,29 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { motion } from 'framer-motion';
 
 const Toast = () => {
   const { alert } = useSelector(state => state.alert);
 
   return (
     <>
-      <div className={`alert-container ${alert.active ? 'show' : ''}`}>
+      <motion.div
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: alert.active ? 0 : -60, opacity: alert.active ? 1 : 0 }}
+        style={{
+          position: 'fixed',
+          top: alert.active ? '60px' : 0,
+          right: 0,
+          left: 0,
+          zIndex: 1000,
+          width: '100%',
+          padding: '1rem'
+        }}
+      >
         <div className={`alert ${alert.type}`}>{alert.text}</div>
-      </div>
+      </motion.div>
+
       <style jsx>{`
-        .alert-container {
-          position: fixed;
-          top: 60px;
-          right: 0;
-          left: 0;
-          z-index: 1000;
-          width: 100%;
-          padding: 1rem;
-          visibility: hidden;
-        }
-
-        .show {
-          visibility: visible;
-          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-          animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
         .alert {
           border-radius: 3px;
           padding: 2rem 1.5rem;
@@ -43,29 +40,6 @@ const Toast = () => {
         .error {
           background-color: #fbe1e3;
           color: #c00;
-          font-size: 1.8rem;
-        }
-
-        @keyframes fadein {
-          from {
-            top: 0;
-            opacity: 0;
-          }
-          to {
-            to: 60px;
-            opacity: 1;
-          }
-        }
-
-        @keyframes fadeout {
-          from {
-            top: 60px;
-            opacity: 1;
-          }
-          to {
-            top: 0;
-            opacity: 0;
-          }
         }
       `}</style>
     </>
