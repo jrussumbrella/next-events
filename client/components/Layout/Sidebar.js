@@ -11,7 +11,6 @@ const Sidebar = ({ open, handleClick }, ref) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    handleClick();
   };
 
   const handleCreateEvent = () => {

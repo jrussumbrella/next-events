@@ -23,11 +23,19 @@ const GroupMembers = () => {
           {groupMembers.map(member => (
             <li key={member._id}>
               <div>
-                <img
-                  className="avatar"
-                  src={`https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png`}
-                  alt={member.user.name}
-                />
+                {member.user.imageURL ? (
+                  <img
+                    className="avatar"
+                    src={`https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png`}
+                    alt={member.user.name}
+                  />
+                ) : (
+                  <div className="avatar">
+                    <span className="avatar-text">
+                      {member.user.name.charAt(0)}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="info">
                 <div className="name">{member.user.name}</div>
@@ -53,6 +61,16 @@ const GroupMembers = () => {
           width: 6rem;
           height: 6rem;
           border-radius: 50%;
+          background-color: var(--color-primary);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .avatar-text {
+          font-size: 1.6rem;
+          font-weight: 600;
+          color: #fff;
         }
 
         .info {

@@ -8,7 +8,9 @@ import {
   SET_USER_PROFILE,
   UPDATE_USER,
   ADD_GROUP,
-  REMOVE_GROUP
+  REMOVE_GROUP,
+  GET_USER_EVENTS,
+  GET_USER_GROUPS
 } from './userTypes';
 import * as authAPI from '../../api/authAPI';
 import * as userAPI from '../../api/userAPI';
@@ -72,6 +74,31 @@ export const updateUserDetails = (token, userData) => async dispatch => {
     dispatch(setModal(false));
   } catch (error) {
     dispatch(setAlert('error', error));
+  }
+};
+
+export const getUserEvents = userId => async dispatch => {
+  try {
+    const { data } = await userAPI.fetchUserEvents(userId);
+    let events = data.events.map(event => {
+      return event.event;
+    });
+
+    dispatch({ type: GET_USER_EVENTS, payload: events });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserGroups = userId => async dispatch => {
+  try {
+    const { data } = await userAPI.fetchUserGroups(userId);
+    let groups = data.groups.map(group => {
+      return group.group;
+    });
+    dispatch({ type: GET_USER_GROUPS, payload: groups });
+  } catch (error) {
+    console.log(error);
   }
 };
 

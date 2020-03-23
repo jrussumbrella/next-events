@@ -6,7 +6,6 @@ import {
   getEventAttendees
 } from '../../store/events/eventsAction';
 import { leaveEvent } from '../../store/events/eventsAction';
-import { addEvent, removeEvent } from '../../store/user/userAction';
 import { setAlert } from '../../store/alert/alertAction';
 
 const EventAction = () => {
@@ -19,12 +18,8 @@ const EventAction = () => {
     if (user) {
       if (action === 'attend') {
         await dispatch(attendEvent(selected._id));
-        dispatch(addEvent(selected._id));
-        dispatch(setAlert('success', 'Successfully attended'));
       } else {
         await dispatch(leaveEvent(selected._id));
-        dispatch(removeEvent(selected._id));
-        dispatch(setAlert('success', 'Successfully leaved'));
       }
       dispatch(getEventAttendees(selected._id));
     } else {

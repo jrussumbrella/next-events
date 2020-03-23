@@ -31,12 +31,11 @@ const EventList = ({ events }) => {
                           {formatDate(event.date)} at {formatTime(event.date)}
                         </span>
                       </div>
-                      {/* <div className="bottom">
+                      <div className="bottom">
                         <div className="attende-text">
-                          {' '}
-                          {event.attendees.length} attendees{' '}
+                          {event.countAttendees} attendees
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </a>
                 </Link>

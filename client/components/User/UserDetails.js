@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../Shared/Button';
-import TabList from '../Shared/Tabs/TabList';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { getUser } from '../../store/user/userAction';
+import { getUser, getUserEvents } from '../../store/user/userAction';
 import { formatCreatedAt } from '../../utils/formatDate';
 import { setModal } from '../../store/modal/modalAction';
 import UserLoader from '../Shared/Loader/UserLoader';
@@ -13,10 +12,8 @@ import EditUserDetails from './EditUserDetails';
 const UserDetails = () => {
   const dispatch = useDispatch();
   const { user, selectedUser } = useSelector(state => state.auth);
-  const [active, setActive] = useState('Groups');
-  const userTabs = ['Groups', 'Events'];
-  const router = useRouter();
 
+  const router = useRouter();
   const { username } = router.query;
 
   useEffect(() => {
@@ -25,10 +22,6 @@ const UserDetails = () => {
 
   const handleEditProfile = () => {
     dispatch(setModal(true));
-  };
-
-  const handleTabChange = val => {
-    console.log(val);
   };
 
   if (!selectedUser) {
@@ -63,17 +56,12 @@ const UserDetails = () => {
           <div className="date">
             Joined Date:{' '}
             <span style={{ fontWeight: 600 }}>
-              {' '}
               {formatCreatedAt(selectedUser.createdAt)}
             </span>
           </div>
         </div>
       </div>
-      <TabList
-        tabs={userTabs}
-        activeTab={active}
-        onTabChange={handleTabChange}
-      />
+
       <style jsx>{`
         .bg-cover {
           background-image: linear-gradient(
@@ -132,6 +120,8 @@ const UserDetails = () => {
           padding-top: 1rem;
           font-size: 1.6rem;
         }
+
+        .tab-item;
       `}</style>
     </div>
   );

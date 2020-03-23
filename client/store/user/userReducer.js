@@ -8,9 +8,11 @@ import {
   SET_USER_PROFILE,
   UPDATE_USER,
   ADD_GROUP,
-  REMOVE_GROUP
+  REMOVE_GROUP,
+  GET_USER_EVENTS,
+  GET_USER_GROUPS
 } from './userTypes';
-import { REMOVE_MEMBER } from '../groups/groupsType';
+
 const initState = {
   user: null,
   error: null,
@@ -36,6 +38,16 @@ export default (state = initState, action) => {
       return { ...state, user: null, loading: true, error: null };
     case SET_USER_PROFILE:
       return { ...state, selectedUser: action.payload };
+    case GET_USER_EVENTS:
+      return {
+        ...state,
+        selectedUser: { ...state.selectedUser, myEvents: action.payload }
+      };
+    case GET_USER_GROUPS:
+      return {
+        ...state,
+        selectedUser: { ...state.selectedUser, myGroups: action.payload }
+      };
     case ADD_GROUP:
       return {
         ...state,
