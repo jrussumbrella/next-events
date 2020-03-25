@@ -7,14 +7,17 @@ const {
   updateGroup,
   getMembers,
   addMember,
-  removeMember
+  removeMember,
+  getMostPopular
 } = require('../controllers/groupController');
 const { protect } = require('../middleware/auth');
-const eventRoutes = require('./eventRoute');
+const eventRoutes = require('./eventRoutes');
 
 const router = express.Router({ mergeParams: true });
 
 router.use('/:groupId/events', eventRoutes);
+
+router.route('/most-popular').get(getMostPopular);
 
 router
   .route('/')

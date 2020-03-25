@@ -8,13 +8,16 @@ const {
   updateEvent,
   addAttendee,
   removeAttendee,
-  getAttendees
+  getAttendees,
+  getUpcomingEvents
 } = require('../controllers/eventController');
 const { protect } = require('../middleware/auth');
 
 const router = express.Router({ mergeParams: true });
 
 router.route('/nearby/:zipcode/:distance').get(getNearbyEvents);
+
+router.route('/upcoming').get(getUpcomingEvents);
 
 router
   .route('/')

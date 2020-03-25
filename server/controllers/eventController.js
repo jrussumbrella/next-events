@@ -6,6 +6,24 @@ const EventAttendee = require('../models/EventAttendee');
 const Group = require('../models/Group');
 const APIFeatures = require('../utils/apiFeatures');
 
+exports.getUpcomingEvents = asyncHandler(async (req, res) => {
+  const date = new Date();
+  const features = new APIFeatures(
+    Event.find({ date: { $gte: date } }),
+    req.query
+  )
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const events = await features.query;
+
+  res
+    .status(200)
+    .json({ success: true, data: { events }, results: events.length });
+});
+
 exports.getEvents = asyncHandler(async (req, res) => {
   let filter = {};
   let query = Event.find();

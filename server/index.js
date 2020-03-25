@@ -6,10 +6,10 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const eventRoute = require('./routes/eventRoute');
-const authRoute = require('./routes/authRoute');
-const userRoute = require('./routes/userRoute');
-const groupRoute = require('./routes/groupRoute');
+const eventRoutes = require('./routes/eventRoutes');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+const groupRoutes = require('./routes/groupRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const connectDb = require('./utils/connectDb');
 const errorHandler = require('./middleware/error');
@@ -43,10 +43,10 @@ const limiter = rateLimit({
 app.use(cors());
 
 //  routes
-app.use('/api/v1/events', eventRoute);
-app.use('/api/v1/auth', authRoute);
-app.use('/api/v1/groups', groupRoute);
-app.use('/api/v1/users', userRoute);
+app.use('/api/v1/events', eventRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/groups', groupRoutes);
+app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/categories', categoryRoutes);
 
 //  error middleware

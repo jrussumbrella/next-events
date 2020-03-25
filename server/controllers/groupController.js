@@ -5,6 +5,23 @@ const GroupMember = require('../models/GroupMember');
 const APIFeatures = require('../utils/apiFeatures');
 const mongoose = require('mongoose');
 
+exports.getMostPopular = asyncHandler(async (req, res) => {
+  const query = { ...req.query, sort: '-countMembers' };
+  const features = new APIFeatures(Group.find(), query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const groups = await features.query;
+
+  res.status(200).json({
+    success: true,
+    data: { groups },
+    results: groups.length
+  });
+});
+
 exports.getGroups = asyncHandler(async (req, res) => {
   let filter = {};
   let query = Group.find();
