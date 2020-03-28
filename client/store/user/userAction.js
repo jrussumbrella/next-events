@@ -22,6 +22,7 @@ import { setAlert } from '../alert/alertAction';
 export const setUser = token => async dispatch => {
   try {
     const { data } = await authAPI.verifyToken(token);
+    setCookie({}, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
     dispatch({ type: SET_USER_SUCCESS, payload: { user: data, token } });
   } catch (error) {
     throw error;

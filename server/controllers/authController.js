@@ -30,6 +30,12 @@ exports.register = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 201, res);
 });
 
+exports.googleLogin = (req, res) => {
+  const { user } = req;
+  const token = user.getSignedJwtToken();
+  res.redirect(`http://localhost:3000/success?token=${token}`);
+};
+
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
 

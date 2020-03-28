@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, clearError } from '../../store/user/userAction';
 import Button from '../Shared/Button';
 import { Alert } from '../Shared/Notif';
+import { FaGoogle } from 'react-icons/fa';
 
 const LoginForm = () => {
   const { error } = useSelector(state => state.auth);
@@ -32,6 +33,10 @@ const LoginForm = () => {
       setSubmit(false);
     }
   });
+
+  const handleGoogleLogin = async () => {
+    window.open('http://localhost:5000/api/v1/auth/google', '_self');
+  };
 
   return (
     <>
@@ -74,6 +79,14 @@ const LoginForm = () => {
           />
         </div>
       </form>
+      <div className="social-login">
+        <Button
+          type="button"
+          onClick={handleGoogleLogin}
+          title="Login with Google"
+          icon={<FaGoogle />}
+        />
+      </div>
       <style jsx>
         {`
           .form input {
@@ -95,6 +108,10 @@ const LoginForm = () => {
             font-size: 1.5rem;
             padding-top: 1rem;
             display: block;
+          }
+
+          .social-login {
+            padding: 2rem 0;
           }
         `}
       </style>

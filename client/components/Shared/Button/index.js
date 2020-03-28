@@ -10,7 +10,8 @@ const Button = ({
   onClick,
   classType,
   loading,
-  href
+  href,
+  icon
 }) => {
   return (
     <>
@@ -29,6 +30,7 @@ const Button = ({
           disabled={loading}
         >
           {loading ? <Spinner size={3} color={`#fff`} /> : title}
+          {icon && <span className="btn-icon">{icon}</span>}
         </button>
       )}
 
@@ -60,6 +62,10 @@ const Button = ({
 
         .btn.link {
           border: 1px solid transparent;
+        }
+
+        .btn-icon {
+          padding-left: 0.5rem;
         }
       `}</style>
     </>
