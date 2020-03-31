@@ -49,25 +49,35 @@ const Event = () => {
               <div className="info">
                 <div className="top">
                   <h1 className="title"> {selected.name}</h1>
-                  {selected.isFree ? <span>FREE</span> : <span>P200</span>}
                 </div>
-                <div className="extra-details">
-                  <div className="date">
-                    {' '}
-                    <MdDateRange
-                      color={'var(--color-primary)'}
-                      size={20}
-                    />{' '}
-                    <span>February 22, 2020</span>
-                  </div>
-                  <div className="place">
-                    <FiMapPin color={'var(--color-primary)'} size={20} />
-                    <span>{selected?.location?.formattedAddress}</span>{' '}
-                  </div>
-                </div>
-                <div className="desc">{selected.description}</div>
               </div>
-              <EventAction />
+              <div className="extra-details">
+                <div className="date">
+                  {' '}
+                  <MdDateRange color={'var(--color-primary)'} size={20} />{' '}
+                  <span>February 22, 2020</span>
+                </div>
+                <div className="place">
+                  <FiMapPin color={'var(--color-primary)'} size={20} />
+                  <span>{selected?.location?.formattedAddress}</span>{' '}
+                </div>
+              </div>
+              <div className="desc">{selected.description}</div>
+
+              <div className="main-middle">
+                <div className="left">
+                  {selected.isFree ? (
+                    <span className="text">FREE</span>
+                  ) : (
+                    <span className="text">P200</span>
+                  )}
+                  <div className="spots">
+                    {selected.countAttendees - selected.maxAttendees} spots
+                    left.
+                  </div>
+                </div>
+                <EventAction />
+              </div>
             </div>
             {/* <EventMap coordinates={selected.location.coordinates} /> */}
             <EventGroup />
@@ -101,6 +111,11 @@ const Event = () => {
           z-index: 1;
         }
 
+        .spots {
+          font-size: 1.7rem;
+          padding-top: 0.5rem;
+        }
+
         .heading {
           font-size: 2rem;
           font-weight: 600;
@@ -109,12 +124,16 @@ const Event = () => {
 
         .top {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
         }
 
-        .top span {
-          font-size: 2.5rem;
+        .main-middle {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .main-middle .text {
+          font-size: 2.2rem;
           color: var(--color-primary);
         }
 

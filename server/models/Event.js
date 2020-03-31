@@ -64,9 +64,9 @@ const EventSchema = mongoose.Schema(
       type: Number,
       default: 0
     },
-    slot: {
+    maxAttendees: {
       type: Number,
-      required: true
+      default: null
     }
   },
   {

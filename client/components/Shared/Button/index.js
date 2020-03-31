@@ -11,7 +11,8 @@ const Button = ({
   classType,
   loading,
   href,
-  icon
+  icon,
+  disabled
 }) => {
   return (
     <>
@@ -27,7 +28,7 @@ const Button = ({
           className={`btn ${classType || ''}`}
           style={style}
           onClick={onClick}
-          disabled={loading}
+          disabled={loading || disabled}
         >
           {loading ? <Spinner size={3} color={`#fff`} /> : title}
           {icon && <span className="btn-icon">{icon}</span>}

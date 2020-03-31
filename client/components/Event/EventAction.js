@@ -37,6 +37,13 @@ const EventAction = () => {
             classType={'primary'}
             onClick={() => handleAttend('cancel')}
           />
+        ) : selected.countAttendees === selected.maxAttendees ? (
+          <Button
+            title="Slot is Full"
+            size={2}
+            classType={'primary'}
+            disabled={true}
+          />
         ) : (
           <Button
             title="Attend"

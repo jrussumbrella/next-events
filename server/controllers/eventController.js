@@ -182,6 +182,10 @@ exports.addAttendee = asyncHandler(async (req, res, next) => {
   if (attendee)
     return next(new ErrorResponse(`You are already join this event`, 400));
 
+  if (event.countAttendees && event.countAttendees === event.maxAttendees) {
+    return next(new ErrorResponse(`Slot is now full`, 400));
+  }
+
   attendee = await new EventAttendee({ user: userId, event: event._id }).save();
 
   res.status(200).json({ success: true, data: { attendee } });

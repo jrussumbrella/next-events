@@ -1,7 +1,7 @@
 import { format, parseISO } from 'date-fns';
 
 function formatDate(date) {
-  return format(parseISO(date), 'EEEE, MMMM, d, yyyy');
+  return format(parseISO(date), 'EEEE, MMMM d, yyyy');
 }
 
 function formatCreatedAt(date) {
