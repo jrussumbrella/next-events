@@ -3,6 +3,7 @@ const User = require('../models/User');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendEmail');
+const Email = require('../utils/email');
 
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken();
@@ -27,6 +28,8 @@ const sendTokenResponse = (user, statusCode, res) => {
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
   const user = await User.create({ name, email, password, role });
+  const url = `http://localhost:3000/user/${user._id}`;
+  await new Email(user, url).sendWelcome();
   sendTokenResponse(user, 201, res);
 });
 

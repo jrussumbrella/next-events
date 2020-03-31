@@ -57,7 +57,7 @@ export const logout = () => async dispatch => {
     await authAPI.logout();
     dispatch({ type: LOGOUT_USER });
     destroyCookie({}, 'token');
-    Router.push('/');
+    window.location.href = '/login';
   } catch (error) {
     console.log(error);
   }
