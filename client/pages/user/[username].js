@@ -23,23 +23,23 @@ const User = () => {
   };
 
   useEffect(() => {
-    if (active === 'Groups') {
-      dispatch(getUserGroups(username));
-    } else {
-      dispatch(getUserEvents(username));
+    if (selectedUser) {
+      if (active === 'Groups') {
+        dispatch(getUserGroups(username));
+      } else {
+        dispatch(getUserEvents(username));
+      }
     }
-  }, [active]);
+  }, [active, selectedUser]);
 
   return (
     <Layout>
       <UserDetails />
-
       <TabList
         tabs={userTabs}
         activeTab={active}
         onTabChange={handleTabChange}
       />
-
       <div className="tab-item">
         {active === 'Groups' ? (
           <>

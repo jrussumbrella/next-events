@@ -30,37 +30,43 @@ const UserDetails = () => {
 
   return (
     <div>
-      <Modal title={'Edit Profile'}>
-        <EditUserDetails />
-      </Modal>
-      <div className="bg-cover"></div>
-      <div className="top">
-        <div className="avatar">
-          <div className="avatar-text">
-            {selectedUser.name.charAt(0).toUpperCase()}
+      {selectedUser ? (
+        <>
+          <Modal title={'Edit Profile'}>
+            <EditUserDetails />
+          </Modal>
+          <div className="bg-cover"></div>
+          <div className="top">
+            <div className="avatar">
+              <div className="avatar-text">
+                {selectedUser?.name?.charAt(0).toUpperCase()}
+              </div>
+            </div>
+            {user?._id === username && (
+              <div className="top-right">
+                <Button
+                  type="button"
+                  title="Edit Profile"
+                  onClick={handleEditProfile}
+                />
+              </div>
+            )}
           </div>
-        </div>
-        {user?._id === username && (
-          <div className="top-right">
-            <Button
-              type="button"
-              title="Edit Profile"
-              onClick={handleEditProfile}
-            />
+          <div className="user-details">
+            <div className="user-info">
+              <div className="name">{selectedUser.name}</div>
+              <div className="date">
+                Joined Date:{' '}
+                <span style={{ fontWeight: 600 }}>
+                  {formatCreatedAt(selectedUser.createdAt)}
+                </span>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
-      <div className="user-details">
-        <div className="user-info">
-          <div className="name">{selectedUser.name}</div>
-          <div className="date">
-            Joined Date:{' '}
-            <span style={{ fontWeight: 600 }}>
-              {formatCreatedAt(selectedUser.createdAt)}
-            </span>
-          </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <div>test</div>
+      )}
 
       <style jsx>{`
         .bg-cover {
