@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, clearError } from '../../store/user/userAction';
+import { clearError, register } from '../../store/user/userAction';
 import Button from '../Shared/Button';
 import { Alert } from '../Shared/Notif';
 import { FaGoogle } from 'react-icons/fa';
@@ -31,7 +31,8 @@ const RegisterForm = () => {
     }),
     onSubmit: async values => {
       setSubmit(true);
-      await dispatch(login(values));
+      await dispatch(register(values));
+      console.log(values);
       setSubmit(false);
     }
   });
@@ -86,7 +87,7 @@ const RegisterForm = () => {
           <Button
             type="submit"
             disabled={submit}
-            title="Login"
+            title="Sign Up"
             size={2}
             style={{ height: '6rem' }}
             classType="primary"

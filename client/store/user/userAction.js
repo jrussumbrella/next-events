@@ -38,15 +38,28 @@ export const getUser = userId => async dispatch => {
   }
 };
 
+const autoLogin = (data, token, dispatch) => {
+  dispatch({
+    type: SET_USER_SUCCESS,
+    payload: { user: data, token }
+  });
+  setCookie({}, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
+  Router.push('/');
+};
+
 export const login = user => async dispatch => {
   try {
     const { data, token } = await authAPI.login(user);
-    dispatch({
-      type: SET_USER_SUCCESS,
-      payload: { user: data, token }
-    });
-    setCookie({}, 'token', token, { maxAge: 30 * 24 * 60 * 60, path: '/' });
-    Router.push('/');
+    autoLogin(data, token, dispatch);
+  } catch (error) {
+    dispatch({ type: SET_USER_FAILURE, payload: error });
+  }
+};
+
+export const register = user => async dispatch => {
+  try {
+    const { data, token } = await authAPI.register(user);
+    autoLogin(data, token, dispatch);
   } catch (error) {
     dispatch({ type: SET_USER_FAILURE, payload: error });
   }

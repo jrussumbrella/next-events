@@ -21,6 +21,15 @@ export const login = async user => {
   }
 };
 
+export const register = async user => {
+  try {
+    const { data } = await axios.post(`${API_URL}/auth/register`, user);
+    return data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
 export const logout = async () => {
   try {
     const { data } = await axios.post(`${API_URL}/auth/logout`);

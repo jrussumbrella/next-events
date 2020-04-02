@@ -27,6 +27,9 @@ const sendTokenResponse = (user, statusCode, res) => {
 
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, password, role } = req.body;
+  let checkIfEmailExits = await User.findOne({ email });
+  if (checkIfEmailExits)
+    return next(new ErrorResponse('Email is already taken', 400));
   const user = await User.create({ name, email, password, role });
   const url = `http://localhost:3000/user/${user._id}`;
   await new Email(user, url).sendWelcome();

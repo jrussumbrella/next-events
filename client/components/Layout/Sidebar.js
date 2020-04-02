@@ -33,7 +33,7 @@ const Sidebar = ({ open, handleClick }, ref) => {
                 </Link>
               </li>
               <li onClick={handleClick}>
-                <Link href="/login">
+                <Link href="/signup">
                   <a> Sign Up </a>
                 </Link>
               </li>
