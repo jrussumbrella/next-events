@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <Layout>
       <div className="container">
-        <div className="page-heading"> Login</div>
+        <h2 className="page-heading"> Login</h2>
         <LoginForm />
         <AuthLink type="login" />
       </div>

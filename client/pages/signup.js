@@ -6,7 +6,7 @@ const SignUp = () => {
   return (
     <Layout>
       <div className="container">
-        <div className="page-heading"> Sign Up</div>
+        <h2 className="page-heading"> Sign Up</h2>
         <RegisterForm />
         <AuthLink type="register" />
       </div>

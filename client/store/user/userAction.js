@@ -78,6 +78,27 @@ export const logout = () => async dispatch => {
   }
 };
 
+export const forgotPassword = email => async dispatch => {
+  try {
+    await authAPI.forgotPassword(email);
+    dispatch(setAlert('success', 'Email Sent. Please check your email'));
+  } catch (error) {
+    dispatch(setAlert('error', error));
+  }
+};
+
+export const resetPassword = (token, resetObj) => async dispatch => {
+  try {
+    await authAPI.resetPassword(token, resetObj);
+    dispatch(setAlert('success', 'Reset Password Success. You can now login'));
+    setTimeout(() => {
+      Router.push('/login');
+    }, 2000);
+  } catch (error) {
+    dispatch(setAlert('error', error));
+  }
+};
+
 export const clearError = () => dispatch => {
   dispatch({ type: CLEAR_ERROR });
 };
