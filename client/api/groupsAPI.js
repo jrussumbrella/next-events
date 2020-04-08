@@ -2,9 +2,9 @@ import baseURL from '../utils/baseURL';
 import axios from 'axios';
 const API_URL = `${baseURL}/api/v1`;
 
-export const fetchAllGroups = async page => {
+export const fetchAllGroups = async (page) => {
   try {
-    const payload = { params: { limit: 10, page } };
+    const payload = { params: { limit: 5, page } };
     const { data } = await axios.get(`${API_URL}/groups`, payload);
     return data;
   } catch (error) {
@@ -22,7 +22,7 @@ export const fetchGroups = async () => {
   }
 };
 
-export const fetchGroup = async slug => {
+export const fetchGroup = async (slug) => {
   try {
     const { data } = await axios.get(`${API_URL}/groups/${slug}`);
     return data;
@@ -31,7 +31,7 @@ export const fetchGroup = async slug => {
   }
 };
 
-export const fetchGroupEvents = async id => {
+export const fetchGroupEvents = async (id) => {
   try {
     const { data } = await axios.get(`${API_URL}/groups/${id}/events`);
     return data;
@@ -40,7 +40,7 @@ export const fetchGroupEvents = async id => {
   }
 };
 
-export const fetchGroupMembers = async id => {
+export const fetchGroupMembers = async (id) => {
   try {
     const { data } = await axios.get(`${API_URL}/groups/${id}/members`);
     return data;

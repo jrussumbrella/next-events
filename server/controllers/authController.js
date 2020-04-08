@@ -116,8 +116,6 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   // create resetPassword url
   const resetURL = `http://localhost:3000/reset-password?token=${token}`;
 
-  const message = `Please go to this url to reset your password ${resetURL}`;
-
   try {
     await new Email(user, resetURL).sendPasswordReset();
     res.status(200).json({ success: true, data: 'Email Sent' });

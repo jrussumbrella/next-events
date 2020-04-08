@@ -4,19 +4,24 @@ import {
   GroupInfo,
   GroupAction,
   GroupEvents,
-  GroupMembers
+  GroupMembers,
 } from '../../components/Group';
 import TabList from '../../components/Shared/Tabs/TabList';
-import { useSelector } from 'react-redux';
-import { getGroup } from '../../store/groups/groupsActions';
+import { useSelector, useDispatch } from 'react-redux';
+import { getGroup, clearGroup } from '../../store/groups/groupsActions';
 
 const Group = () => {
   const [activeTab, setActiveTab] = useState('Events');
   const tabs = ['Events', 'Members'];
 
-  const { group } = useSelector(state => state.groups);
+  const { group } = useSelector((state) => state.groups);
+  const dispatch = useDispatch();
 
-  const handleTabChange = value => {
+  useEffect(() => {
+    return () => dispatch(clearGroup());
+  }, []);
+
+  const handleTabChange = (value) => {
     setActiveTab(value);
   };
 
@@ -47,7 +52,7 @@ const Group = () => {
   );
 };
 
-Group.getInitialProps = async ctx => {
+Group.getInitialProps = async (ctx) => {
   const { slug } = ctx.query;
   await ctx.store.dispatch(getGroup(slug));
   return {};
