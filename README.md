@@ -1,4 +1,4 @@
-## Next Events
+## Groups and Events Management
 
 ### A full stack application that allow user to create a group and organize an event.
 
