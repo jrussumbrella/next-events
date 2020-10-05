@@ -1,0 +1,14 @@
+.banner {
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--color-primary);
+}
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #ffff;
+  text-align: center;
+}

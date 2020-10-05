@@ -1,0 +1,31 @@
+.btn {
+  border: 1px solid var(--color-primary);
+  background-color: #fff;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0 1.5rem;
+}
+
+.btn:disabled {
+  opacity: 0.8;
+}
+
+.btn.primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn.link {
+  border: 1px solid transparent;
+}
+.btn-icon {
+  padding-left: 0.5rem;
+}

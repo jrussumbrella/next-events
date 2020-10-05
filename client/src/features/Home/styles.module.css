@@ -1,0 +1,26 @@
+.container {
+  margin: 3rem 2rem;
+}
+.pageHeading {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.viewAllContainer {
+  margin: 2rem 0;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.categoryWrapper {
+  margin: 0 -2rem 2rem -2rem;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+}
+
+.inner {
+  padding-left: 2rem;
+}

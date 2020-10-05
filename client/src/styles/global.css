@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+
+:root {
+  --color-primary: #ee5253;
+  --color-gray: #777777;
+  --color-dark: #222;
+  --color-light-dark: #484848;
+  --color-light-gray: #dddbdd;
+  --text-danger: #ff0000;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  --color-dark: #3d3d3d;
+  font-family: Poppins, Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-dark);
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font-family: Poppins, Tahoma, Geneva, Verdana, sans-serif;
+}
