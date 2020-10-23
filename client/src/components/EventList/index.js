@@ -23,13 +23,14 @@ const EventList = ({ events }) => {
                 <div className={styles.info}>
                   <div className={styles.name}>{event.name}</div>
                   <div className={styles.location}>
-                    <FiMapPin color={`var(--color-primary)`} size={18} />
+                    <FiMapPin color="var(--color-primary)" size={18} />
                     <span className={styles.text}>{event.location?.city}</span>
                   </div>
                   <div className={styles.date}>
-                    <MdDateRange color={`var(--color-primary)`} size={18} />
+                    <MdDateRange color="var(--color-primary)" size={18} />
                     <span className={styles.text}>
-                      {formatDate(event.date)} at {formatTime(event.date)}
+                      {formatDate(event.date)} at
+                      {formatTime(event.date)}
                     </span>
                   </div>
                   <div className={styles.bottom}>

@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import Button from '../../Button';
 import styles from './styles.module.css';
 
-const SidebarLink = ({ handleClick, link, title }) => {
-  return (
-    <li onClick={handleClick}>
-      <Link to={link}>{title}</Link>
-    </li>
-  );
-};
+const SidebarLink = ({ handleClick, link, title }) => (
+  <li onClick={handleClick}>
+    <Link to={link}>{title}</Link>
+  </li>
+);
 
 const Sidebar = ({ open, handleClick }, ref) => {
   const user = null;
@@ -18,49 +16,39 @@ const Sidebar = ({ open, handleClick }, ref) => {
 
   const handleCreateEvent = () => {};
 
-  const unAuthLinks = () => {
-    return (
-      <>
-        <SidebarLink handleClick={handleClick} link="/login" title="Log In" />
-        <SidebarLink
-          handleClick={handleClick}
-          link="/sign-up"
-          title="Sign Up"
-        />
-      </>
-    );
-  };
+  const unAuthLinks = () => (
+    <>
+      <SidebarLink handleClick={handleClick} link="/login" title="Log In" />
+      <SidebarLink handleClick={handleClick} link="/sign-up" title="Sign Up" />
+    </>
+  );
 
-  const authLinks = () => {
-    return (
-      <>
-        <SidebarLink
-          handleClick={handleClick}
-          link="/profile"
-          title="Profile"
+  const authLinks = () => (
+    <>
+      <SidebarLink handleClick={handleClick} link="/profile" title="Profile" />
+      <SidebarLink
+        handleClick={handleClick}
+        link="/settings"
+        title="Settings"
+      />
+      <li>
+        <Button
+          type="button"
+          title="Logout"
+          onClick={handleLogout}
+          classType="link"
         />
-        <SidebarLink
-          handleClick={handleClick}
-          link="/settings"
-          title="Settings"
-        />
-        <li>
-          <Button
-            type="button"
-            title="Logout"
-            onClick={handleLogout}
-            classType="link"
-          />
-        </li>
-      </>
-    );
-  };
+      </li>
+    </>
+  );
 
   const linksElement = user ? authLinks() : unAuthLinks();
 
   const userInfoElement = user ? (
     <div className={styles.welcome}>
-      Hello, <span>{user.name}</span>
+      Hello,
+      {' '}
+      <span>{user.name}</span>
     </div>
   ) : null;
 

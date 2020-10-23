@@ -4,22 +4,20 @@ import HomeCategories from './HomeCategories';
 import HomeBanner from './HomeBanner';
 import styles from './styles.module.css';
 
-const Home = () => {
-  return (
-    <div>
-      <HomeBanner />
-      <div className={styles.container}>
-        <div className={styles.pageHeading}> Categories </div>
-        <div className={styles.categoryWrapper}>
-          <div className={styles.inner}>
-            <HomeCategories />
-          </div>
+const Home = () => (
+  <div>
+    <HomeBanner />
+    <div className={styles.container}>
+      <div className={styles.pageHeading}> Categories </div>
+      <div className={styles.categoryWrapper}>
+        <div className={styles.inner}>
+          <HomeCategories />
         </div>
-        <div className={styles.pageHeading}>Upcoming Events</div>
-        <HomeEvents />
       </div>
+      <div className={styles.pageHeading}>Upcoming Events</div>
+      <HomeEvents />
     </div>
-  );
-};
+  </div>
+);
 
 export default Home;

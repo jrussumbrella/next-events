@@ -9,11 +9,6 @@ const Header = () => {
   const sidebarRef = useRef();
   const mobileMenuRef = useRef();
 
-  useEffect(() => {
-    window.addEventListener('click', handleClickOutside);
-    return () => window.removeEventListener('click', handleClickOutside);
-  }, []);
-
   function handleClickOutside(e) {
     if (
       sidebarRef.current.contains(e.target) ||
@@ -28,6 +23,11 @@ const Header = () => {
     setIsOpenDrawer(!isOpenDrawer);
   }
 
+  useEffect(() => {
+    window.addEventListener('click', handleClickOutside);
+    return () => window.removeEventListener('click', handleClickOutside);
+  }, []);
+
   return (
     <>
       <header className={styles.header}>
@@ -35,12 +35,8 @@ const Header = () => {
           <Link to="/"> Eventify </Link>
         </div>
         <div className={styles.headerRight}>
-          <div
-            className={styles.hamburgerMenu}
-            ref={mobileMenuRef}
-            onClick={handleClickSidebar}
-          >
-            <HamburgerIcon active={isOpenDrawer} />
+          <div className={styles.hamburgerMenu} ref={mobileMenuRef}>
+            <HamburgerIcon active={isOpenDrawer} onClick={handleClickSidebar} />
           </div>
         </div>
         <Sidebar

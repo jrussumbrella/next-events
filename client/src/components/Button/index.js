@@ -8,36 +8,34 @@ const Button = ({
   title,
   style,
   onClick,
-  classType,
   loading,
   href,
   icon,
   disabled,
-}) => {
-  return (
-    <>
-      {href ? (
-        <Link
-          to={href}
-          className={`${styles.btn} ${classType || ''}`}
-          style={style}
-        >
-          {title}
-        </Link>
-      ) : (
-        <button
-          type={type}
-          className={`${styles.btn} ${classType || ''}`}
-          style={style}
-          onClick={onClick}
-          disabled={loading || disabled}
-        >
-          {loading ? <Spinner size={3} color={`#fff`} /> : title}
-          {icon && <span className="btn-icon">{icon}</span>}
-        </button>
-      )}
-    </>
-  );
-};
+  variant,
+}) => (
+  <>
+    {href ? (
+      <Link
+        to={href}
+        className={`${styles.btn} ${styles[variant] || ''}`}
+        style={style}
+      >
+        {title}
+      </Link>
+    ) : (
+      <button
+        type={type}
+        className={`${styles.btn} ${styles[variant] || ''}`}
+        style={style}
+        onClick={onClick}
+        disabled={loading || disabled}
+      >
+        {loading ? <Spinner size={3} color="#fff" /> : title}
+        {icon && <span className={styles.icon}>{icon}</span>}
+      </button>
+    )}
+  </>
+);
 
 export default Button;

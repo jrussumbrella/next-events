@@ -1,9 +1,11 @@
 import React from 'react';
-import Layout from './components/Layout';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './features/Home';
 import { QueryCache, ReactQueryCacheProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query-devtools';
+import Layout from './components/Layout';
+import Home from './features/Home';
+import Login from './features/Login';
+import Event from './features/Event';
 
 const queryCache = new QueryCache();
 
@@ -13,12 +15,18 @@ function App() {
       <ReactQueryCacheProvider queryCache={queryCache}>
         <Layout>
           <Switch>
-            <Route path="/">
+            <Route path="/" exact>
               <Home />
+            </Route>
+            <Route path="/login" exact>
+              <Login />
+            </Route>
+            <Route path="/event/:id" exact>
+              <Event />
             </Route>
           </Switch>
         </Layout>
-        <ReactQueryDevtools initialIsOpen />
+        <ReactQueryDevtools initialIsOpen={false} />
       </ReactQueryCacheProvider>
     </Router>
   );

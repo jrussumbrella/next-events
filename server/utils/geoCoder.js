@@ -1,11 +1,10 @@
-var NodeGeocoder = require("node-geocoder");
-const { geocoder_api_key } = require("../config");
+const NodeGeocoder = require('node-geocoder');
 
 const options = {
-  provider: "mapquest",
+  provider: 'mapquest',
   // Optional depending on the providers
-  httpAdapter: "https", // Default
-  apiKey: geocoder_api_key, // for Mapquest, OpenCage, Google Premier
+  httpAdapter: 'https', // Default
+  apiKey: process.env.GEOCODER_API_KEY, // for Mapquest, OpenCage, Google Premier
   formatter: null // 'gpx', 'string', ...
 };
 

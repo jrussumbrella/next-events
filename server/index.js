@@ -1,22 +1,18 @@
+require('dotenv').config();
 const express = require('express');
-const dotenv = require('dotenv');
 const mongoSanitize = require('express-mongo-sanitize');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const cors = require('cors');
-const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
 const eventRoutes = require('./routes/eventRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const groupRoutes = require('./routes/groupRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
-const connectDb = require('./utils/connectDb');
+const connectDb = require('./database');
 const errorHandler = require('./middleware/error');
-
-// env vars
-dotenv.config({ path: './config/config.env' });
 
 connectDb();
 

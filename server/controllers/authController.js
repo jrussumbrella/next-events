@@ -20,8 +20,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   res
     .status(statusCode)
-    // .cookie('token', token, options)
-    .json({ success: true, token, data: userData });
+    .json({ success: true, data: { user: userData, token } });
 };
 
 exports.register = asyncHandler(async (req, res, next) => {

@@ -2,7 +2,7 @@ import apiClient from '../utils/apiClient';
 
 const getAllEvents = async (page = 1) => {
   const payload = { params: { limit: 10, page } };
-  const { data } = await apiClient.get(`/events`, payload);
+  const { data } = await apiClient.get('/events', payload);
   return data;
 };
 

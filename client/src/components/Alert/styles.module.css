@@ -1,0 +1,11 @@
+.alert {
+  border-radius: 6px;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.error {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  font-size: 1.6rem;
+}
