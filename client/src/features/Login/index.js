@@ -30,7 +30,6 @@ const Login = () => {
         const { email, password } = values;
         setSubmit(true);
         const { data } = await AuthAPI.login(email, password);
-        setSubmit(false);
         const url = `/profile/${data.user._id}`;
         history.push(url);
       } catch (err) {
