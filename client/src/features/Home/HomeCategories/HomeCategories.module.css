@@ -1,3 +1,13 @@
+.categoryWrapper {
+  margin: 0 -2rem 2rem -2rem;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+}
+
+.inner {
+  padding-left: 2rem;
+}
+
 .categories {
   display: flex;
   flex-wrap: nowrap;

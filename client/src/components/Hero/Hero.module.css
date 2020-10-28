@@ -1,4 +1,4 @@
-.banner {
+.hero {
   height: 20rem;
   display: flex;
   align-items: center;
@@ -6,6 +6,7 @@
   flex-direction: column;
   background-color: var(--color-primary);
 }
+
 .title {
   font-size: 3rem;
   font-weight: 600;

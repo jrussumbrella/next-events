@@ -1,8 +1,13 @@
 import apiClient from '../utils/apiClient';
 
-const getAllEvents = async (page = 1) => {
+const getEvents = async (page = 1) => {
   const payload = { params: { limit: 10, page } };
   const { data } = await apiClient.get('/events', payload);
+  return data;
+};
+
+const getEvent = async (eventId) => {
+  const { data } = await apiClient.get(`/events/${eventId}`);
   return data;
 };
 
@@ -12,16 +17,6 @@ const getAllEvents = async (page = 1) => {
 //     const { data } = await axios.get(`${API_URL}/events`, payload);
 //     return data;
 //   } catch (error) {
-//     throw error.response.data.error;
-//   }
-// };
-
-// const fetchEvent = async (eventId) => {
-//   try {
-//     const { data } = await axios.get(`${API_URL}/events/${eventId}`);
-//     return data;
-//   } catch (error) {
-//     console.log(error);
 //     throw error.response.data.error;
 //   }
 // };
@@ -66,5 +61,6 @@ const getAllEvents = async (page = 1) => {
 // };
 
 export default {
-  getAllEvents,
+  getEvent,
+  getEvents,
 };

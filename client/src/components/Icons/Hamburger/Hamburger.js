@@ -1,7 +1,7 @@
 import React from 'react';
-import './styles.css';
+import './Hamburger.css';
 
-const HamburgerIcon = ({ active, onClick }) => (
+const Hamburger = ({ active, onClick }) => (
   <>
     <button
       onClick={onClick}
@@ -16,4 +16,4 @@ const HamburgerIcon = ({ active, onClick }) => (
   </>
 );
 
-export default HamburgerIcon;
+export default Hamburger;
