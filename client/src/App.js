@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { QueryCache, ReactQueryCacheProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query-devtools';
 import Layout from './components/Layout';
-import Home from './features/Home';
-import Login from './features/Login';
-import Event from './features/Event';
-import Profile from './features/Profile';
+import Home from './views/Home';
+import Login from './views/Login';
+import Event from './views/Event';
+import Profile from './views/Profile';
 import { UserProvider } from './contexts/user';
 
 const queryCache = new QueryCache();
