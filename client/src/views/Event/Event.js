@@ -3,9 +3,11 @@ import { useParams } from 'react-router-dom';
 import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
 import { useQuery } from 'react-query';
+import Button from '../../components/Button';
 import EventSkeleton from './EventSkeleton';
 import EventAPI from '../../api/EventAPI';
 import EventGroup from './EventGroup';
+import EventAttendees from './EventAttendees';
 import styles from './Event.module.css';
 
 const Event = () => {
@@ -14,21 +16,12 @@ const Event = () => {
 
   const event = data?.data;
 
+  if (error) return <p>Something went wrong</p>;
+
   if (isLoading) return <EventSkeleton />;
 
   return (
     <div>
-      <ul className={styles.breadcrumb}>
-        <li>
-          <a href="#">Home</a>
-        </li>
-        <li>
-          <a href="#">Events</a>
-        </li>
-        <li>
-          <a href="#">{event.name}</a>
-        </li>
-      </ul>
       <div className={styles.topBar}>
         <div
           className={styles.coverImg}
@@ -48,33 +41,35 @@ const Event = () => {
             <MdDateRange color="var(--color-primary)" size={20} />
             <span>February 22, 2020</span>
           </div>
-          <div className="place">
+          <div className={styles.place}>
             <FiMapPin color="var(--color-primary)" size={20} />
             <span>{event?.location?.formattedAddress}</span>
           </div>
         </div>
         <div className={styles.description}>{data.description}</div>
         <div className={styles.mainMiddle}>
-          <div className={styles.left}>
-            {data.isFree ? (
-              <span className={styles.text}>FREE</span>
-            ) : (
-              <span className={styles.text}>P200</span>
-            )}
-            <div className={styles.spot}>
-              <span className={styles.spotNum}>
-                {data.countAttendees - data.maxAttendees}
-              </span>
-              spots left.
-            </div>
+          {data.isFree ? (
+            <p className={styles.text}>FREE</p>
+          ) : (
+            <p className={styles.text}>P200</p>
+          )}
+          <div className={styles.spot}>
+            <span className={styles.spotNum}>
+              {event.countAttendees - event.maxAttendees}
+            </span>
+            spots left.
           </div>
-          {/* <EventAction /> */}
         </div>
       </div>
+
+      <div>
+        <Button title="Attend" />
+      </div>
+
       {/* <EventMap coordinates={data.location.coordinates} /> */}
       <EventGroup />
       <div className={styles.heading}>Attendees ({event.countAttendees})</div>
-      {/* <EventAttendees attendees={data.attendees || []} /> */}
+      <EventAttendees attendees={data.attendees || []} />
     </div>
   );
 };

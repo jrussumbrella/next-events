@@ -5,6 +5,12 @@ const login = async (email, password) => {
   return data;
 };
 
+const getMe = async () => {
+  const { data } = await apiClient.get('/auth/account');
+  return data;
+};
+
 export default {
   login,
+  getMe,
 };

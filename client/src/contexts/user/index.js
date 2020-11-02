@@ -1,4 +1,11 @@
-import React, { createContext, useReducer, useMemo, useContext } from 'react';
+import React, {
+  createContext,
+  useReducer,
+  useMemo,
+  useContext,
+  useEffect,
+} from 'react';
+import AuthAPI from '../../api/AuthAPI';
 
 const initialState = {
   loading: true,
@@ -42,6 +49,18 @@ export const UserProvider = ({ children }) => {
     localStorage.removeItem('access_token');
     dispatch({ type: LOG_OUT });
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data } = await AuthAPI.getMe();
+        dispatch({ type: LOG_IN, payload: { user: data } });
+      } catch (error) {
+        logout();
+      }
+    };
+    getUser();
+  }, []);
 
   const value = useMemo(
     () => ({
