@@ -4,8 +4,8 @@ import HomeCategories from './HomeCategories';
 import Hero from '../../components/Hero';
 import Container from '../../components/Container';
 import EventAPI from '../../api/EventAPI';
-import EventList from '../../components/EventList';
-import EventListSkeleton from '../../components/EventListSkeleton';
+import EventList from '../../components/Events/EventList';
+import EventListSkeleton from '../../components/Events/EventListSkeleton';
 import styles from './Home.module.css';
 
 const Home = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { formatDate, formatTime } from '../../utils/formatDate';
+import { formatDate, formatTime } from 'utils/formatDate';
 import styles from './EventList.module.css';
 
 const EventList = ({ events }) => {
@@ -29,8 +29,7 @@ const EventList = ({ events }) => {
                   <div className={styles.date}>
                     <MdDateRange color="var(--color-primary)" size={18} />
                     <span className={styles.text}>
-                      {formatDate(event.date)} at
-                      {formatTime(event.date)}
+                      {formatDate(event.date)} at {formatTime(event.date)}
                     </span>
                   </div>
                   <div className={styles.bottom}>

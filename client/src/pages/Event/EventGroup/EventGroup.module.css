@@ -1,0 +1,29 @@
+.link {
+  color: var(--color-dark);
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+}
+
+.img {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+}
+
+.info {
+  padding-left: 1rem;
+  flex: 1;
+  font-size: 1.7rem;
+}
+
+.title {
+  margin: 0.5rem 0;
+}
+
+.mode {
+  color: var(--color-gray);
+}

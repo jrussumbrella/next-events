@@ -8,6 +8,13 @@
     "plugin:prettier/recommended",
     "airbnb"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx"]
+      }
+    },
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true

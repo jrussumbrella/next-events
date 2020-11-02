@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { QueryCache, ReactQueryCacheProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query-devtools';
-import Layout from './components/Layout';
-import Home from './views/Home';
-import Login from './views/Login';
-import Event from './views/Event';
-import Profile from './views/Profile';
-import { UserProvider } from './contexts/user';
+import Layout from 'components/Layout';
+import Home from 'pages/Home';
+import Login from 'pages/Login';
+import Event from 'pages/Event';
+import Profile from 'pages/Profile';
+import { UserProvider } from 'contexts/user';
 
 const queryCache = new QueryCache();
 

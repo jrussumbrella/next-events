@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './EventListSkeleton.module.css';
 
-const EventListSkeleton = ({ numbers = 5 }) => {
+const EventListSkeleton = ({ numbers = 8 }) => {
   const lists = Array(numbers)
     .fill(null)
     .map((_, i) => i + 1);

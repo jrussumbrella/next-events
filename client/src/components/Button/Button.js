@@ -13,6 +13,7 @@ const Button = ({
   icon,
   disabled,
   variant,
+  className = '',
 }) => (
   <>
     {href ? (
@@ -26,7 +27,7 @@ const Button = ({
     ) : (
       <button
         type={type}
-        className={`${styles.btn} ${styles[variant] || ''}`}
+        className={`${styles.btn} ${styles[variant] || ''} ${className}`}
         style={style}
         onClick={onClick}
         disabled={loading || disabled}

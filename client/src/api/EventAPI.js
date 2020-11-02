@@ -11,25 +11,10 @@ const getEvent = async (eventId) => {
   return data;
 };
 
-// const fetchEvents = async () => {
-//   try {
-//     const payload = { params: { limit: 10 } };
-//     const { data } = await axios.get(`${API_URL}/events`, payload);
-//     return data;
-//   } catch (error) {
-//     throw error.response.data.error;
-//   }
-// };
-
-// const fetchEventAttendees = async (eventId) => {
-//   try {
-//     const { data } = await axios.get(`${API_URL}/events/${eventId}/attendees`);
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error.response.data.error;
-//   }
-// };
+const getEventAttendees = async (eventId) => {
+  const { data } = await apiClient.get(`/events/${eventId}/attendees`);
+  return data;
+};
 
 // const attendEvent = async (eventId, token) => {
 //   try {
@@ -63,4 +48,5 @@ const getEvent = async (eventId) => {
 export default {
   getEvent,
   getEvents,
+  getEventAttendees,
 };

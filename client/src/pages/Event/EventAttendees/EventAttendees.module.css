@@ -1,0 +1,56 @@
+.attendees {
+  display: flex;
+  align-items: center;
+  flex: no-wrap;
+  padding-left: 2rem;
+  overflow-y: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.attendees .list {
+  padding: 15px 15px 15px 0;
+}
+
+.attendees .link {
+  color: var(--color-dark);
+}
+
+.inner {
+  box-shadow: 0 0 4px 0 rgba(46, 62, 72, 0.12),
+    0 4px 12px 0 rgba(46, 62, 72, 0.12);
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.wrapper {
+  padding: 2rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.wrapper .info {
+  font-size: 1.5rem;
+  padding: 1rem 0;
+}
+
+.wrapper .name {
+  margin-bottom: 0.5rem;
+}
+
+.wrapper .label {
+  color: var(--color-gray);
+}
+
+.msg {
+  text-align: center;
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
