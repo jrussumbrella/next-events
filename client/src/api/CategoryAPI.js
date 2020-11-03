@@ -1,4 +1,4 @@
-import apiClient from '../utils/apiClient';
+import apiClient from 'utils/apiClient';
 
 const getCategories = async () => {
   const { data } = await apiClient.get('/categories');

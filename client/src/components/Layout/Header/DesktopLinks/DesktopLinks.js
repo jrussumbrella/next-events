@@ -27,7 +27,7 @@ const DesktopLinks = () => {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link to="/profile" className={styles.navLink}>
+            <Link to={`/profile/${currentUser._id}`} className={styles.navLink}>
               <Avatar letter={currentUser.name.charAt(0)} size={50} />
             </Link>
           </li>

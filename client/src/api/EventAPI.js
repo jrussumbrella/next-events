@@ -1,4 +1,4 @@
-import apiClient from '../utils/apiClient';
+import apiClient from 'utils/apiClient';
 
 const getEvents = async (page = 1) => {
   const payload = { params: { limit: 10, page } };
@@ -16,20 +16,10 @@ const getEventAttendees = async (eventId) => {
   return data;
 };
 
-// const attendEvent = async (eventId, token) => {
-//   try {
-//     const headers = { headers: { authorization: `Bearer ${token}` } };
-//     const { data } = await axios.post(
-//       `${API_URL}/events/${eventId}/attendees`,
-//       {},
-//       headers
-//     );
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error.response.data.error;
-//   }
-// };
+const attendEvent = async (eventId) => {
+  const { data } = await apiClient.post(`/events/${eventId}/attendees`);
+  return data;
+};
 
 // const leaveEvent = async (eventId, token) => {
 //   try {
@@ -49,4 +39,5 @@ export default {
   getEvent,
   getEvents,
   getEventAttendees,
+  attendEvent,
 };
