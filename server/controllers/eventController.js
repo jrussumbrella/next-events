@@ -5,6 +5,7 @@ const Event = require('../models/Event');
 const EventAttendee = require('../models/EventAttendee');
 const Group = require('../models/Group');
 const APIFeatures = require('../utils/apiFeatures');
+const checkAuth = require('../utils/checkAuth');
 
 exports.getUpcomingEvents = asyncHandler(async (req, res) => {
   const date = new Date();
@@ -75,16 +76,29 @@ exports.getNearbyEvents = asyncHandler(async (req, res, next) => {
 
 exports.getEvent = asyncHandler(async (req, res, next) => {
   const isObjectId = mongoose.isValidObjectId;
-  let query;
-  query = isObjectId(req.params.id)
-    ? Event.findById(req.params.id)
-    : Event.findOne({ slug: req.params.id });
+  const { id } = req.params;
+
+  const query = isObjectId(id)
+    ? Event.findById(id)
+    : Event.findOne({ slug: id });
 
   const event = await query.populate({
     path: 'group',
     select: 'name description'
   });
   if (!event) return next(new ErrorResponse(`Event not found`, 404));
+  event.is_attendee = false;
+
+  const user = await checkAuth(req);
+  if (user) {
+    const isAlreadyAttendee = user.events.some(
+      eventId => eventId.toString() === event.id
+    );
+    if (isAlreadyAttendee) {
+      event.is_attendee = true;
+    }
+  }
+
   res.status(200).json({ success: true, data: event });
 });
 
@@ -92,10 +106,10 @@ exports.createEvent = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
   req.body.group = req.params.groupId;
   const group = await Group.findById(req.params.groupId);
-  //make sure group is exist
+  // make sure group is exist
   if (!group) return next(new ErrorResponse(`Group not found`, 404));
 
-  //Make sure user is group owner
+  // make sure user is group owner
   if (group.owner.toString() !== req.user.id && req.user.role !== 'admin')
     return next(
       new ErrorResponse(
@@ -180,7 +194,7 @@ exports.addAttendee = asyncHandler(async (req, res, next) => {
 
   let attendee = await EventAttendee.findOne({ user: userId, event: eventId });
   if (attendee)
-    return next(new ErrorResponse(`You are already join this event`, 400));
+    return next(new ErrorResponse(`You already join this event`, 400));
 
   if (event.countAttendees && event.countAttendees === event.maxAttendees) {
     return next(new ErrorResponse(`Slot is now full`, 400));

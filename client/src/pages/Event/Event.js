@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { MdDateRange } from 'react-icons/md';
 import { FiMapPin } from 'react-icons/fi';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, useQueryCache } from 'react-query';
 import Button from 'components/Button';
 import EventSkeleton from './EventSkeleton';
 import EventAPI from 'api/EventAPI';
@@ -12,10 +12,39 @@ import styles from './Event.module.css';
 import Container from 'components/Container';
 
 const Event = () => {
+  const cache = useQueryCache();
   const { id } = useParams();
-  const { isLoading, error, data } = useQuery(id, () => EventAPI.getEvent(id));
-
+  const key = `event_${id}`;
+  const { isLoading, error, data } = useQuery(key, () => EventAPI.getEvent(id));
   const event = data?.data;
+  const [mutateAttendEvent] = useMutation(EventAPI.attendEvent, {
+    onSuccess: async () => {
+      cache.refetchQueries([key]);
+      cache.refetchQueries([`attendees_${event._id}`]);
+    },
+  });
+  const [mutateLeaveEvent] = useMutation(EventAPI.leaveEvent, {
+    onSuccess: () => {
+      cache.refetchQueries([key]);
+      cache.refetchQueries([`attendees_${event._id}`]);
+    },
+  });
+
+  const handleLeaveEvent = async () => {
+    try {
+      mutateLeaveEvent(event._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAttend = async () => {
+    try {
+      await mutateAttendEvent(event._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (error) return <p>Something went wrong</p>;
 
@@ -48,7 +77,7 @@ const Event = () => {
       <EventAttendees attendees={[]} eventId={event._id} />
       <div className={styles.bottom}>
         <div className={styles.left}>
-          {data.isFree ? (
+          {event.isFree ? (
             <p className={styles.text}>FREE</p>
           ) : (
             <p className={styles.text}>P200</p>
@@ -61,7 +90,19 @@ const Event = () => {
             </span>
             spots left.
           </div>
-          <Button title="Attend" className={styles.button} />
+          {event.is_attendee ? (
+            <Button
+              title="Leave Event"
+              className={styles.button}
+              onClick={handleLeaveEvent}
+            />
+          ) : (
+            <Button
+              title="Attend Event"
+              className={styles.button}
+              onClick={handleAttend}
+            />
+          )}
         </div>
       </div>
     </Container>

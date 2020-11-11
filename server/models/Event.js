@@ -36,10 +36,13 @@ const EventSchema = mongoose.Schema(
       zipcode: String,
       country: String
     },
-    imageCoverURL: {
+    image_url: {
       type: String
     },
-    isFree: {
+    is_attendee: {
+      type: Boolean
+    },
+    is_free: {
       type: Boolean,
       default: 'true'
     },
@@ -60,11 +63,11 @@ const EventSchema = mongoose.Schema(
       ref: 'Group',
       required: true
     },
-    countAttendees: {
+    count_attendees: {
       type: Number,
       default: 0
     },
-    maxAttendees: {
+    max_attendees: {
       type: Number,
       default: null
     }

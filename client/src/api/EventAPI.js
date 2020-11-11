@@ -21,23 +21,15 @@ const attendEvent = async (eventId) => {
   return data;
 };
 
-// const leaveEvent = async (eventId, token) => {
-//   try {
-//     const headers = { headers: { authorization: `Bearer ${token}` } };
-//     const { data } = await axios.delete(
-//       `${API_URL}/events/${eventId}/attendees`,
-//       headers
-//     );
-//     return data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error.response.data.error;
-//   }
-// };
+const leaveEvent = async (eventId) => {
+  const { data } = await apiClient.delete(`/events/${eventId}/attendees`);
+  return data;
+};
 
 export default {
   getEvent,
   getEvents,
   getEventAttendees,
   attendEvent,
+  leaveEvent,
 };

@@ -45,10 +45,10 @@ const GroupSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category'
     },
-    imageCoverURL: {
+    image_url: {
       type: String
     },
-    countMembers: {
+    count_members: {
       type: Number,
       default: 0
     }
