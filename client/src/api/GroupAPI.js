@@ -1,6 +1,6 @@
 import apiClient from 'utils/apiClient';
 
-const getGroups = async (page, limit = 5) => {
+const getGroups = async (page = 1, limit = 12) => {
   const payload = { params: { limit, page } };
   const { data } = await apiClient.get(`/groups`, payload);
   return data;

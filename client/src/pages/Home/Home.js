@@ -81,6 +81,9 @@ const Home = () => {
         </div>
         <div className={styles.pageHeading}>Upcoming Events</div>
         {renderEvents()}
+        <div className={styles.buttonContainer}>
+          <Button title="View All Events" href="/events" />
+        </div>
       </Container>
     </div>
   );
