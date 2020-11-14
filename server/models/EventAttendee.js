@@ -32,9 +32,9 @@ EventAttendeeSchema.statics.countAttendees = async function(eventId) {
   ]);
 
   if (stats.length > 0) {
-    await Event.findByIdAndUpdate(eventId, { countAttendees: stats[0].count });
+    await Event.findByIdAndUpdate(eventId, { count_attendees: stats[0].count });
   } else {
-    await Event.findByIdAndUpdate(eventId, { countAttendees: 0 });
+    await Event.findByIdAndUpdate(eventId, { count_attendees: 0 });
   }
 };
 

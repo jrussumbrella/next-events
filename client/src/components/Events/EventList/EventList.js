@@ -18,7 +18,7 @@ const EventList = ({ events }) => {
             <div className={styles.eventCard}>
               <Link to={`/event/${event.slug}`} className="link">
                 <div className={styles.imgWrapper}>
-                  <img src={event.imageCoverURL} alt={event.name} />
+                  <img src={event.image_url} alt={event.name} />
                 </div>
                 <div className={styles.info}>
                   <div className={styles.name}>{event.name}</div>
@@ -34,7 +34,7 @@ const EventList = ({ events }) => {
                   </div>
                   <div className={styles.bottom}>
                     <div className={styles.attendeeText}>
-                      {event.countAttendees} attendees
+                      {event.count_attendees} attendees
                     </div>
                   </div>
                 </div>

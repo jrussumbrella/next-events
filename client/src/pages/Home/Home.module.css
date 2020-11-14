@@ -1,14 +1,12 @@
-.container {
-  margin: 3rem 2rem;
-}
 .pageHeading {
   font-size: 2rem;
   font-weight: 600;
   margin: 2rem 0;
 }
 
-.viewAllContainer {
-  margin: 2rem 0;
+.buttonContainer {
+  margin: 20px 0;
+  text-align: center;
 }
 
 ::-webkit-scrollbar {

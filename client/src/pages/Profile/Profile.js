@@ -18,15 +18,6 @@ const Profile = () => {
 
   const user = data?.data;
 
-  if (isLoading)
-    return (
-      <Container>
-        <div className={styles.loadingContainer}>
-          <Spinner size={50} />
-        </div>
-      </Container>
-    );
-
   if (error)
     return (
       <p> Unable to fetch user details right now. Please try again later. </p>
@@ -34,7 +25,13 @@ const Profile = () => {
 
   return (
     <Container>
-      <ProfileDetails user={user} />
+      {isLoading ? (
+        <div className={styles.loadingContainer}>
+          <Spinner size={50} />
+        </div>
+      ) : (
+        <ProfileDetails user={user} />
+      )}
     </Container>
   );
 };

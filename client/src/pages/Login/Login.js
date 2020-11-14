@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FaGoogle } from 'react-icons/fa';
-import Button from '../../components/Button';
-import Alert from '../../components/Alert';
-import AuthAPI from '../../api/AuthAPI';
-import { useUser } from '../../contexts';
+import Button from 'components/Button';
+import Alert from 'components/Alert';
+import AuthAPI from 'api/AuthAPI';
+import { useUser } from 'contexts';
 import styles from './Login.module.css';
 
 const Login = () => {
   const [submit, setSubmit] = useState(false);
   const [error, setError] = useState(null);
-
-  const history = useHistory();
 
   const { login } = useUser();
 
@@ -35,7 +32,7 @@ const Login = () => {
         const { data } = await AuthAPI.login(email, password);
         login(data);
         const url = `/profile/${data.user._id}`;
-        history.push(url);
+        window.location.href = url;
       } catch (err) {
         setError(err.response.data.message);
         setSubmit(false);
